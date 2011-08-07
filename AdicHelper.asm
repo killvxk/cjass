@@ -1453,8 +1453,11 @@ inc	edi
 		_lOptCC_FuncGetEnd:
 		inc	esi
 		_lOptCC_FuncGetEndEX:
+cmp	dword ptr [esi],		646e6502h	;; _end
+je	_lOptCC_FuncGetEndOX
 		cmp	dword ptr [esi],		646e650ah	;; _end
 		jne	_lOptCC_FuncGetEnd
+_lOptCC_FuncGetEndOX:
 		cmp	dword ptr [esi+04h],		636e7566h	;; func
 		jne	_lOptCC_FuncGetEnd
 
@@ -2812,6 +2815,14 @@ jmp	_lCRScanLine
 		cmp	byte ptr [esi+03h],	20h
 		jbe	_lCRFXSyn
 
+_lbl:
+cmp	eax,			"jcon"
+jne	_next
+cmp	word ptr [esi + 03h],	"ssaj"
+jne	_next
+cmp	byte ptr [esi + 07h],	20h
+jbe	_lCRFXSyn
+
 		_lbl:
 		cmp	ax,			6f62h		;; bo
 		jne	_next
@@ -2819,6 +2830,7 @@ jmp	_lCRScanLine
 		jne	_next
 		cmp	byte ptr [esi+03h],	20h
 		jg	_next
+
 
 		_lCRFXSyn:
 		mov	eax,			dword ptr [_dSynDesc]
@@ -2842,11 +2854,22 @@ jmp	_lCRScanLine
 
 		_lCREndFXSynEX:
 		cmp	dword ptr [esi],	"ldne"
-		jne	_lCREndFXSynFX
+		jne	_lCREndFXSynRX
 		cmp	word ptr [esi+04h],	"au"
-		jne	_lCREndFXSynFX
+		jne	_lCREndFXSynRX
 		cmp	byte ptr [esi+06h],	20h		;; bs
 		jb	_lCREndFXSynDX
+
+_lCREndFXSynRX:
+cmp	dword ptr [esi],		"ndne"
+jne	_lCREndFXSynFX
+cmp	dword ptr [esi + 04h],		"ajco"
+jne	_lCREndFXSynFX
+cmp	word ptr [esi + 08h],		"ss"
+jne	_lCREndFXSynFX
+cmp	byte ptr [esi + 0ah],		" "		;; bs
+jb	_lCREndFXSynDX
+
 
 		_lCREndFXSynFX:
 		cmp	dword ptr [esi],	62646e65h	;; endb
