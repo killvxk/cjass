@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 01 04 02 18
+;;	v 01 04 02 1a
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -101,8 +101,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.25", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.25", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.26", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.26", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -3129,7 +3129,9 @@ jmp	_lCRScanLine
 		add	ebx,			_lBSRemBase
 		jmp	ebx
 
-		_lCRBSNext:	;; test next chaqr
+		_lCRBSNext:	;; test next char
+cmp	word ptr [esi + 01h],		"*/"
+je	_lCRBSAdd	
 		xor	ebx,			ebx
 		mov	bl,			ah
 		mov	bl,			byte ptr [_bAscii_02+ebx]
@@ -3483,6 +3485,13 @@ je	_lCRScanLine
 		dec	edx
 		jnz	_lCRCommNextEx
 		add	esi,			02h
+cmp	byte ptr [edi - 01h],		" "
+jne	_lCRScan
+mov	dl,				byte ptr [esi]
+cmp	byte ptr [_bAscii_00+edx],	dh	;; bh = 00h
+jne	_lCRScan
+dec	edi
+mov	byte ptr [edi],			00h
 		jmp	_lCRScan
 
 			;;----------------
@@ -6162,7 +6171,7 @@ mov	esi,				dword ptr [esi + 06h]
 jmp	_lXFP_1b_End
 
 _lXFP_1b_Check_00:
-cmp	al,				byte ptr [ebx]
+cmp	al,				byte ptr [edx]
 jne	_lXFP_1b_Check_GetNext
 inc	edx
 inc	ebx
