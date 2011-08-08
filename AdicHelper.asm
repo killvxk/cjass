@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 01 04 02 18
+;;	v 1.4.2.27
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -44,6 +44,8 @@
 	extern	_imp__SetThreadPriority@8:dword
 	extern	_imp__LoadLibraryA@4:dword
 	extern	_imp__GetProcAddress@8:dword
+extern	_imp__CreateProcessA@40:dword
+extern	_imp__WaitForSingleObject@8:dword
 
 	extern	_imp__MessageBoxA@16:dword
 	extern	_imp__RegisterClassA@4:dword
@@ -101,8 +103,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.25", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.25", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.27", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.27", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -354,6 +356,7 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWarVerSL		dd	offset _sVerUndef	;; if zero - do not remove unused code
 
 	_sProg_00		db	"Parsing: preparing...", 00h
+	_sProg_01_pre		db	"Parsing: textmacro preprocessing...", 00h
 	_sProg_01		db	"Parsing: processing...", 00h
 	_sProg_02		db	"Parsing: build Find'n'Replace table...", 00h
 	_sProg_03		db	"Parsing: find'n'Replace - process...", 00h
@@ -608,6 +611,16 @@ _sCallbackReg_15_Str	equ	$
 			db	"exitwhen i==16", 0dh, 0ah
 			db	"endloop", 0dh, 0ah
 _sCallbackReg_15_End	equ	$
+
+_sTempMacroIn		db	"macro_preprocessing_in.j", 00h
+_sTempMacroOut		db	"macro_preprocessing_out.j", 00h
+_sTempMacroCJ		db	"cj_null.j", 00h
+_sTempMacroBJ		db	"bj_null.j", 00h
+
+_sEndMacroExStr		db	"cjpreprocendmacrodetectionen_8H4f855w9Ioen68EgE337gy", 0dh, 0ah
+_sEndMacroExStrSize	equ	$ - offset _sEndMacroExStr
+
+_sVXPreProcCmdLine	db	"--nooptimize --macromode cj_null.j bj_null.j macro_preprocessing_in.j macro_preprocessing_out.j"
 
 ;;_dAonBlockBaseFuncS	dd	0ffffffffh	;; base anon block's function
 ;;_dAonBlockBaseFuncE	dd	0ffffffffh
@@ -898,44 +911,59 @@ _fScr_CJ		dd	?
 	_dFlushLocalsStackPos	dd	?
 	_dFlushLocalsExBlock	dd	?		;; 01 - normal block (root or if), 02 - loop
 
-_dCallbackList		db	6800h	dup(?)	
+	_dCallbackList		db	6800h	dup(?)	
 
-_bIsExist_BaseOffset			equ	$
-_bIsExist_onInit			db	?
-					db	?	;; is have arg?
-_bIsExist_onUnitAttacked		db	?
-					db	?
-_bIsExist_onUnitDeath			db	?
-					db	?
-_bIsExist_onUnitDecay			db	?
-					db	?
-_bIsExist_onUnitIssuedOrder		db	?
-					db	?
-_bIsExist_onUnitIssuedPointOrder	db	?
-					db	?
-_bIsExist_onUnitIssuedTargetOrder	db	?
-					db	?
-_bIsExist_onHeroLevel			db	?
-					db	?
-_bIsExist_onHeroSkill			db	?
-					db	?
-_bIsExist_onUnitSpellChannel		db	?
-					db	?
-_bIsExist_onUnitSpellCast		db	?
-					db	?
-_bIsExist_onUnitSpellEffect		db	?
-					db	?
-_bIsExist_onUnitSpellFinish		db	?
-					db	?
-_bIsExist_onUnitSpellEndcast		db	?
-					db	?
-_bIsExist_onGameLoad			db	?
-					db	?
-_bIsExist_onGameSave			db	?
-					db	?
-_bIsExist_BaseOffsetEnd			equ	$
+	_bIsExist_BaseOffset			equ	$
+	_bIsExist_onInit			db	?
+						db	?	;; is have arg?
+	_bIsExist_onUnitAttacked		db	?
+						db	?
+	_bIsExist_onUnitDeath			db	?
+						db	?
+	_bIsExist_onUnitDecay			db	?
+						db	?
+	_bIsExist_onUnitIssuedOrder		db	?
+						db	?
+	_bIsExist_onUnitIssuedPointOrder	db	?
+						db	?
+	_bIsExist_onUnitIssuedTargetOrder	db	?
+						db	?
+	_bIsExist_onHeroLevel			db	?
+						db	?
+	_bIsExist_onHeroSkill			db	?
+						db	?
+	_bIsExist_onUnitSpellChannel		db	?
+						db	?
+	_bIsExist_onUnitSpellCast		db	?
+						db	?
+	_bIsExist_onUnitSpellEffect		db	?
+						db	?
+	_bIsExist_onUnitSpellFinish		db	?
+						db	?
+	_bIsExist_onUnitSpellEndcast		db	?
+						db	?
+	_bIsExist_onGameLoad			db	?
+						db	?
+	_bIsExist_onGameSave			db	?
+						db	?
+	_bIsExist_BaseOffsetEnd			equ	$
 
-_bFlushFlagBlock			db	?
+	_bFlushFlagBlock			db	?
+
+_dVJassParserAdd			dd	?
+_bUseMacroPrePorc			db	?
+
+_hTempMacroIn				dd	?
+
+_bMacroPreIsExist			db	?
+
+_xPrcInfo				PROCESS_INFORMATION	<?>
+_xStrInfo				STARTUPINFO		<?>
+
+_dMacroPreMem				dd	?
+_dMacroPrePnt				dd	?	;; next run
+
+_dMacroPreESI				dd	?	;; save esi in #R
 
 ;_bCallbackTempType			db	?
 
@@ -1453,8 +1481,11 @@ inc	edi
 		_lOptCC_FuncGetEnd:
 		inc	esi
 		_lOptCC_FuncGetEndEX:
+cmp	dword ptr [esi],		646e6502h	;; _end
+je	_lOptCC_FuncGetEndOX
 		cmp	dword ptr [esi],		646e650ah	;; _end
 		jne	_lOptCC_FuncGetEnd
+_lOptCC_FuncGetEndOX:
 		cmp	dword ptr [esi+04h],		636e7566h	;; func
 		jne	_lOptCC_FuncGetEnd
 
@@ -1833,6 +1864,449 @@ inc	edi
 	_lMapParseCode:
 
 	;;----------------
+	;; utf 8 bom
+	cmp	word ptr [esi],		0bbefh
+	jne	_next
+	cmp	byte ptr [esi+02h],	0bfh
+	jne	_next
+
+	add	esi,			03h
+
+	_lbl:
+	;;----------------
+
+	;;----------------
+	;; textmacro preprocessing
+	cmp	byte ptr [_bUseMacroPrePorc],	00h
+	je	_lMcrPre_End
+
+	push	esi
+	push	edi
+
+		;;----------------
+		mov	_dCurrStr,			offset _sProg_01_pre
+		mov	eax,				04
+		call	_lSetProg
+		;;----------------
+
+		;;----------------
+		;; create file
+		push	00h
+		push	FILE_ATTRIBUTE_NORMAL
+		push	CREATE_ALWAYS
+		push	00h
+		push	FILE_SHARE_READ + FILE_SHARE_WRITE
+		push	00h
+		push	offset _sTempMacroCJ
+		call	_imp__CreateFileA@28
+
+		cmp	eax,				0ffffffffh
+;; je err
+		push	eax
+		call	_imp__CloseHandle@4
+
+		push	00h
+		push	FILE_ATTRIBUTE_NORMAL
+		push	CREATE_ALWAYS
+		push	00h
+		push	FILE_SHARE_READ + FILE_SHARE_WRITE
+		push	00h
+		push	offset _sTempMacroBJ
+		call	_imp__CreateFileA@28
+
+		cmp	eax,				0ffffffffh
+;; je err
+
+		push	eax
+		call	_imp__CloseHandle@4
+
+		;; in file
+		push	00h
+		push	FILE_ATTRIBUTE_NORMAL
+		push	CREATE_ALWAYS
+		push	00h
+		push	FILE_SHARE_READ + FILE_SHARE_WRITE
+		push	GENERIC_READ + GENERIC_WRITE
+		push	offset _sTempMacroIn
+		call	_imp__CreateFileA@28
+
+		cmp	eax,				0ffffffffh
+;; je err
+		mov	dword ptr [_hTempMacroIn],	eax
+		;;----------------
+
+	jmp	_lMcrPre_Get_LineEx
+
+	_lMcrPre_Get_Line:
+	inc	esi
+	_lMcrPre_Get_LineEx:
+	cmp	byte ptr [esi],			20h
+	je	_lMcrPre_Get_Line
+	cmp	byte ptr [esi],			09h
+	je	_lMcrPre_Get_Line
+
+	cmp	word ptr [esi],			2f2fh	;; //
+	jne	_lMcrPre_Get_NextLine
+	cmp	byte ptr [esi + 02h],		"!"
+	jne	_lMcrPre_Get_Comment
+
+		;;----------------
+		lea	ecx,			[esi + 02h]
+
+		_lMcrPre_Get_Instruct:
+		inc	ecx
+		_lMcrPre_Get_InstructEx:
+		cmp	byte ptr [ecx],		" "
+		je	_lMcrPre_Get_Instruct
+		cmp	byte ptr [ecx],		09h
+		je	_lMcrPre_Get_Instruct
+
+		cmp	dword ptr [ecx],	"txet"
+		jne	_next
+		cmp	dword ptr [ecx + 04h],	"rcam"
+		jne	_next
+		cmp	word ptr [ecx + 08h],	" o"
+		je	_lMcrPre_Get_MacroIn
+		cmp	word ptr [ecx + 08h],	"_o"
+		je	_lMcrPre_Get_MacroIn
+		cmp	word ptr [ecx + 08h],	096fh	;; o tab
+		je	_lMcrPre_Get_MacroIn
+
+		_lbl:
+		cmp	dword ptr [ecx],	"tnur"
+		jne	_lMcrPre_Get_Comment
+		cmp	dword ptr [ecx + 04h],	"mtxe"
+		jne	_lMcrPre_Get_Comment
+		cmp	dword ptr [ecx + 08h],	"orca"
+		jne	_lMcrPre_Get_Comment
+		cmp	byte ptr [ecx + 0ch],	" "
+		jne	_lMcrPre_Get_Comment
+
+			;;----------------
+			;; run macro
+			_lMcrPre_Get_MacroRun:
+			inc	ecx
+cmp	byte ptr [ecx],			00h
+;;
+			cmp	byte ptr [ecx],		0ah
+			jne	_lMcrPre_Get_MacroRun
+			inc	ecx
+
+				;;----------------
+				;; write it
+				mov	byte ptr [_bMacroPreIsExist],	01h
+
+				mov	ebx,			ecx
+				sub	ebx,			esi
+				mov	edi,			esi
+				mov	ebp,			ecx
+
+				push	00h
+				push	offset _dBuffer
+				push	ebx
+				push	esi
+				push	dword ptr [_hTempMacroIn]
+				call	_imp__WriteFile@20
+
+				push	00h
+				push	offset _dBuffer
+				push	_sEndMacroExStrSize
+				push	offset _sEndMacroExStr
+				push	dword ptr [_hTempMacroIn]
+				call	_imp__WriteFile@20
+
+				mov	word ptr [edi],		5201h	;; #R
+				inc	edi
+				_lMcrPre_Get_MacroRunClean:
+				inc	edi
+				cmp	byte ptr [edi],		0ah
+				je	_lMcrPre_Get_MacroRunCleanEnd
+				mov	byte ptr [edi],		" "
+				jmp	_lMcrPre_Get_MacroRunClean
+				_lMcrPre_Get_MacroRunCleanEnd:
+				mov	byte ptr [edi],		" "
+
+				mov	esi,			ebp
+
+				jmp	_lMcrPre_Get_LineEx
+				;;----------------
+			;;----------------
+
+			;;----------------
+			;; declare macro
+			_lMcrPre_Get_MacroIn:
+			mov	ebx,			esi
+
+			_lMcrPre_Get_MacroIn_NextChar:
+			inc	ebx
+			_lMcrPre_Get_MacroIn_NextCharEx:
+cmp	byte ptr [ebx],				00h
+;; err
+			cmp	word ptr [ebx],		2f2fh
+			je	_lMcrPre_Get_MacroIn_SkipLine
+
+			cmp	byte ptr [ebx],		22h
+			jne	_lMcrPre_Get_MacroIn_NextCharFx
+			push	ebx
+			call	_lSkipStr
+			mov	ebx,			eax
+			jmp	_lMcrPre_Get_MacroIn_NextCharEx
+
+			_lMcrPre_Get_MacroIn_NextCharFx:
+			cmp	word ptr [ebx],		"*/"
+			jne	_lMcrPre_Get_MacroIn_NextCharLN
+			push	ebx
+			call	_lSkipComment
+			mov	ebx,			eax
+			jmp	_lMcrPre_Get_MacroIn_NextCharEx
+
+			_lMcrPre_Get_MacroIn_NextCharLN:
+			cmp	byte ptr [ebx],			0ah
+			jne	_lMcrPre_Get_MacroIn_NextChar
+			jmp	_lMcrPre_Get_MacroIn_LineEx
+
+			_lMcrPre_Get_MacroIn_SkipLine:
+			inc	ebx
+cmp	byte ptr [ebx],			00h
+;;
+			cmp	byte ptr [ebx],			0ah
+			jne	_lMcrPre_Get_MacroIn_SkipLine
+			jmp	_lMcrPre_Get_MacroIn_Line
+
+			_lMcrPre_Get_MacroIn_LineEx:
+			inc	ebx
+			_lMcrPre_Get_MacroIn_Line:
+			cmp	byte ptr [ebx],			" "
+			je	_lMcrPre_Get_MacroIn_LineEx
+			cmp	byte ptr [ebx],			09h
+			je	_lMcrPre_Get_MacroIn_LineEx
+			cmp	word ptr [ebx],			2f2fh
+			jne	_lMcrPre_Get_MacroIn_NextCharEx
+			cmp	byte ptr [ebx + 02h],		"!"
+			jne	_lMcrPre_Get_MacroIn_NextCharEx
+
+			lea	ebp,				[ebx + 02h]
+			_lMcrPre_Get_MacroIn_EndMacro:
+			inc	ebp
+			cmp	byte ptr [ebp],			" "
+			je	_lMcrPre_Get_MacroIn_EndMacro
+			cmp	byte ptr [ebp],			09h
+			je	_lMcrPre_Get_MacroIn_EndMacro
+			cmp	dword ptr [ebp],		"tdne"
+			jne	_lMcrPre_Get_MacroIn_NextChar
+			cmp	dword ptr [ebp + 04h],		"mtxe"
+			jne	_lMcrPre_Get_MacroIn_NextChar
+			cmp	dword ptr [ebp + 08h],		"orca"
+			jne	_lMcrPre_Get_MacroIn_NextChar
+			cmp	byte ptr [ebp + 0ch],		20h
+			ja	_lMcrPre_Get_MacroIn_NextChar
+
+			_lMcrPre_Get_MacroIn_EndMacroEx:
+			inc	ebp
+cmp	byte ptr [ebp],			00h
+;;
+			cmp	byte ptr [ebp],			0ah
+			jne	_lMcrPre_Get_MacroIn_EndMacroEx
+			inc	ebp
+
+				;;----------------
+				;; write it
+				mov	edi,				esi
+				mov	ebx,				ebp
+				sub	ebp,				esi
+
+				push	00h
+				push	offset _dBuffer
+				push	ebp
+				push	esi
+				push	dword ptr [_hTempMacroIn]
+				call	_imp__WriteFile@20
+
+				mov	al,				" "
+				mov	ecx,				ebp
+				mov	esi,				ebx
+				rep	stosb				
+
+				jmp	_lMcrPre_Get_LineEx
+				;;----------------
+			;;----------------
+		;;----------------
+
+		;;----------------
+		_lMcrPre_Get_Comment:
+		inc	esi
+cmp	byte ptr [esi],			00h
+;;
+		cmp	byte ptr [esi],			0ah
+		jne	_lMcrPre_Get_Comment
+		jmp	_lMcrPre_Get_LineEx
+
+		_lMcrPre_Get_NextLineEx:
+		inc	esi
+		_lMcrPre_Get_NextLine:
+		cmp	byte ptr [esi],			00h
+		je	_lMcrPre_EndEx
+
+		cmp	word ptr [esi],			2f2fh	;; //
+		je	_lMcrPre_Get_Comment
+
+		cmp	byte ptr [esi],			22h
+		jne	_lMcrPre_Get_NextLineFx
+		push	esi
+		call	_lSkipStr
+		mov	esi,				eax
+		jmp	_lMcrPre_Get_NextLine
+
+		_lMcrPre_Get_NextLineFx:
+		cmp	word ptr [esi],			"*/"
+		jne	_lMcrPre_Get_NextLineOx
+		push	esi
+		call	_lSkipComment
+		mov	esi,				eax
+		jmp	_lMcrPre_Get_NextLine
+
+		_lMcrPre_Get_NextLineOx:
+		cmp	byte ptr [esi],			0ah	;; nl
+		je	_lMcrPre_Get_Line
+
+		jmp	_lMcrPre_Get_NextLineEx
+		;;----------------
+
+		;;----------------
+		;; skip ex comment /* */
+		_lSkipComment:
+		mov	ecx,			dword ptr [esp + 04h]
+		xor	edx,			edx
+
+		_lSkipComment_Next:
+		inc	ecx
+		_lSkipComment_NextEx:
+cmp	byte ptr [ecx],			00h
+;;
+
+		cmp	byte ptr [ecx],		22h
+		jne	_lSkipComment_NextFx
+		push	ecx
+		call	_lSkipStr
+		mov	ecx,			eax
+		jmp	_lSkipComment_NextEx
+
+		_lSkipComment_NextFx:
+		cmp	word ptr [ecx],		"*/"
+		je	_lSkipComment_NextDx
+		cmp	word ptr [ecx],		"/*"
+		jne	_lSkipComment_Next
+
+		dec	edx
+		jns	_lSkipComment_Next
+
+		lea	eax,			[ecx + 02h]
+		retn	04h
+
+
+		_lSkipComment_NextDx:
+		inc	edx
+		jmp	_lSkipComment_Next
+		;;----------------
+
+		;;----------------
+		;; skip line proc (addr)
+		_lSkipStr:
+		mov	eax,			dword ptr [esp + 04h]
+
+		_lMcrPre_Get_String:
+		inc	eax
+		_lMcrPre_Get_StringEx:
+		cmp	byte ptr [eax],			5ch	;; \ 
+		jne	_lMcrPre_Get_String_Next
+		add	eax,				02h
+		jmp	_lMcrPre_Get_StringEx
+		_lMcrPre_Get_String_Next:
+cmp	byte ptr [eax],			00h
+;;
+		cmp	byte ptr [eax],			22h
+		jne	_lMcrPre_Get_String
+
+		inc	eax
+
+		retn	04h
+		;;----------------
+
+	_lMcrPre_EndEx:
+	cmp	byte ptr [_bMacroPreIsExist],	00h
+	je	_lMcrPre_EndNoRun
+
+	push	dword ptr [_hTempMacroIn]
+	call	_imp__CloseHandle@4
+
+	mov	dword ptr [_xStrInfo.cb],	sizeof STARTUPINFO
+	push	offset _xPrcInfo
+	push	offset _xStrInfo
+	push	00h
+	push	00h
+	push	00h
+	push	00h
+	push	00h
+	push	00h
+	push	offset _sVXPreProcCmdLine
+	push	dword ptr [_dVJassParserAdd]
+	call	_imp__CreateProcessA@40
+
+	test	eax,				eax
+;; jz err
+
+	push	0ffffffffh
+	push	dword ptr [_xPrcInfo.hProcess]
+	call	_imp__WaitForSingleObject@8
+
+		;;----------------
+		;; get parsed file
+		push	00h
+		push	FILE_ATTRIBUTE_NORMAL
+		push	OPEN_EXISTING
+		push	00h
+		push	FILE_SHARE_READ
+		push	GENERIC_READ
+		push	offset _sTempMacroOut
+		call	_imp__CreateFileA@28
+
+		cmp	eax,			0ffffffffh
+;; je err cant read parsed file
+
+		mov	ebx,			eax	;; ebx - file
+
+		push	00h
+		push	ebx
+		call	_imp__GetFileSize@8
+
+		mov	esi,			eax	;; esi - size
+
+		push	eax
+		push	GPTR
+		call	_imp__GlobalAlloc@8
+
+		mov	dword ptr [_dMacroPreMem],	eax	;; mem addr
+		mov	dword ptr [_dMacroPrePnt],	eax	;; mem addr
+
+		push	00h
+		push	offset _dBuffer
+		push	esi
+		push	eax
+		push	ebx
+		call	_imp__ReadFile@20
+
+		push	ebx
+		call	_imp__CloseHandle@4
+		;;----------------
+
+	_lMcrPre_EndNoRun:
+	pop	edi
+	pop	esi
+
+	_lMcrPre_End:
+	;;----------------
+
+	;;----------------
 	mov	_dCurrStr,			offset _sProg_01
 	mov	eax,				10h
 	call	_lSetProg
@@ -1849,17 +2323,7 @@ mov	dword ptr [_sCstPlugPath + 04h],	5c736e69h	;; \sni
 mov	dword ptr [_sCstMapPath],		offset _sMapPathSX
 ;;----------------
 
-		;;----------------
-		;; utf 8 bom
-		cmp	word ptr [esi],		0bbefh
-		jne	_lCrStr
-		cmp	byte ptr [esi+02h],	0bfh
-		jne	_lCrStr
-
-		add	esi,			03h
-		;;----------------
-
-	_lCrStr:
+;	_lCrStr:
 	push	00h					;; for safe
 	mov	_dStackPos,			esp	;; save stack
 	mov	dword ptr [_dErrorCodeStart],	edi	;; for syntax error
@@ -1917,6 +2381,40 @@ mov	dword ptr [_sCstMapPath],		offset _sMapPathSX
 		inc	esi
 		jmp	_lCRScanLineSx
 		;;----------------
+
+;;----------------
+;; macro pre out
+_lbl:
+cmp	eax,				"rpjc"
+jne	_next
+cmp	dword ptr [esi + 04h],		"orpe"
+jne	_next
+cmp	dword ptr [esi + 08h],		"dnec"
+jne	_next
+
+push	edi
+push	esi
+
+mov	ecx,				_sEndMacroExStrSize
+mov	edi,				offset _sEndMacroExStr
+
+repe	cmpsb
+
+test	ecx,				ecx
+jnz	_lMacroPreOut_Fail
+
+mov	dword ptr [_dMacroPrePnt],	esi
+mov	esi,				dword ptr [_dMacroPreESI]
+
+add	esp,				04h
+pop	edi
+
+jmp	_lCRScanLine
+
+_lMacroPreOut_Fail:
+pop	esi
+pop	edi
+;;----------------
 
 		;;----------------
 		;; define test
@@ -2812,6 +3310,14 @@ jmp	_lCRScanLine
 		cmp	byte ptr [esi+03h],	20h
 		jbe	_lCRFXSyn
 
+_lbl:
+cmp	eax,			"jcon"
+jne	_next
+cmp	word ptr [esi + 03h],	"ssaj"
+jne	_next
+cmp	byte ptr [esi + 07h],	20h
+jbe	_lCRFXSyn
+
 		_lbl:
 		cmp	ax,			6f62h		;; bo
 		jne	_next
@@ -2819,6 +3325,7 @@ jmp	_lCRScanLine
 		jne	_next
 		cmp	byte ptr [esi+03h],	20h
 		jg	_next
+
 
 		_lCRFXSyn:
 		mov	eax,			dword ptr [_dSynDesc]
@@ -2842,11 +3349,22 @@ jmp	_lCRScanLine
 
 		_lCREndFXSynEX:
 		cmp	dword ptr [esi],	"ldne"
-		jne	_lCREndFXSynFX
+		jne	_lCREndFXSynRX
 		cmp	word ptr [esi+04h],	"au"
-		jne	_lCREndFXSynFX
+		jne	_lCREndFXSynRX
 		cmp	byte ptr [esi+06h],	20h		;; bs
 		jb	_lCREndFXSynDX
+
+_lCREndFXSynRX:
+cmp	dword ptr [esi],		"ndne"
+jne	_lCREndFXSynFX
+cmp	dword ptr [esi + 04h],		"ajco"
+jne	_lCREndFXSynFX
+cmp	word ptr [esi + 08h],		"ss"
+jne	_lCREndFXSynFX
+cmp	byte ptr [esi + 0ah],		" "		;; bs
+jb	_lCREndFXSynDX
+
 
 		_lCREndFXSynFX:
 		cmp	dword ptr [esi],	62646e65h	;; endb
@@ -3129,7 +3647,9 @@ jmp	_lCRScanLine
 		add	ebx,			_lBSRemBase
 		jmp	ebx
 
-		_lCRBSNext:	;; test next chaqr
+		_lCRBSNext:	;; test next char
+cmp	word ptr [esi + 01h],		"*/"
+je	_lCRBSAdd	
 		xor	ebx,			ebx
 		mov	bl,			ah
 		mov	bl,			byte ptr [_bAscii_02+ebx]
@@ -3172,6 +3692,19 @@ jmp	_lCRScanLine
 		add	edi,			02h
 		jmp	_lCRScan
 		;;----------------
+
+;;----------------
+;; #R - macro pre in
+_lbl:
+cmp	ax,			5201h	;; #R
+jne	_next
+
+add	esi,				02h
+mov	dword ptr [_dMacroPreESI],	esi
+mov	esi,				dword ptr [_dMacroPrePnt]
+
+jmp	_lCRScanLine
+;;----------------
 
 		;;----------------
 		;; new line
@@ -3483,6 +4016,13 @@ je	_lCRScanLine
 		dec	edx
 		jnz	_lCRCommNextEx
 		add	esi,			02h
+cmp	byte ptr [edi - 01h],		" "
+jne	_lCRScan
+mov	dl,				byte ptr [esi]
+cmp	byte ptr [_bAscii_00+edx],	dh	;; bh = 00h
+jne	_lCRScan
+dec	edi
+mov	byte ptr [edi],			00h
 		jmp	_lCRScan
 
 			;;----------------
@@ -6162,7 +6702,7 @@ mov	esi,				dword ptr [esi + 06h]
 jmp	_lXFP_1b_End
 
 _lXFP_1b_Check_00:
-cmp	al,				byte ptr [ebx]
+cmp	al,				byte ptr [edx]
 jne	_lXFP_1b_Check_GetNext
 inc	edx
 inc	ebx
@@ -14710,12 +15250,56 @@ mov	byte ptr [edi],			00h
 	
 	_lCLScanStart:
 	inc	ebx
+	_lCLScanStartEx:
 	cmp	byte ptr [ebx],		00h
 	je	_lCLAbout
 	cmp	byte ptr [ebx],		2fh
 	jne	_lCLScanStart
 
 	mov	ebp,			offset _lOpenMapCode	;; file or map?
+
+;;----------------
+;; textmacros preprocessor
+cmp	dword ptr [ebx],		"cmt/"
+jne	_lCLScanVerGH
+cmp	dword ptr [ebx + 04h],		"erpr"
+jne	_lCLScanVerGH
+cmp	byte ptr [ebx + 08h],		"="
+jne	_lCLScanVerGH
+
+mov	byte ptr [_bUseMacroPrePorc],	01h
+
+cmp	byte ptr [ebx + 09h],		22h
+je	_lMacroPreProcEx
+
+add	ebx,				09h
+mov	dword ptr [_dVJassParserAdd],	ebx
+
+_lMacroPreProcSkip:
+inc	ebx
+cmp	byte ptr [ebx],			00h
+je	_lCLScanStartEx
+cmp	byte ptr [ebx],			" "
+jne	_lMacroPreProcSkip
+mov	byte ptr [ebx],			00h
+jmp	_lCLScanStart
+
+_lMacroPreProcEx:
+add	ebx,				0ah
+mov	dword ptr [_dVJassParserAdd],	ebx
+
+_lMacroPreProcSkipEx:
+inc	ebx
+cmp	byte ptr [ebx],			00h
+je	_lCLScanStartEx
+cmp	byte ptr [ebx],			22h
+jne	_lMacroPreProcSkipEx
+mov	byte ptr [ebx],			00h
+cmp	byte ptr [ebx + 01h],		" "
+jne	_lCLScanStart
+inc	ebx
+jmp	_lCLScanStart
+;;----------------
 
 		;;----------------
 		;; do not remove unused code
