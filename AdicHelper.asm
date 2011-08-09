@@ -9682,6 +9682,7 @@ call	_lCheckInFuncVars
 		cmp	byte ptr [esi],			22h
 		jne	_lCopyCode_String
 
+		movsb
 		jmp	_lCopyCode_Word
 		;;----------------
 
@@ -14511,7 +14512,8 @@ rep	movsb
 				jmp	_lCallbackReg_AddFunc_GetArgedCopyArg
 
 				_lCallbackReg_AddFunc_GetArgedCopyArg_Str:
-				lodsb
+				stosb
+;; lodsb???
 				_lCallbackReg_AddFunc_GetArgedCopyArg_StrEx:
 				cmp	byte ptr [esi],		22h
 				je	_lCallbackReg_AddFunc_GetArgedCopyArg_Str_00
