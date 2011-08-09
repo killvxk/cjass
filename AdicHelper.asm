@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 1.4.2.27
+;;	v 1.4.2.28
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -103,8 +103,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.27", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.27", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.28", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.28", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -8428,13 +8428,13 @@ inc	edi
 			mov	dword ptr [_dFCL],			offset _bFuncCodeLocals
 			mov	dword ptr [_dFCB],			offset _bFuncCodeBase
 
-mov	dword ptr [_dInFuncBlockMax],		00h
-mov	dword ptr [_dInFuncBlockStack],		00h
-mov	dword ptr [_dInFuncBlockPnt],		offset _dInFuncBlockStack + 04h
+			mov	dword ptr [_dInFuncBlockMax],		00h
+			mov	dword ptr [_dInFuncBlockStack],		00h
+			mov	dword ptr [_dInFuncBlockPnt],		offset _dInFuncBlockStack + 04h
 
-mov	byte ptr [_bFuncCodeNop],		00h
+			mov	byte ptr [_bFuncCodeNop],		00h
 
-mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
+			mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 
 			jmp	_lFNPLine
 			;;----------------
@@ -8553,36 +8553,36 @@ mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 		cmp	word ptr [esi+08h],	" t"
 		je	_lFNPCopy
 
-_lbl:
-cmp	eax,			"olbv"
-jne	_next
-cmp	word ptr [esi + 04h],	"kc"
-jne	_next
-cmp	byte ptr [esi + 06h],	20h
-jg	_next
-call	_lInFuncBlockIn
-call	_lFNPCheckBlock
-mov	byte ptr [_bInVblock],	01h
-test	eax,			eax
-jz	_lFNPCopyParse
-mov	dword ptr [eax],	"vdne"
-mov	dword ptr [eax + 04h],	"colb"
-mov	byte ptr [eax + 08h],	"k"
-jmp	_lFNPCopyParse
+		_lbl:
+		cmp	eax,			"olbv"
+		jne	_next
+		cmp	word ptr [esi + 04h],	"kc"
+		jne	_next
+		cmp	byte ptr [esi + 06h],	20h
+		jg	_next
+		call	_lInFuncBlockIn
+		call	_lFNPCheckBlock
+		mov	byte ptr [_bInVblock],	01h
+		test	eax,			eax
+		jz	_lFNPCopyParse
+		mov	dword ptr [eax],	"vdne"
+		mov	dword ptr [eax + 04h],	"colb"
+		mov	byte ptr [eax + 08h],	"k"
+		jmp	_lFNPCopyParse
 
-_lbl:
-cmp	eax,			"vdne"
-jne	_next
-cmp	dword ptr [esi + 04h],	"colb"
-jne	_next
-cmp	byte ptr [esi + 08h],	"k"
-jne	_next
-cmp	byte ptr [esi + 09h],	20h
-jg	_next
-call	_lInFuncBlockOut
-call	_lInFuncBlockOutVars
-mov	byte ptr [_bInVblock],	00h
-jmp	_lFNPCopyParse
+		_lbl:
+		cmp	eax,			"vdne"
+		jne	_next
+		cmp	dword ptr [esi + 04h],	"colb"
+		jne	_next
+		cmp	byte ptr [esi + 08h],	"k"
+		jne	_next
+		cmp	byte ptr [esi + 09h],	20h
+		jg	_next
+		call	_lInFuncBlockOut
+		call	_lInFuncBlockOutVars
+		mov	byte ptr [_bInVblock],	00h
+		jmp	_lFNPCopyParse
 
 		_lbl:
 		cmp	eax,			61636f6ch	;; loca
@@ -8607,7 +8607,7 @@ jmp	_lFNPCopyParse
 			cmp	byte ptr [esi+02h],	2eh		;; _ ;; !!!!
 			jg	_next
 
-call	_lInFuncBlockIn
+			call	_lInFuncBlockIn
 
 			movsw
 			mov	dword ptr [edi],	20202020h	;; bs
@@ -8624,17 +8624,17 @@ call	_lInFuncBlockIn
 			jne	_next
 			cmp	word ptr [esi+04h],	0a0dh		;; new line
 			jne	_lFNPIfUX
-call	_lInFuncBlockOut
-call	_lInFuncBlockOutVars
-call	_lInFuncBlockIn
+			call	_lInFuncBlockOut
+			call	_lInFuncBlockOutVars
+			call	_lInFuncBlockIn
 			jmp	_lFNPCopyParse
 			_lFNPIfUX:
 			cmp	word ptr [esi+04h],	7801h		;; #x
 			jne	_lFNPIfEX
 
-call	_lInFuncBlockOut
-call	_lInFuncBlockOutVars
-call	_lInFuncBlockIn
+			call	_lInFuncBlockOut
+			call	_lInFuncBlockOutVars
+			call	_lInFuncBlockIn
 
 			mov	ecx,			dword ptr [esi+06h]
 			mov	dword ptr [esi+04h],	06060606h
@@ -8652,9 +8652,9 @@ call	_lInFuncBlockIn
 			cmp	byte ptr [esi+06h],	2eh		;; _ ;; !!!!
 			jg	_next
 
-call	_lInFuncBlockOut
-call	_lInFuncBlockOutVars
-call	_lInFuncBlockIn
+			call	_lInFuncBlockOut
+			call	_lInFuncBlockOutVars
+			call	_lInFuncBlockIn
 
 			_FNPIf:
 			mov	eax,			esi
@@ -8725,8 +8725,8 @@ je	_lFNPIfBlockNull
 			jne	_next
 			cmp	byte ptr [esi+05h],	20h		;; _
 
-call	_lInFuncBlockOut
-call	_lInFuncBlockOutVars
+			call	_lInFuncBlockOut
+			call	_lInFuncBlockOutVars
 			jbe	_lFNPCopyParse
 			;;----------------
 
@@ -8737,7 +8737,7 @@ call	_lInFuncBlockOutVars
 			jne	_next
 			cmp	byte ptr [esi+04h],	20h		;; _
 			jg	_next
-call	_lInFuncBlockIn
+			call	_lInFuncBlockIn
 			call	_lFNPCheckBlock
 			test	eax,			eax
 			jz	_lFNPCopyParse
@@ -8754,10 +8754,9 @@ call	_lInFuncBlockIn
 			jne	_next
 			cmp	byte ptr [esi+07h],	20h		;; _
 			jg	_next
-call	_lInFuncBlockOut
-call	_lInFuncBlockOutVars
+			call	_lInFuncBlockOut
+			call	_lInFuncBlockOutVars
 			jmp	_lFNPCopyParse
-;;			jbe	_lFNPCopyParse
 
 			_lbl:
 			cmp	eax,			74697865h	;; exit
@@ -8787,7 +8786,7 @@ call	_lInFuncBlockOutVars
 				jne	_next
 				cmp	byte ptr [esi+08h],	2dh		;; _ ;; !!!!
 				jg	_next
-call	_lInFuncBlockIn
+				call	_lInFuncBlockIn
 				call	_lFNPCheckBlock
 				add	esi,			08h
 				test	eax,			eax
@@ -8827,8 +8826,8 @@ call	_lInFuncBlockIn
 				mov	dword ptr [edi],	6c646e65h	;; endl
 				mov	dword ptr [edi+04h],	00706f6fh	;; oop_
 				add	edi,			07h
-call	_lInFuncBlockOut
-call	_lInFuncBlockOutVars
+				call	_lInFuncBlockOut
+				call	_lInFuncBlockOutVars
 				jmp	_lFNPCopyParse
 				;;----------------
 
@@ -8840,7 +8839,7 @@ call	_lInFuncBlockOutVars
 				cmp	byte ptr [esi+02h],	21h
 				jg	_next
 
-call	_lInFuncBlockIn
+				call	_lInFuncBlockIn
 
 				mov	dword ptr [edi],	706f6f6ch	;; loop
 				mov	word ptr [edi+04h],	0a0dh		;; new line
@@ -8889,8 +8888,8 @@ call	_lInFuncBlockIn
 				cmp	byte ptr [esi+0eh],	2dh		;; _ ;; !!!!
 				jg	_next
 
-call	_lInFuncBlockOut
-call	_lInFuncBlockOutVars
+				call	_lInFuncBlockOut
+				call	_lInFuncBlockOutVars
 
 				mov	dword ptr [esi],	74697865h	;; exit
 				mov	dword ptr [esi+04h],	6e656877h	;; when
@@ -8906,8 +8905,8 @@ call	_lInFuncBlockOutVars
 			_lbl:
 			cmp	ax,			6601h		;; #f
 			jne	_next
-call	_lInFuncBlockOut
-call	_lInFuncBlockOutVars
+			call	_lInFuncBlockOut
+			call	_lInFuncBlockOutVars
 			add	esi,			02h
 			mov	dword ptr [edi],	6e650a0dh	;; nl en
 			mov	dword ptr [edi+04h],	6f6f6c64h	;; dloo
@@ -8934,165 +8933,165 @@ call	_lInFuncBlockOutVars
 	
 		jmp	_lFNPCopyParse
 
-;;----------------
-;; in func block in
-_lInFuncBlockIn:
-push	eax
-push	ebx
+			;;----------------
+			;; in func block in
+			_lInFuncBlockIn:
+			push	eax
+			push	ebx
 
-mov	eax,				dword ptr [_dInFuncBlockMax]
-inc	eax
-mov	ebx,				dword ptr [_dInFuncBlockPnt]
-mov	dword ptr [_dInFuncBlockMax],	eax
-mov	dword ptr [ebx],		eax
-add	ebx,				04h
-mov	dword ptr [_dInFuncBlockPnt],	ebx
+			mov	eax,				dword ptr [_dInFuncBlockMax]
+			inc	eax
+			mov	ebx,				dword ptr [_dInFuncBlockPnt]
+			mov	dword ptr [_dInFuncBlockMax],	eax
+			mov	dword ptr [ebx],		eax
+			add	ebx,				04h
+			mov	dword ptr [_dInFuncBlockPnt],	ebx
 
-pop	ebx
-pop	eax
+			pop	ebx
+			pop	eax
 
-retn
-;;----------------
+			retn
+			;;----------------
 
-;;----------------
-;;in func block out
-_lInFuncBlockOut:
-push	eax
-push	ebx
+			;;----------------
+			;;in func block out
+			_lInFuncBlockOut:
+			push	eax
+			push	ebx
 
-mov	ebx,				dword ptr [_dInFuncBlockPnt]
-mov	eax,				dword ptr [ebx]	;; eax - outed block id
-sub	ebx,				04h
-mov	dword ptr [_dInFuncBlockPnt],	ebx
+			mov	ebx,				dword ptr [_dInFuncBlockPnt]
+			mov	eax,				dword ptr [ebx]	;; eax - outed block id
+			sub	ebx,				04h
+			mov	dword ptr [_dInFuncBlockPnt],	ebx
 
-pop	ebx
-pop	eax
+			pop	ebx
+			pop	eax
 
-retn
-;;----------------
+			retn
+			;;----------------
 
-;;----------------
-;; in func block out - process variables
-_lInFuncBlockOutVars:
-push	ecx
-push	eax
+			;;----------------
+			;; in func block out - process variables
+			_lInFuncBlockOutVars:
+			push	ecx
+			push	eax
 
-mov	eax,				dword ptr [_dInFuncBlockPnt]
-mov	ecx,				offset _bFuncCodeLocals
-;mov	eax,				dword ptr [eax - 04h]
-mov	eax,				dword ptr [eax]
+			mov	eax,				dword ptr [_dInFuncBlockPnt]
+			mov	ecx,				offset _bFuncCodeLocals
+			;mov	eax,				dword ptr [eax - 04h]
+			mov	eax,				dword ptr [eax]
 
-_lInFuncBlockOut_CheckVars:
-cmp	ecx,				dword ptr [_dFCL]
-jge	_lInFuncBlockOut_CheckVarsEnd
+			_lInFuncBlockOut_CheckVars:
+			cmp	ecx,				dword ptr [_dFCL]
+			jge	_lInFuncBlockOut_CheckVarsEnd
 
-cmp	word ptr [ecx],			4d23h		;; #M
-jne	_lInFuncBlockOut_CheckVarsGetNext
+			cmp	word ptr [ecx],			4d23h		;; #M
+			jne	_lInFuncBlockOut_CheckVarsGetNext
 
-cmp	dword ptr [ecx + 03h],		eax
-jne	_lInFuncBlockOut_CheckVarsGetNext
+			cmp	dword ptr [ecx + 03h],		eax
+			jne	_lInFuncBlockOut_CheckVarsGetNext
 
-	;;----------------
-	;; undef it
+				;;----------------
+				;; undef it
 
-	mov	byte ptr [ecx + 02h],		00h
-;	mov	word ptr [edi],			"O#"
-;	add	edi,				02h
-;
-;	add	ecx,				0dh
-;	xor	ebx,				ebx
-;
-;	_lInFuncBlockOut_UndefGetName:
-;	inc	ecx
-;	cmp	byte ptr [ecx - 01h],		" "
-;	jne	_lInFuncBlockOut_UndefGetName
-;
-;	cmp	dword ptr [ecx],		"arra"
-;	jne	_lInFuncBlockOut_Undef
-;	cmp	word ptr [ecx + 04h],		" y"
-;	jne	_lInFuncBlockOut_Undef
-;	add	ecx,				06h
-;
-;	_lInFuncBlockOut_Undef:
-;	mov	bl,				byte ptr [ecx]
-;	cmp	[_bAscii_00 + ebx],		bh
-;	je	_lInFuncBlockOut_UndefEnd
-;	mov	byte ptr [edi],			bl
-;	inc	ecx
-;	inc	edi
-;	jmp	_lInFuncBlockOut_Undef
-;
-;	_lInFuncBlockOut_UndefEnd:
-;	mov	word ptr [edi],			0a0dh
-;	add	edi,				02h
-	;;----------------
+				mov	byte ptr [ecx + 02h],		00h
+			;	mov	word ptr [edi],			"O#"
+			;	add	edi,				02h
+			;
+			;	add	ecx,				0dh
+			;	xor	ebx,				ebx
+			;
+			;	_lInFuncBlockOut_UndefGetName:
+			;	inc	ecx
+			;	cmp	byte ptr [ecx - 01h],		" "
+			;	jne	_lInFuncBlockOut_UndefGetName
+			;
+			;	cmp	dword ptr [ecx],		"arra"
+			;	jne	_lInFuncBlockOut_Undef
+			;	cmp	word ptr [ecx + 04h],		" y"
+			;	jne	_lInFuncBlockOut_Undef
+			;	add	ecx,				06h
+			;
+			;	_lInFuncBlockOut_Undef:
+			;	mov	bl,				byte ptr [ecx]
+			;	cmp	[_bAscii_00 + ebx],		bh
+			;	je	_lInFuncBlockOut_UndefEnd
+			;	mov	byte ptr [edi],			bl
+			;	inc	ecx
+			;	inc	edi
+			;	jmp	_lInFuncBlockOut_Undef
+			;
+			;	_lInFuncBlockOut_UndefEnd:
+			;	mov	word ptr [edi],			0a0dh
+			;	add	edi,				02h
+				;;----------------
 
-_lInFuncBlockOut_CheckVarsGetNext:
-inc	ecx
-cmp	word ptr [ecx - 02h],		0a0dh
-jne	_lInFuncBlockOut_CheckVarsGetNext
-jmp	_lInFuncBlockOut_CheckVars
+			_lInFuncBlockOut_CheckVarsGetNext:
+			inc	ecx
+			cmp	word ptr [ecx - 02h],		0a0dh
+			jne	_lInFuncBlockOut_CheckVarsGetNext
+			jmp	_lInFuncBlockOut_CheckVars
 
-_lInFuncBlockOut_CheckVarsEnd:
-pop	eax
-pop	ecx
+			_lInFuncBlockOut_CheckVarsEnd:
+			pop	eax
+			pop	ecx
 
-retn
-;;----------------
+			retn
+			;;----------------
 
-;;----------------
-_lInFuncBlockOutVarsEx:
-mov	eax,				dword ptr [_dInFuncBlockPnt]
-pop	ecx
-mov	eax,				dword ptr [eax]
+			;;----------------
+			_lInFuncBlockOutVarsEx:
+			mov	eax,				dword ptr [_dInFuncBlockPnt]
+			pop	ecx
+			mov	eax,				dword ptr [eax]
 
-_lInFuncBlockOutVarsEx_Start:
-cmp	dword ptr [esp],		00h
-je	_lInFuncBlockOutVarsEx_End
+			_lInFuncBlockOutVarsEx_Start:
+			cmp	dword ptr [esp],		00h
+			je	_lInFuncBlockOutVarsEx_End
 
-cmp	dword ptr [esp + 08h],		eax
-jb	_lInFuncBlockOutVarsEx_End
+			cmp	dword ptr [esp + 08h],		eax
+			jb	_lInFuncBlockOutVarsEx_End
 
-	;;----------------
-	;; generated groups
-	mov	ebx,				dword ptr [esp + 04h]
-	cmp	dword ptr [ebx],		"rgjc"
-	jne	_lInFuncBlockOutVarsEx_Clean
-	cmp	dword ptr [ebx + 04h],		"_ngf"
-	jne	_lInFuncBlockOutVarsEx_Clean
+				;;----------------
+				;; generated groups
+				mov	ebx,				dword ptr [esp + 04h]
+				cmp	dword ptr [ebx],		"rgjc"
+				jne	_lInFuncBlockOutVarsEx_Clean
+				cmp	dword ptr [ebx + 04h],		"_ngf"
+				jne	_lInFuncBlockOutVarsEx_Clean
 
-	mov	edx,				dword ptr [_dFreeForGroupPnt]
-	add	edx,				04h
-	mov	dword ptr [edx],		ebx
-	mov	dword ptr [_dFreeForGroupPnt],	edx
-	;;----------------
+				mov	edx,				dword ptr [_dFreeForGroupPnt]
+				add	edx,				04h
+				mov	dword ptr [edx],		ebx
+				mov	dword ptr [_dFreeForGroupPnt],	edx
+				;;----------------
 
-_lInFuncBlockOutVarsEx_Clean:
-add	esp,				0ch
-jmp	_lInFuncBlockOutVarsEx_Start
+			_lInFuncBlockOutVarsEx_Clean:
+			add	esp,				0ch
+			jmp	_lInFuncBlockOutVarsEx_Start
 
-_lInFuncBlockOutVarsEx_End:
-jmp	ecx
-;;----------------
+			_lInFuncBlockOutVarsEx_End:
+			jmp	ecx
+			;;----------------
 
-;;----------------
-;; auto flush locals
-_lbl:
-cmp	eax,			"sulf"
-jne	_next
-cmp	dword ptr [esi+04h],	"ol h"
-jne	_next
-cmp	dword ptr [esi+08h],	"slac"
-jne	_next
-cmp	word ptr [esi+0ch],	0a0dh	;; nl
-jne	_next
+			;;----------------
+			;; auto flush locals
+			_lbl:
+			cmp	eax,			"sulf"
+			jne	_next
+			cmp	dword ptr [esi+04h],	"ol h"
+			jne	_next
+			cmp	dword ptr [esi+08h],	"slac"
+			jne	_next
+			cmp	word ptr [esi+0ch],	0a0dh	;; nl
+			jne	_next
 
-;;add	esi,			0ch
+			;;add	esi,			0ch
 
-jmp	_lFNPCopyParse
+			jmp	_lFNPCopyParse
 
-;;jmp	_lFNPCopyParseNext	;; eax mast be null!
-;;----------------
+			;;jmp	_lFNPCopyParseNext	;; eax mast be null!
+			;;----------------
 
 			;;----------------
 			;; ++ -- pre
@@ -9126,29 +9125,29 @@ jmp	_lFNPCopyParse
 			je	_lFNPIDPreX
 			;;----------------
 
-_lbl:
-cmp	eax,			"cdne"
-jne	_next
-cmp	dword ptr [esi + 04h],	"blla"
-jne	_next
-cmp	dword ptr [esi + 07h],	"kcab"
-jne	_next
-cmp	byte ptr [esi + 0bh],	20h
-jg	_next
+		_lbl:
+		cmp	eax,			"cdne"
+		jne	_next
+		cmp	dword ptr [esi + 04h],	"blla"
+		jne	_next
+		cmp	dword ptr [esi + 07h],	"kcab"
+		jne	_next
+		cmp	byte ptr [esi + 0bh],	20h
+		jg	_next
 
-mov	eax,			ebx
-and	eax,			10b
-jz	_lCallbackEndf
-mov	dword ptr [esi],	"mdne"
-mov	dword ptr [esi + 04h],	"ohte"
-mov	dword ptr [esi + 08h],	"   d"
-jmp	_lFNPFuncOut
+		mov	eax,			ebx
+		and	eax,			10b
+		jz	_lCallbackEndf
+		mov	dword ptr [esi],	"mdne"
+		mov	dword ptr [esi + 04h],	"ohte"
+		mov	dword ptr [esi + 08h],	"   d"
+		jmp	_lFNPFuncOut
 
-_lCallbackEndf:
-mov	dword ptr [esi],	"fdne"
-mov	dword ptr [esi + 04h],	"tcnu"
-mov	dword ptr [esi + 08h],	" noi"
-jmp	_lFNPFuncOut
+		_lCallbackEndf:
+		mov	dword ptr [esi],	"fdne"
+		mov	dword ptr [esi + 04h],	"tcnu"
+		mov	dword ptr [esi + 08h],	" noi"
+		jmp	_lFNPFuncOut
 
 		_lbl:
 		cmp	eax,			66646e65h	;; endf
@@ -9167,16 +9166,16 @@ jmp	_lFNPFuncOut
 			_lFNPFuncOut:
 			mov	edi,			dword ptr [_dBCP]
 
-;;----------------
-;; get function type
-mov	ecx,				edi
-_lFNPFuncOutBX:
-dec	ecx
-cmp	byte ptr [ecx - 01h],		" "
-jne	_lFNPFuncOutBX
+				;;----------------
+				;; get function type
+				mov	ecx,				edi
+				_lFNPFuncOutBX:
+				dec	ecx
+				cmp	byte ptr [ecx - 01h],		" "
+				jne	_lFNPFuncOutBX
 
-mov	dword ptr [_sFuncType],		ecx
-;;----------------
+				mov	dword ptr [_sFuncType],		ecx
+				;;----------------
 
 				;;----------------
 				;; sys locals
@@ -9317,18 +9316,6 @@ call	_lCheckInFuncVars
 	mov	esi,				offset _bFuncCodeLocals
 	mov	dword ptr [_dLocalsOffset],	edi
 
-;	cmp	dword ptr [esp],		00h
-;	jne	_lVarsCopy
-;
-;		;;----------------
-;		;; copy without replacing
-;		mov	ecx,			dword ptr [_dFCL]
-;		sub	ecx,			offset _bFuncCodeLocals
-;
-;		rep	movsb
-;		jmp	_lVarsCopy_End
-;		;;----------------
-
 	_lVarsCopy:
 	cmp	esi,				dword ptr [_dFCL]
 	jae	_lVarsCopy_End
@@ -9403,11 +9390,14 @@ call	_lCheckInFuncVars
 			;; copy word
 			_lVarsCopy_NoReplace:
 			mov	al,				byte ptr [esi]
-cmp	al,			"."
-je	_lVarsCopy_NoReplaceEx
+
+			cmp	al,				"."
+			je	_lVarsCopy_NoReplaceEx
+
+			_lVarsCopy_NoReplaceQX:
 			cmp	byte ptr [_bAscii_00 + eax],	ah
 			je	_lVarsCopy_NoReplace_00
-_lVarsCopy_NoReplaceEx:
+			_lVarsCopy_NoReplaceEx:
 			mov	byte ptr [edi],			al
 			inc	esi
 			inc	edi
@@ -9436,31 +9426,16 @@ _lVarsCopy_NoReplaceEx:
 
 	;;----------------
 	;; copy (with replacing) code
-mov	dword ptr [_dInFuncBlockMax],		00h
-mov	dword ptr [_dInFuncBlockStack],		00h
-mov	dword ptr [_dInFuncBlockPnt],		offset _dInFuncBlockStack + 04h
+	mov	dword ptr [_dInFuncBlockMax],		00h
+	mov	dword ptr [_dInFuncBlockStack],		00h
+	mov	dword ptr [_dInFuncBlockPnt],		offset _dInFuncBlockStack + 04h
 
-mov	byte ptr [_bFuncCodeNop],		00h
+	mov	byte ptr [_bFuncCodeNop],		00h
 
-mov	dword ptr [_dFreeForGroupPnt],		offset _dFreeForGroup - 04h
+	mov	dword ptr [_dFreeForGroupPnt],		offset _dFreeForGroup - 04h
 
 	mov	esi,				offset _bFuncCodeBase
 	mov	dword ptr [_dCodeOffset],	edi
-
-; can't, coz there may be sysvariables (for return etc)
-;	cmp	dword ptr [_dGeneratedLocalsID],	00h
-;	jne	_lCodeCopy_LineEx
-;
-;		;;----------------
-;		;; copy without replacing
-;		mov	ecx,			dword ptr [_dFCB]
-;		sub	ecx,			offset _bFuncCodeBase
-;
-;		rep	movsb
-;		jmp	_lCodeCopy_End
-;		;;----------------
-;
-;	_lCodeCopy_LineEx:
 
 	_lCodeCopy_Line:
 	cmp	esi,				dword ptr [_dFCB]
@@ -9508,7 +9483,7 @@ mov	dword ptr [_dFreeForGroupPnt],		offset _dFreeForGroup - 04h
 	cmp	eax,			"esle"
 	jne	_lCodeCopy_03
 	call	_lInFuncBlockOut
-call	_lInFuncBlockOutVarsEx
+	call	_lInFuncBlockOutVarsEx
 	call	_lInFuncBlockIn
 	jmp	_lCopyCode_Word
 
@@ -9518,7 +9493,7 @@ call	_lInFuncBlockOutVarsEx
 	cmp	byte ptr [esi + 04h],	"f"
 	jne	_lCodeCopy_04
 	call	_lInFuncBlockOut
-call	_lInFuncBlockOutVarsEx
+	call	_lInFuncBlockOutVarsEx
 	jmp	_lCopyCode_Word
 
 	_lCodeCopy_04:
@@ -9533,7 +9508,7 @@ call	_lInFuncBlockOutVarsEx
 	cmp	dword ptr [esi + 03h],	"pool"
 	jne	_lCodeCopy_06
 	call	_lInFuncBlockOut
-call	_lInFuncBlockOutVarsEx
+	call	_lInFuncBlockOutVarsEx
 	jmp	_lCopyCode_Word
 
 	_lCodeCopy_06:
@@ -9578,40 +9553,39 @@ call	_lInFuncBlockOutVarsEx
 	call	_lFlushLocals
 	jmp	_lCopyCode_Word
 
-_lCodeCopy_08:
-cmp	eax,			"olbv"
-jne	_lCodeCopy_09
-cmp	word ptr [esi + 04h],	"kc"
-jne	_lCodeCopy_09
-cmp	byte ptr [esi + 06h],	20h
-jg	_lCodeCopy_09
-call	_lInFuncBlockIn
-add	esi,			08h
-jmp	_lCodeCopy_Line
+	_lCodeCopy_08:
+	cmp	eax,			"olbv"
+	jne	_lCodeCopy_09
+	cmp	word ptr [esi + 04h],	"kc"
+	jne	_lCodeCopy_09
+	cmp	byte ptr [esi + 06h],	20h
+	jg	_lCodeCopy_09
+	call	_lInFuncBlockIn
+	add	esi,			08h
+	jmp	_lCodeCopy_Line
 
-_lCodeCopy_09:
-cmp	eax,			"vdne"
-jne	_lCodeCopy_0a
-cmp	dword ptr [esi + 04h],	"colb"
-jne	_lCodeCopy_0a
-cmp	byte ptr [esi + 08h],	"k"
-jne	_lCodeCopy_0a
-cmp	byte ptr [esi + 09h],	20h
-jg	_lCodeCopy_0a
-call	_lInFuncBlockOut
-call	_lInFuncBlockOutVarsEx
-add	esi,			0bh
-jmp	_lCodeCopy_Line
+	_lCodeCopy_09:
+	cmp	eax,			"vdne"
+	jne	_lCodeCopy_0a
+	cmp	dword ptr [esi + 04h],	"colb"
+	jne	_lCodeCopy_0a
+	cmp	byte ptr [esi + 08h],	"k"
+	jne	_lCodeCopy_0a
+	cmp	byte ptr [esi + 09h],	20h
+	jg	_lCodeCopy_0a
+	call	_lInFuncBlockOut
+	call	_lInFuncBlockOutVarsEx
+	add	esi,			0bh
+	jmp	_lCodeCopy_Line
 
-_lCodeCopy_0a:
-cmp	eax,			"rgjc"
-jne	_lCodeCopy_0b
-cmp	dword ptr [esi + 04h],	"_ngf"
-jne	_lCodeCopy_0b
+	_lCodeCopy_0a:
+	cmp	eax,			"rgjc"
+	jne	_lCodeCopy_0b
+	cmp	dword ptr [esi + 04h],	"_ngf"
+	jne	_lCodeCopy_0b
 
 	;;----------------
 	;; generate group
-
 	cmp	dword ptr [_dFreeForGroupPnt],	offset _dFreeForGroup - 04h
 	je	_lCodeCopy_GenGroup
 
@@ -9681,9 +9655,12 @@ jne	_lCodeCopy_0b
 
 	_lCopyCode_WordStart:
 	xor	eax,				eax
+	_lCopyCode_WordStartEx:
 	mov	al,				byte ptr [esi]
-cmp	al,				"."
-je	_lCopyCode_WordCopyFx
+
+	cmp	al,				"."
+	je	_lCopyCode_WordCopyFx
+
 	cmp	byte ptr [_bAscii_00 + eax],	ah
 	jne	_lCopyCode_WordNew
 	movsb
@@ -9764,13 +9741,13 @@ _lCopyCode_WordCopyFx:
 	_lCodeCopy_End:
 	cmp	byte ptr [_bLocalsAutoFlush],	00h
 	je	_lCodeCopy_EndEx
-cmp	byte ptr [_bALFReturnLast],	01h
-je	_lCodeCopy_EndEx
+	cmp	byte ptr [_bALFReturnLast],	01h
+	je	_lCodeCopy_EndEx
 	mov	byte ptr [_bALFReturnExpr],	00h
 	call	_lFlushLocals
 
 	_lCodeCopy_EndEx:
-mov	byte ptr [_bALFReturnLast],	00h
+	mov	byte ptr [_bALFReturnLast],	00h
 	;;----------------
 
 	;;----------------
@@ -9818,8 +9795,8 @@ mov	byte ptr [_bALFReturnLast],	00h
 	cmp	word ptr [edx + 0dh],		0a0dh
 	jne	_lCodeCopy_RemoveFxNulling_GetNextLine
 
-dec	ecx
-mov	word ptr [ecx - 01h],		"  "
+	dec	ecx
+	mov	word ptr [ecx - 01h],		"  "
 
 	_lCodeCopy_RemoveFxNulling_RemoveLine:
 	inc	ecx
@@ -9878,994 +9855,994 @@ pop	ebx
 				jmp	_lFNPAnonStr
 				;;----------------
 
-;;----------------
-;; check redeclared static variables
-_lCheckInFuncVars:
-push	ebx
-push	ecx
-push	edx
-
-lea	ecx,			[esp + 10h]
-xor	eax,			eax
-
-_lCheckInFuncVars_Next:
-add	ecx,			0ch
-cmp	dword ptr [ecx],	00h
-je	_lCheckInFuncVars_End
-
-mov	ebx,				dword ptr [ecx]
-mov	edx,				dword ptr [esp + 10h]
-
-_lCheckInFuncVars_Check:
-mov	al,				byte ptr [ebx]
-cmp	byte ptr [_bAscii_00 + eax],	ah
-je	_lCheckInFuncVars_Check_00
-cmp	al,				byte ptr [edx]
-jne	_lCheckInFuncVars_Next
-inc	ebx
-inc	edx
-jmp	_lCheckInFuncVars_Check
-
-_lCheckInFuncVars_Check_00:
-mov	al,				byte ptr [edx]
-cmp	byte ptr [_bAscii_00 + eax],	ah
-jne	_lCheckInFuncVars_Next
-
-	;;----------------
-	;; error
-	mov	dword ptr [_xErrorTable],	offset _sErr_RedeclaredVar
-	mov	dword ptr [_xErrorTable + 04h],	edi
-
-	_lCheckInFuncVars_Err:
-	movsb
-	cmp	word ptr [esi],			0a0dh
-	jne	_lCheckInFuncVars_Err
-
-	mov	dword ptr [_xErrorTable + 08h],	edi
-	jmp	_lErrIn
-	;;----------------
-
-_lCheckInFuncVars_End:
-pop	edx
-pop	ecx
-pop	ebx
-
-retn
-;;----------------
-
-;;----------------
-;; get global var
-_lGetGlobals_Start:
-push	eax
-xor	eax,				eax
-mov	ecx,				offset _sCJGenGlobalsTypes
-
-_lGetGlobals_Type:
-cmp	byte ptr [ecx],			00h
-je	_lGetGlobals_NewType
-mov	edx,				dword ptr [esp]
-
-_lGetGlobals_Check:
-mov	al,				byte ptr [edx]
-cmp	byte ptr [_bAscii_00 + eax],	ah
-je	_lGetGlobals_Check_00
-cmp	al,				byte ptr [ecx]
-jne	_lGetGlobals_GetNext
-inc	edx
-inc	ecx
-jmp	_lGetGlobals_Check
-
-_lGetGlobals_Check_00:
-mov	al,				byte ptr [ecx]
-cmp	byte ptr [_bAscii_00 + eax],	ah
-jne	_lGetGlobals_GetNext
-
-	;;----------------
-	pop	edx
-
-	_lGetGlobals_CopyType_00:
-	mov	al,				byte ptr [edx]
-	cmp	byte ptr [_bAscii_00 + eax],	ah
-	je	_lGetGlobals_End
-
-	stosb
-	inc	edx
-	jmp	_lGetGlobals_CopyType_00
-	;;----------------
-
-_lGetGlobals_GetNextEx:
-inc	ecx
-_lGetGlobals_GetNext:
-mov	al,				byte ptr [ecx]
-cmp	byte ptr [_bAscii_00 + eax],	ah
-jne	_lGetGlobals_GetNextEx
-inc	ecx
-jmp	_lGetGlobals_Type
-
-	;;----------------
-	_lGetGlobals_NewType:
-	pop	edx
-	cmp	byte ptr [ecx - 01h],		00h
-	je	_lGetGlobals_CopyType_01
-
-	mov	byte ptr [ecx],			" "
-	inc	ecx
-
-	_lGetGlobals_CopyType_01:
-	mov	al,				byte ptr [edx]
-	cmp	byte ptr [_bAscii_00 + eax],	ah
-	je	_lGetGlobals_End
-
-	stosb
-	inc	edx
-	mov	byte ptr [ecx],			al
-	inc	ecx
-
-	jmp	_lGetGlobals_CopyType_01
-	;;----------------
-
-_lGetGlobals_End:
-retn
-;;----------------
-
-;;----------------
-;; flush locals pre
-_lFlushLocals:
-
-	;;----------------
-	;; scan locals
-	push	00h
-	push	00h
-
-mov	dword ptr [_dFlushLocalsStackPos],	esp
-
-	mov	ecx,			dword ptr [_dLocalsOffset]
-
-	_lFlLoc_00:
-	cmp	ecx,				dword ptr [_dCodeOffset]
-	jae	_lFlLoc_LSE
-
-	cmp	dword ptr [ecx],	"acol"
-	jne	_lFlLoc_Skip
-	cmp	word ptr [ecx + 04h],	" l"
-	jne	_lFlLoc_Skip
-	add	ecx,			06h
-
-		;;----------------
-		;; check types
-;; correct types
-		mov	eax,			dword ptr [ecx]
-		cmp	eax,			"neve"
-		jne	_lFlLoc_T_00
-		cmp	word ptr [ecx+04h],	" t"
-		jne	_lFlLoc_T_00
-		add	ecx,			06h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_00:
-		cmp	eax,			"gdiw"
-		jne	_lFlLoc_T_01
-		cmp	word ptr [ecx+04h],	"te"
-		jne	_lFlLoc_T_01
-		cmp	byte ptr [ecx+06h],	" "
-		jne	_lFlLoc_T_01
-		add	ecx,			07h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_01:
-		cmp	eax,			"tinu"
-		jne	_lFlLoc_T_02
-		cmp	byte ptr [ecx+04h],	" "
-		jne	_lFlLoc_T_02
-		add	ecx,			05h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_02:
-		cmp	eax,			"tsed"
-		jne	_lFlLoc_T_03
-		cmp	dword ptr [ecx+04h],	"tcur"
-		jne	_lFlLoc_T_03
-		cmp	dword ptr [ecx+08h],	"elba"
-		jne	_lFlLoc_T_03
-		cmp	byte ptr [ecx+0ch],	" "
-		jne	_lFlLoc_T_03
-		add	ecx,			0dh
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_03:
-		cmp	eax,			"meti"
-		jne	_lFlLoc_T_04
-		cmp	byte ptr [ecx+04h],	" "
-		jne	_lFlLoc_T_04
-		add	ecx,			05h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_04:
-		cmp	eax,			"crof"
-		jne	_lFlLoc_T_05
-		cmp	word ptr [ecx+04h],	" e"
-		jne	_lFlLoc_T_05
-		add	ecx,			06h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_05:
-		cmp	eax,			"uorg"
-		jne	_lFlLoc_T_06
-		cmp	word ptr [ecx],		" p"
-		jne	_lFlLoc_T_06
-		add	ecx,			06h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_06:
-		cmp	eax,			"girt"
-		jne	_lFlLoc_T_07
-		cmp	dword ptr [ecx+04h],	" reg"
-		jne	_lFlLoc_T_07
-		add	ecx,			08h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_07:
-		cmp	eax,			"girt"
-		jne	_lFlLoc_T_08
-		cmp	dword ptr [ecx+04h],	"creg"
-		jne	_lFlLoc_T_08
-		cmp	dword ptr [ecx+08h],	"idno"
-		jne	_lFlLoc_T_08
-		cmp	dword ptr [ecx+0ch],	"noit"
-		jne	_lFlLoc_T_08
-		cmp	byte ptr [ecx+10h],	" "
-		jne	_lFlLoc_T_08
-		add	ecx,			11h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_08:
-		cmp	eax,			"girt"
-		jne	_lFlLoc_T_09
-		cmp	dword ptr [ecx+04h],	"areg"
-		jne	_lFlLoc_T_09
-		cmp	dword ptr [ecx+08h],	"oitc"
-		jne	_lFlLoc_T_09
-		cmp	word ptr [ecx+0ch],	" n"
-		jne	_lFlLoc_T_09
-		add	ecx,			0eh
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_09:
-		cmp	eax,			"emit"
-		jne	_lFlLoc_T_0a
-		cmp	word ptr [ecx+04h],	" r"
-		jne	_lFlLoc_T_0a
-		add	ecx,			06h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_0a:
-		cmp	eax,			"acol"
-		jne	_lFlLoc_T_0b
-		cmp	dword ptr [ecx+04h],	"noit"
-		jne	_lFlLoc_T_0b
-		cmp	byte ptr [ecx+08h],	" "
-		jne	_lFlLoc_T_0b
-		add	ecx,			09h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_0b:
-		cmp	eax,			"iger"
-		jne	_lFlLoc_T_0c
-		cmp	word ptr [ecx+04h],	"no"
-		jne	_lFlLoc_T_0c
-		cmp	byte ptr [ecx+06h],	" "
-		jne	_lFlLoc_T_0c
-		add	ecx,			07h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_0c:
-		cmp	eax,			"tcer"
-		jne	_lFlLoc_T_0d
-		cmp	byte ptr [ecx+04h],	" "
-		jne	_lFlLoc_T_0d
-		add	ecx,			05h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_0d:
-		cmp	eax,			"nuos"
-		jne	_lFlLoc_T_0e
-		cmp	word ptr [ecx+04h],	" d"
-		jne	_lFlLoc_T_0e
-		add	ecx,			06h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_0e:
-;		cmp	eax,			"emac"
-;		jne	_lFlLoc_T_0f
-;		cmp	dword ptr [ecx+04h],	"esar"
-;		jne	_lFlLoc_T_0f
-;		cmp	dword ptr [ecx+08h],	" put"
-;		jne	_lFlLoc_T_0f
-;		add	ecx,			0ch
-;		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_0f:
-		cmp	eax,			"effe"
-		jne	_lFlLoc_T_10
-		cmp	word ptr [ecx+04h],	"tc"
-		jne	_lFlLoc_T_10
-		cmp	byte ptr [ecx+06h],	" "
-		jne	_lFlLoc_T_10
-		add	ecx,			07h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_10:
-		cmp	eax,			"taew"
-		jne	_lFlLoc_T_11
-		cmp	dword ptr [ecx+04h],	"ereh"
-		jne	_lFlLoc_T_11
-		cmp	dword ptr [ecx+08h],	"ceff"
-		jne	_lFlLoc_T_11
-		cmp	word ptr [ecx+0ch],	" t"
-		add	ecx,			0eh
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_11:
-		cmp	eax,			"laid"
-		jne	_lFlLoc_T_12
-		cmp	word ptr [ecx+04h],	"go"
-		jne	_lFlLoc_T_12
-		cmp	byte ptr [ecx+06h],	" "
-		jne	_lFlLoc_T_12
-		add	ecx,			07h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_12:
-		cmp	eax,			"ttub"
-		jne	_lFlLoc_T_13
-		cmp	dword ptr [ecx+03h],	" not"
-		jne	_lFlLoc_T_13
-		add	ecx,			07h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_13:
-		cmp	eax,			"seuq"
-		jne	_lFlLoc_T_14
-		cmp	word ptr [ecx+04h],	" t"
-		jne	_lFlLoc_T_14
-		add	ecx,			06h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_14:
-		cmp	eax,			"seuq"
-		jne	_lFlLoc_T_15
-		cmp	dword ptr [ecx+04h],	"etit"
-		jne	_lFlLoc_T_15
-		cmp	word ptr [ecx+08h],	" m"
-		jne	_lFlLoc_T_15
-		add	ecx,			0ah
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_15:
-		cmp	eax,			"emit"
-		jne	_lFlLoc_T_16
-		cmp	dword ptr [ecx+04h],	"aidr"
-		jne	_lFlLoc_T_16
-		cmp	dword ptr [ecx+08h],	" gol"
-		jne	_lFlLoc_T_16
-		add	ecx,			0ch
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_16:
-		cmp	eax,			"dael"
-		jne	_lFlLoc_T_17
-		cmp	dword ptr [ecx+04h],	"obre"
-		jne	_lFlLoc_T_17
-		cmp	dword ptr [ecx+08h],	" dra"
-		jne	_lFlLoc_T_17
-		add	ecx,			0ch
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_17:
-		cmp	eax,			"tlum"
-		jne	_lFlLoc_T_18
-		cmp	dword ptr [ecx+04h],	"aobi"
-		jne	_lFlLoc_T_18
-		cmp	dword ptr [ecx+07h],	" dra"
-		jne	_lFlLoc_T_18
-		add	ecx,			0bh
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_18:
-		cmp	eax,			"tlum"
-		jne	_lFlLoc_T_19
-		cmp	dword ptr [ecx+04h],	"aobi"
-		jne	_lFlLoc_T_19
-		cmp	dword ptr [ecx+08h],	"tidr"
-		jne	_lFlLoc_T_19
-		cmp	dword ptr [ecx+0bh],	" met"
-		jne	_lFlLoc_T_19
-		add	ecx,			0fh
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_19:
-		cmp	eax,			"emag"
-		jne	_lFlLoc_T_1a
-		cmp	dword ptr [ecx+04h],	"hcac"
-		jne	_lFlLoc_T_1a
-		cmp	word ptr [ecx+08h],	" e"
-		jne	_lFlLoc_T_1a
-		add	ecx,			0ah
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_1a:
-;		cmp	eax,			"hgil"
-;		jne	_lFlLoc_T_1b
-;		cmp	dword ptr [ecx+04h],	"niht"
-;		jne	_lFlLoc_T_1b
-;		cmp	word ptr [ecx+08h],	" g"
-;		jne	_lFlLoc_T_1b
-;		add	ecx,			0ah
-;		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_1b:
-;		cmp	eax,			"gami"
-;		jne	_lFlLoc_T_1c
-;		cmp	dword ptr [ecx+04h],	" e"
-;		jne	_lFlLoc_T_1c
-;		add	ecx,			06h
-;		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_1c:
-;		cmp	eax,			"rebu"
-;		jne	_lFlLoc_T_1d
-;		cmp	dword ptr [ecx+04h],	"alps"
-;		jne	_lFlLoc_T_1d
-;		cmp	word ptr [ecx+08h],	" t"
-;		jne	_lFlLoc_T_1d
-;		add	ecx,			0ah
-;		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_1d:
-		cmp	eax,			"dnah"
-		jne	_lFlLoc_T_1e
-		cmp	dword ptr [ecx+03h],	" eld"
-		jne	_lFlLoc_T_1e
-		add	ecx,			07h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_1e:
-		cmp	eax,			"hsah"
-		jne	_lFlLoc_T_1f
-		cmp	dword ptr [ecx+04h],	"lbat"
-		jne	_lFlLoc_T_1f
-		cmp	word ptr [ecx+08h],	" e"
-		jne	_lFlLoc_T_1f
-		add	ecx,			0ah
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_1f:
-		cmp	eax,			"nega"
-		jne	_lFlLoc_T_20
-		cmp	word ptr [ecx+04h],	" t"
-		jne	_lFlLoc_T_20
-		add	ecx,			06h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_20:
-		cmp	eax,			"tinu"
-		jne	_lFlLoc_T_21
-		cmp	dword ptr [ecx+04h],	"loop"
-		jne	_lFlLoc_T_21
-		cmp	byte ptr [ecx+08h],	" "
-		jne	_lFlLoc_T_21
-		add	ecx,			09h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_21:
-		cmp	eax,			"meti"
-		jne	_lFlLoc_T_22
-		cmp	dword ptr [ecx+04h],	"loop"
-		jne	_lFlLoc_T_22
-		cmp	byte ptr [ecx+08h],	" "
-		jne	_lFlLoc_T_22
-		add	ecx,			09h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_22:
-		cmp	eax,			"mgof"
-		jne	_lFlLoc_T_23
-		cmp	dword ptr [ecx+04h],	"fido"
-		jne	_lFlLoc_T_23
-		cmp	dword ptr [ecx+08h],	" rei"
-		jne	_lFlLoc_T_23
-		add	ecx,			0ch
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_23:
-		cmp	eax,			"efed"
-		jne	_lFlLoc_T_24
-		cmp	dword ptr [ecx+04h],	"octa"
-		jne	_lFlLoc_T_24
-		cmp	dword ptr [ecx+08h],	"tind"
-		jne	_lFlLoc_T_24
-		cmp	dword ptr [ecx+0ch],	" noi"
-		jne	_lFlLoc_T_24
-		add	ecx,			10h
-		jmp	_lFlLoc_T_Add
-
-		_lFlLoc_T_24:
-		_lFlLoc_GetNext:
-		inc	ecx
-		cmp	word ptr [ecx-02h],	0a0dh	;; nl
-		jne	_lFlLoc_GetNext
-		jmp	_lFlLoc_00
-
-		_lFlLoc_T_Add:
-		cmp	dword ptr [ecx],	"arra"
-		jne	_lFlLoc_T_AddEX
-		cmp	word ptr [ecx+04h],	" y"
-		je	_lFlLoc_GetNext
-		_lFlLoc_T_AddEX:
-		push	ecx
-
-		_lFlLoc_T_IsInit:
-		inc	ecx
-		cmp	byte ptr [ecx],		"="
-		je	_lFlLoc_T_Init
-		cmp	word ptr [ecx],		0a0dh
-		jne	_lFlLoc_T_IsInit
-		add	ecx,			02h
-		push	00h			;; var is null
-		jmp	_lFlLoc_00
-
-		_lFlLoc_T_Init:
-		cmp	dword ptr [ecx+01h],	"llun"
-		jne	_lFlLoc_T_InitEX
-		cmp	word ptr [ecx+05h],	0a0dh	;; nl
-		jne	_lFlLoc_T_InitEX
-		push	00h			;; var is null
-		jmp	_lFlLoc_GetNext
-
-		_lFlLoc_T_InitEX:
-		push	01h			;; var is't null
-		jmp	_lFlLoc_GetNext
-		;;----------------
-
-		;;----------------
-		_lFlLoc_Skip:
-		inc	ecx
-		cmp	word ptr [ecx - 02h],	0a0dh
-		jne	_lFlLoc_Skip
-		jmp	_lFlLoc_00
-		;;----------------
-
-	_lFlLoc_LSE:
-	;;----------------
-
-	;;----------------
-	;; scan code
-
-	;; 0 variables
-	cmp	dword ptr [esp + 04h],		00h
-	je	_lFlushLocals_EndEx
-
-mov	dword ptr [_dFlushLocalsExBlock],	01h
-
-	mov	ecx,				dword ptr [_dCodeOffset]
-;	xor	edx,				edx	;; block counter
-
-	_lFlLoc_SC_Start:
-	mov	eax,				dword ptr [ecx]
-
-	cmp	al,			00h
-	je	_lFlLoc_SC_End
-
-	cmp	ax,			"fi"
-	je	_lFlLoc_SC_If
-
-	cmp	eax,			"esle"
-	je	_lFlLoc_SC_Else
-
-	cmp	eax,			"idne"
-	je	_lFlLoc_SC_Endif
-
-	cmp	eax,			"pool"
-	je	_lFlLoc_SC_Loop
-
-	cmp	eax,			"ldne"
-	je	_lFlLoc_SC_Endloop
-
-	cmp	eax,			"uter"
-	je	_lFlLoc_SC_Return
-
-	cmp	eax,			" tes"
-	jne	_lFlLoc_SC_GetNextLine
-	
-		;;----------------
-		;; set
-		add	ecx,			04h
-		mov	ebp,			esp
-		xor	eax,			eax
-
-		_lFlLoc_SC_GetVal_00:
-		mov	ebx,			dword ptr [ebp + 04h]
-		test	ebx,			ebx
-		jz	_lFlLoc_SC_GetNextLine
-
-			;;----------------
-			;; check
-			push	ecx
-			_lFlLoc_SC_CheckVal_00:
-			mov	al,				byte ptr [ecx]
-			cmp	byte ptr [_bAscii_00 + eax],	ah
-			jz	_lFlLoc_SC_CheckVal_01
-
-			cmp	byte ptr [ebx],			al
-			jne	_lFlLoc_SC_GetVal_Next
-			inc	ecx
-			inc	ebx
-			jmp	_lFlLoc_SC_CheckVal_00
-
-			_lFlLoc_SC_CheckVal_01:
-			mov	al,				byte ptr [ebx]
-			cmp	byte ptr [_bAscii_00 + eax],	ah
-			jz	_lFlLoc_SC_GetVal_Found
-			;;----------------
-
-		_lFlLoc_SC_GetVal_Next:
-		pop	ecx
-		add	ebp,			08h
-		jmp	_lFlLoc_SC_GetVal_00
-
-			;;----------------
-			;; found
-			_lFlLoc_SC_GetVal_Found:
-			add	esp,			04h
-			cmp	dword ptr [ecx + 01h],	"llun"
-			jne	_lFlLoc_SC_NotNullEx
-			cmp	word ptr [ecx + 05h],	0a0dh
-			jne	_lFlLoc_SC_NotNullEx
-;			test	edx,			edx
-;			jnz	_lFlLoc_SC_GetNextLine
-			mov	dword ptr [ebp],	00h
-			jmp	_lFlLoc_SC_GetNextLine
-
-			_lFlLoc_SC_NotNullEx:
-			cmp	dword ptr [ecx + 01h],	"llun"
-			jne	_lFlLoc_SC_NotNull
-			cmp	dword ptr [ecx + 05h],	"njc_"
-			jne	_lFlLoc_SC_NotNull
-			cmp	dword ptr [ecx + 09h],	"ellu"
-			jne	_lFlLoc_SC_NotNull
-			cmp	byte ptr [ecx + 0dh],	"x"
-			jne	_lFlLoc_SC_NotNull
-			cmp	word ptr [ecx + 0eh],	0a0dh
-			jne	_lFlLoc_SC_NotNull
-;			test	edx,			edx
-;			jnz	_lFlLoc_SC_GetNextLine
-			mov	dword ptr [ebp],	00h
-			jmp	_lFlLoc_SC_GetNextLine
-
-			_lFlLoc_SC_NotNull:
-			mov	dword ptr [ebp],	01h
-			jmp	_lFlLoc_SC_GetNextLine
-			;;----------------
-		;;----------------
-
-		;;----------------
-		;; if
-		_lFlLoc_SC_If:
-		cmp	byte ptr [ecx+02h],	28h
-		ja	_lFlLoc_SC_GetNextLine
-;		inc	edx
-push	00h
-push	dword ptr [_dFlushLocalsExBlock]
-mov	dword ptr [_dFlushLocalsExBlock],	01h
-jmp	_lFlLoc_SC_BlockIn
-;		jmp	_lFlLoc_SC_GetNextLine
-		;;----------------
-
-		;;----------------
-		;; else and elseif
-		_lFlLoc_SC_Else:
-		cmp	word ptr [ecx + 04h],	0a0dh
-		je	_lFlLoc_SC_ElseEx
-		cmp	word ptr [ecx + 04h],	"fi"
-		jne	_lFlLoc_SC_GetNextLine
-		cmp	byte ptr [ecx + 06h],	28h
-		ja	_lFlLoc_SC_GetNextLine
-
-		_lFlLoc_SC_ElseEx:
-call	_lFlLoc_SC_BlockOut
-push	00h
-push	dword ptr [_dFlushLocalsExBlock]
-mov	dword ptr [_dFlushLocalsExBlock],	01h
-jmp	_lFlLoc_SC_BlockIn
-;		jmp	_lFlLoc_SC_GetNextLine
-		;;----------------
-
-		;;----------------
-		;; endif
-		_lFlLoc_SC_Endif:
-		cmp	word ptr [ecx + 03h],	"fi"
-		jne	_lFlLoc_SC_GetNextLine
-		cmp	byte ptr [ecx + 05h],	28h
-		ja	_lFlLoc_SC_GetNextLine
-;		dec	edx
-call	_lFlLoc_SC_BlockOut
-		jmp	_lFlLoc_SC_GetNextLine
-		;;----------------
-
-		;;----------------
-		;; loop
-		_lFlLoc_SC_Loop:
-		cmp	byte ptr [ecx + 04h],	28h
-		ja	_lFlLoc_SC_GetNextLine
-;		inc	edx
-push	00h
-push	dword ptr [_dFlushLocalsExBlock]
-mov	dword ptr [_dFlushLocalsExBlock],	02h
-jmp	_lFlLoc_SC_BlockIn
-;		jmp	_lFlLoc_SC_GetNextLine
-		;;----------------
-
-		;;----------------
-		;; endloop
-		_lFlLoc_SC_Endloop:
-		cmp	dword ptr [ecx + 03h],	"pool"
-		jne	_lFlLoc_SC_GetNextLine
-		cmp	byte ptr [ecx + 07h],	28h
-		ja	_lFlLoc_SC_GetNextLine
-;		dec	edx
-call	_lFlLoc_SC_BlockOut
-		jmp	_lFlLoc_SC_GetNextLine
-		;;----------------
-
-		;;----------------
-		;; return
-		_lFlLoc_SC_Return:
-		cmp	word ptr [ecx + 04h],	"nr"
-		jne	_lFlLoc_SC_GetNextLine
-		cmp	byte ptr [ecx + 06h],	28h
-		ja	_lFlLoc_SC_GetNextLine
-
-;;----------------
-cmp	dword ptr [_dFlushLocalsExBlock],	02h
-je	_lFlLoc_SC_GetNextLine
-
-mov	edx,				esp
-
-_lFlLoc_SC_ReturnFix:
-mov	dword ptr [edx],		00h
-add	edx,				08h
-cmp	dword ptr [edx + 04h],		00h
-jne	_lFlLoc_SC_ReturnFix
-;;----------------
-
-		jmp	_lFlLoc_SC_GetNextLine
-		;;----------------
-
-		;;----------------
-		;; get next line
-		_lFlLoc_SC_GetNextLine:
-		inc	ecx
-		cmp	word ptr [ecx - 02h],	0a0dh	;; nl
-		jne	_lFlLoc_SC_GetNextLine
-		jmp	_lFlLoc_SC_Start
-		;;----------------
-
-;;----------------
-;; block in
-_lFlLoc_SC_BlockIn:
-mov	edx,			dword ptr [_dFlushLocalsStackPos]
-
-_lFlLoc_SC_BlockIn_Start:
-mov	eax,			dword ptr [edx - 04h]
-test	eax,			eax
-je	_lFlLoc_SC_GetNextLine
-
-push	eax
-mov	eax,			dword ptr [edx - 08h]
-push	eax
-
-sub	edx,			08h
-jmp	_lFlLoc_SC_BlockIn_Start
-;;----------------
-
-;;----------------
-;; block out
-_lFlLoc_SC_BlockOut:
-pop	ebp			;; ret addr
-
-mov	edx,			esp
-_lFlLoc_SC_BlockOut_Get:
-add	edx,			08h
-cmp	dword ptr [edx + 04h],	00h
-jne	_lFlLoc_SC_BlockOut_Get
-add	edx,			08h
-
-_lFlLoc_SC_BlockOut_Start:
-pop	eax
-add	esp,			04h
-or	eax,			dword ptr [edx]
-add	edx,			08h
-cmp	dword ptr [esp + 04h],	00h
-jne	_lFlLoc_SC_BlockOut_Start
-
-pop	dword ptr [_dFlushLocalsExBlock]
-add	esp,			04h
-
-jmp	ebp
-;;----------------
-
-	_lFlLoc_SC_End:
-	;;----------------
-
-	;;----------------
-	;; process return expression
-	cmp	byte ptr [_bALFReturnExpr],	00h
-	je	_lFLRetExpr_End
-
-	lea	ecx,			[esi + 05h]
-	xor	eax,			eax
-
-	_lFLRetExpr_Start:
-	inc	ecx
-	_lFLRetExpr_StartEx:
-	cmp	word ptr [ecx],		0a0dh
-	je	_lFLRetExpr_End
-
-	mov	al,				byte ptr [ecx]
-	cmp	byte ptr [_bAscii_00 + eax],	ah
-	je	_lFLRetExpr_Start
-
-		;;----------------
-		;; check word
-		lea	ebp,				[esp - 08h]
-
-		_lFLRetExpr_Check:
-		add	ebp,				08h
-		mov	edx,				ecx
-		mov	ebx,				dword ptr [ebp + 04h]
-		test	ebx,				ebx
-		jz	_lFLRetExpr_NextWord
-
-		_lFLRetExpr_Check_00:
-		mov	al,				byte ptr [edx]
-		cmp	byte ptr [_bAscii_00 + eax],	ah
-		je	_lFLRetExpr_Check_01
-		cmp	al,				byte ptr [ebx]
-		jne	_lFLRetExpr_Check
-		inc	ebx
-		inc	edx
-		jmp	_lFLRetExpr_Check_00
-
-		_lFLRetExpr_Check_01:
-		mov	al,				byte ptr [ebx]
-		cmp	byte ptr [_bAscii_00 + eax],	ah
-		jne	_lFLRetExpr_Check
-
-cmp	dword ptr [ebp],			00h
-je	_lFLRetExpr_NextWord
-
-			;;----------------
-			;; use generated globals
-			mov	eax,				dword ptr [_sFuncType]
-
-			mov	dword ptr [edi],		" tes"
-			mov	dword ptr [edi + 04h],		"v_jc"
-			mov	dword ptr [edi + 08h],		"_666"
-			add	edi,				0ch
-
-			call	_lGetGlobals_Start
-
-			mov	byte ptr [edi],			"="
-			inc	edi
-
-			add	esi,				06h
-			_lFLRetExpr_CopyExpr:
-			movsb
-			cmp	word ptr [edi - 02h],		0a0dh
-			jne	_lFLRetExpr_CopyExpr
-
-			mov	byte ptr [_bALFReturnExprUse],	01h
-			jmp	_lFLRetExpr_End
-			;;----------------
-
-		_lFLRetExpr_NextWord:
-		inc	ecx
-		mov	al,				byte ptr [ecx]
-		cmp	byte ptr [_bAscii_00 + eax],	ah
-		jne	_lFLRetExpr_NextWord
-		jmp	_lFLRetExpr_StartEx
-		;;----------------
-
-	_lFLRetExpr_End:
-	;;----------------
-
-	;;----------------
-	;; final
-	mov	byte ptr [_bFlushFlagBlock],	01h
-
-	_lFlLoc_FinalNext:
-	pop	eax	;; is null
-	pop	ebx	;; val name
-
-	test	ebx,			ebx
-	jz	_lFlLoc_FinalEnd
-
-	cmp	byte ptr [_bFlushFlagBlock],	00h
-	je	_lFlLoc_FinalNext
-
-	test	eax,			eax
-	jz	_lFlLoc_FinalNext
-
-		;;----------------
-		mov	dword ptr [edi],		" tes"
-		add	edi,				04h
-
-		_lFlLoc_Final_00:
-		mov	al,				byte ptr [ebx]
-		cmp	byte ptr [_bAscii_00+eax],	ah
-		jz	_lFlLoc_Final_01
-		mov	byte ptr [edi],			al
-		inc	ebx
-		inc	edi
-		jmp	_lFlLoc_Final_00
-
-		_lFlLoc_Final_01:
-		mov	dword ptr [edi],		"lun="
-		mov	dword ptr [edi+04h],		000a0d6ch	;; l nl _
-		add	edi,				07h
-		jmp	_lFlLoc_FinalNext
-		;;----------------
-
-	_lFlLoc_FinalEnd:
-	mov	byte ptr [_bFlushFlagBlock],	00h
-	test	eax,			eax
-	jnz	_lFlLoc_FinalNext
-	;;----------------
-
-	;;----------------
-	;; return expr ex
-	cmp	byte ptr [_bALFReturnExprUse],	00h
-	je	_lFlLoc_RetnExprEx_End
-
-	mov	byte ptr [_bALFReturnLast],	01h
-
-	mov	dword ptr [edi],		"uter"
-	mov	dword ptr [edi + 04h],		"c nr"
-	mov	dword ptr [edi + 08h],		"6v_j"
-	mov	dword ptr [edi + 0ch],		"__66"
-
-	add	edi,				0fh
-
-	mov	ecx,				dword ptr [_sFuncType]
-	xor	eax,				eax
-
-	_lFlLoc_RetnExprEx_CopyType:
-	mov	al,				byte ptr [ecx]
-	cmp	byte ptr [_bAscii_00 + eax],	ah
-	je	_lFlLoc_RetnExprEx_CopyTypeEnd
-	stosb
-	inc	ecx
-	jmp	_lFlLoc_RetnExprEx_CopyType
-
-	_lFlLoc_RetnExprEx_CopyTypeEnd:
-	mov	word ptr [edi],			0a0dh
-	add	edi,				02h
-
-;	_lFlLoc_RetnExprEx_Correct:
-;	inc	esi
-;	cmp	word ptr [esi - 02h],		0a0dh
-;	jmp	_lFlLoc_RetnExprEx_Correct
-
-	_lFlLoc_RetnExprEx_End:
-	;;----------------
-
-_lFlushLocals_End:
-retn
-
-_lFlushLocals_EndEx:
-add	esp,				08h
-retn
-;;----------------
+				;;----------------
+				;; check redeclared static variables
+				_lCheckInFuncVars:
+				push	ebx
+				push	ecx
+				push	edx
+
+				lea	ecx,			[esp + 10h]
+				xor	eax,			eax
+
+				_lCheckInFuncVars_Next:
+				add	ecx,			0ch
+				cmp	dword ptr [ecx],	00h
+				je	_lCheckInFuncVars_End
+
+				mov	ebx,				dword ptr [ecx]
+				mov	edx,				dword ptr [esp + 10h]
+
+				_lCheckInFuncVars_Check:
+				mov	al,				byte ptr [ebx]
+				cmp	byte ptr [_bAscii_00 + eax],	ah
+				je	_lCheckInFuncVars_Check_00
+				cmp	al,				byte ptr [edx]
+				jne	_lCheckInFuncVars_Next
+				inc	ebx
+				inc	edx
+				jmp	_lCheckInFuncVars_Check
+
+				_lCheckInFuncVars_Check_00:
+				mov	al,				byte ptr [edx]
+				cmp	byte ptr [_bAscii_00 + eax],	ah
+				jne	_lCheckInFuncVars_Next
+
+					;;----------------
+					;; error
+					mov	dword ptr [_xErrorTable],	offset _sErr_RedeclaredVar
+					mov	dword ptr [_xErrorTable + 04h],	edi
+
+					_lCheckInFuncVars_Err:
+					movsb
+					cmp	word ptr [esi],			0a0dh
+					jne	_lCheckInFuncVars_Err
+
+					mov	dword ptr [_xErrorTable + 08h],	edi
+					jmp	_lErrIn
+					;;----------------
+
+				_lCheckInFuncVars_End:
+				pop	edx
+				pop	ecx
+				pop	ebx
+
+				retn
+				;;----------------
+
+				;;----------------
+				;; get global var
+				_lGetGlobals_Start:
+				push	eax
+				xor	eax,				eax
+				mov	ecx,				offset _sCJGenGlobalsTypes
+
+				_lGetGlobals_Type:
+				cmp	byte ptr [ecx],			00h
+				je	_lGetGlobals_NewType
+				mov	edx,				dword ptr [esp]
+
+				_lGetGlobals_Check:
+				mov	al,				byte ptr [edx]
+				cmp	byte ptr [_bAscii_00 + eax],	ah
+				je	_lGetGlobals_Check_00
+				cmp	al,				byte ptr [ecx]
+				jne	_lGetGlobals_GetNext
+				inc	edx
+				inc	ecx
+				jmp	_lGetGlobals_Check
+
+				_lGetGlobals_Check_00:
+				mov	al,				byte ptr [ecx]
+				cmp	byte ptr [_bAscii_00 + eax],	ah
+				jne	_lGetGlobals_GetNext
+
+					;;----------------
+					pop	edx
+
+					_lGetGlobals_CopyType_00:
+					mov	al,				byte ptr [edx]
+					cmp	byte ptr [_bAscii_00 + eax],	ah
+					je	_lGetGlobals_End
+
+					stosb
+					inc	edx
+					jmp	_lGetGlobals_CopyType_00
+					;;----------------
+
+				_lGetGlobals_GetNextEx:
+				inc	ecx
+				_lGetGlobals_GetNext:
+				mov	al,				byte ptr [ecx]
+				cmp	byte ptr [_bAscii_00 + eax],	ah
+				jne	_lGetGlobals_GetNextEx
+				inc	ecx
+				jmp	_lGetGlobals_Type
+
+					;;----------------
+					_lGetGlobals_NewType:
+					pop	edx
+					cmp	byte ptr [ecx - 01h],		00h
+					je	_lGetGlobals_CopyType_01
+
+					mov	byte ptr [ecx],			" "
+					inc	ecx
+
+					_lGetGlobals_CopyType_01:
+					mov	al,				byte ptr [edx]
+					cmp	byte ptr [_bAscii_00 + eax],	ah
+					je	_lGetGlobals_End
+
+					stosb
+					inc	edx
+					mov	byte ptr [ecx],			al
+					inc	ecx
+
+					jmp	_lGetGlobals_CopyType_01
+					;;----------------
+
+				_lGetGlobals_End:
+				retn
+				;;----------------
+
+				;;----------------
+				;; flush locals pre
+				_lFlushLocals:
+
+					;;----------------
+					;; scan locals
+					push	00h
+					push	00h
+
+				mov	dword ptr [_dFlushLocalsStackPos],	esp
+
+					mov	ecx,			dword ptr [_dLocalsOffset]
+
+					_lFlLoc_00:
+					cmp	ecx,				dword ptr [_dCodeOffset]
+					jae	_lFlLoc_LSE
+
+					cmp	dword ptr [ecx],	"acol"
+					jne	_lFlLoc_Skip
+					cmp	word ptr [ecx + 04h],	" l"
+					jne	_lFlLoc_Skip
+					add	ecx,			06h
+
+						;;----------------
+						;; check types
+				;; correct types
+						mov	eax,			dword ptr [ecx]
+						cmp	eax,			"neve"
+						jne	_lFlLoc_T_00
+						cmp	word ptr [ecx+04h],	" t"
+						jne	_lFlLoc_T_00
+						add	ecx,			06h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_00:
+						cmp	eax,			"gdiw"
+						jne	_lFlLoc_T_01
+						cmp	word ptr [ecx+04h],	"te"
+						jne	_lFlLoc_T_01
+						cmp	byte ptr [ecx+06h],	" "
+						jne	_lFlLoc_T_01
+						add	ecx,			07h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_01:
+						cmp	eax,			"tinu"
+						jne	_lFlLoc_T_02
+						cmp	byte ptr [ecx+04h],	" "
+						jne	_lFlLoc_T_02
+						add	ecx,			05h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_02:
+						cmp	eax,			"tsed"
+						jne	_lFlLoc_T_03
+						cmp	dword ptr [ecx+04h],	"tcur"
+						jne	_lFlLoc_T_03
+						cmp	dword ptr [ecx+08h],	"elba"
+						jne	_lFlLoc_T_03
+						cmp	byte ptr [ecx+0ch],	" "
+						jne	_lFlLoc_T_03
+						add	ecx,			0dh
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_03:
+						cmp	eax,			"meti"
+						jne	_lFlLoc_T_04
+						cmp	byte ptr [ecx+04h],	" "
+						jne	_lFlLoc_T_04
+						add	ecx,			05h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_04:
+						cmp	eax,			"crof"
+						jne	_lFlLoc_T_05
+						cmp	word ptr [ecx+04h],	" e"
+						jne	_lFlLoc_T_05
+						add	ecx,			06h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_05:
+						cmp	eax,			"uorg"
+						jne	_lFlLoc_T_06
+						cmp	word ptr [ecx],		" p"
+						jne	_lFlLoc_T_06
+						add	ecx,			06h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_06:
+						cmp	eax,			"girt"
+						jne	_lFlLoc_T_07
+						cmp	dword ptr [ecx+04h],	" reg"
+						jne	_lFlLoc_T_07
+						add	ecx,			08h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_07:
+						cmp	eax,			"girt"
+						jne	_lFlLoc_T_08
+						cmp	dword ptr [ecx+04h],	"creg"
+						jne	_lFlLoc_T_08
+						cmp	dword ptr [ecx+08h],	"idno"
+						jne	_lFlLoc_T_08
+						cmp	dword ptr [ecx+0ch],	"noit"
+						jne	_lFlLoc_T_08
+						cmp	byte ptr [ecx+10h],	" "
+						jne	_lFlLoc_T_08
+						add	ecx,			11h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_08:
+						cmp	eax,			"girt"
+						jne	_lFlLoc_T_09
+						cmp	dword ptr [ecx+04h],	"areg"
+						jne	_lFlLoc_T_09
+						cmp	dword ptr [ecx+08h],	"oitc"
+						jne	_lFlLoc_T_09
+						cmp	word ptr [ecx+0ch],	" n"
+						jne	_lFlLoc_T_09
+						add	ecx,			0eh
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_09:
+						cmp	eax,			"emit"
+						jne	_lFlLoc_T_0a
+						cmp	word ptr [ecx+04h],	" r"
+						jne	_lFlLoc_T_0a
+						add	ecx,			06h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_0a:
+						cmp	eax,			"acol"
+						jne	_lFlLoc_T_0b
+						cmp	dword ptr [ecx+04h],	"noit"
+						jne	_lFlLoc_T_0b
+						cmp	byte ptr [ecx+08h],	" "
+						jne	_lFlLoc_T_0b
+						add	ecx,			09h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_0b:
+						cmp	eax,			"iger"
+						jne	_lFlLoc_T_0c
+						cmp	word ptr [ecx+04h],	"no"
+						jne	_lFlLoc_T_0c
+						cmp	byte ptr [ecx+06h],	" "
+						jne	_lFlLoc_T_0c
+						add	ecx,			07h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_0c:
+						cmp	eax,			"tcer"
+						jne	_lFlLoc_T_0d
+						cmp	byte ptr [ecx+04h],	" "
+						jne	_lFlLoc_T_0d
+						add	ecx,			05h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_0d:
+						cmp	eax,			"nuos"
+						jne	_lFlLoc_T_0e
+						cmp	word ptr [ecx+04h],	" d"
+						jne	_lFlLoc_T_0e
+						add	ecx,			06h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_0e:
+				;		cmp	eax,			"emac"
+				;		jne	_lFlLoc_T_0f
+				;		cmp	dword ptr [ecx+04h],	"esar"
+				;		jne	_lFlLoc_T_0f
+				;		cmp	dword ptr [ecx+08h],	" put"
+				;		jne	_lFlLoc_T_0f
+				;		add	ecx,			0ch
+				;		jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_0f:
+						cmp	eax,			"effe"
+						jne	_lFlLoc_T_10
+						cmp	word ptr [ecx+04h],	"tc"
+						jne	_lFlLoc_T_10
+						cmp	byte ptr [ecx+06h],	" "
+						jne	_lFlLoc_T_10
+						add	ecx,			07h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_10:
+						cmp	eax,			"taew"
+						jne	_lFlLoc_T_11
+						cmp	dword ptr [ecx+04h],	"ereh"
+						jne	_lFlLoc_T_11
+						cmp	dword ptr [ecx+08h],	"ceff"
+						jne	_lFlLoc_T_11
+						cmp	word ptr [ecx+0ch],	" t"
+						add	ecx,			0eh
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_11:
+						cmp	eax,			"laid"
+						jne	_lFlLoc_T_12
+						cmp	word ptr [ecx+04h],	"go"
+						jne	_lFlLoc_T_12
+						cmp	byte ptr [ecx+06h],	" "
+						jne	_lFlLoc_T_12
+						add	ecx,			07h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_12:
+						cmp	eax,			"ttub"
+						jne	_lFlLoc_T_13
+						cmp	dword ptr [ecx+03h],	" not"
+						jne	_lFlLoc_T_13
+						add	ecx,			07h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_13:
+						cmp	eax,			"seuq"
+						jne	_lFlLoc_T_14
+						cmp	word ptr [ecx+04h],	" t"
+						jne	_lFlLoc_T_14
+						add	ecx,			06h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_14:
+						cmp	eax,			"seuq"
+						jne	_lFlLoc_T_15
+						cmp	dword ptr [ecx+04h],	"etit"
+						jne	_lFlLoc_T_15
+						cmp	word ptr [ecx+08h],	" m"
+						jne	_lFlLoc_T_15
+						add	ecx,			0ah
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_15:
+						cmp	eax,			"emit"
+						jne	_lFlLoc_T_16
+						cmp	dword ptr [ecx+04h],	"aidr"
+						jne	_lFlLoc_T_16
+						cmp	dword ptr [ecx+08h],	" gol"
+						jne	_lFlLoc_T_16
+						add	ecx,			0ch
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_16:
+						cmp	eax,			"dael"
+						jne	_lFlLoc_T_17
+						cmp	dword ptr [ecx+04h],	"obre"
+						jne	_lFlLoc_T_17
+						cmp	dword ptr [ecx+08h],	" dra"
+						jne	_lFlLoc_T_17
+						add	ecx,			0ch
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_17:
+						cmp	eax,			"tlum"
+						jne	_lFlLoc_T_18
+						cmp	dword ptr [ecx+04h],	"aobi"
+						jne	_lFlLoc_T_18
+						cmp	dword ptr [ecx+07h],	" dra"
+						jne	_lFlLoc_T_18
+						add	ecx,			0bh
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_18:
+						cmp	eax,			"tlum"
+						jne	_lFlLoc_T_19
+						cmp	dword ptr [ecx+04h],	"aobi"
+						jne	_lFlLoc_T_19
+						cmp	dword ptr [ecx+08h],	"tidr"
+						jne	_lFlLoc_T_19
+						cmp	dword ptr [ecx+0bh],	" met"
+						jne	_lFlLoc_T_19
+						add	ecx,			0fh
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_19:
+						cmp	eax,			"emag"
+						jne	_lFlLoc_T_1a
+						cmp	dword ptr [ecx+04h],	"hcac"
+						jne	_lFlLoc_T_1a
+						cmp	word ptr [ecx+08h],	" e"
+						jne	_lFlLoc_T_1a
+						add	ecx,			0ah
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_1a:
+				;		cmp	eax,			"hgil"
+				;		jne	_lFlLoc_T_1b
+				;		cmp	dword ptr [ecx+04h],	"niht"
+				;		jne	_lFlLoc_T_1b
+				;		cmp	word ptr [ecx+08h],	" g"
+				;		jne	_lFlLoc_T_1b
+				;		add	ecx,			0ah
+				;		jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_1b:
+				;		cmp	eax,			"gami"
+				;		jne	_lFlLoc_T_1c
+				;		cmp	dword ptr [ecx+04h],	" e"
+				;		jne	_lFlLoc_T_1c
+				;		add	ecx,			06h
+				;		jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_1c:
+				;		cmp	eax,			"rebu"
+				;		jne	_lFlLoc_T_1d
+				;		cmp	dword ptr [ecx+04h],	"alps"
+				;		jne	_lFlLoc_T_1d
+				;		cmp	word ptr [ecx+08h],	" t"
+				;		jne	_lFlLoc_T_1d
+				;		add	ecx,			0ah
+				;		jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_1d:
+						cmp	eax,			"dnah"
+						jne	_lFlLoc_T_1e
+						cmp	dword ptr [ecx+03h],	" eld"
+						jne	_lFlLoc_T_1e
+						add	ecx,			07h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_1e:
+						cmp	eax,			"hsah"
+						jne	_lFlLoc_T_1f
+						cmp	dword ptr [ecx+04h],	"lbat"
+						jne	_lFlLoc_T_1f
+						cmp	word ptr [ecx+08h],	" e"
+						jne	_lFlLoc_T_1f
+						add	ecx,			0ah
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_1f:
+						cmp	eax,			"nega"
+						jne	_lFlLoc_T_20
+						cmp	word ptr [ecx+04h],	" t"
+						jne	_lFlLoc_T_20
+						add	ecx,			06h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_20:
+						cmp	eax,			"tinu"
+						jne	_lFlLoc_T_21
+						cmp	dword ptr [ecx+04h],	"loop"
+						jne	_lFlLoc_T_21
+						cmp	byte ptr [ecx+08h],	" "
+						jne	_lFlLoc_T_21
+						add	ecx,			09h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_21:
+						cmp	eax,			"meti"
+						jne	_lFlLoc_T_22
+						cmp	dword ptr [ecx+04h],	"loop"
+						jne	_lFlLoc_T_22
+						cmp	byte ptr [ecx+08h],	" "
+						jne	_lFlLoc_T_22
+						add	ecx,			09h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_22:
+						cmp	eax,			"mgof"
+						jne	_lFlLoc_T_23
+						cmp	dword ptr [ecx+04h],	"fido"
+						jne	_lFlLoc_T_23
+						cmp	dword ptr [ecx+08h],	" rei"
+						jne	_lFlLoc_T_23
+						add	ecx,			0ch
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_23:
+						cmp	eax,			"efed"
+						jne	_lFlLoc_T_24
+						cmp	dword ptr [ecx+04h],	"octa"
+						jne	_lFlLoc_T_24
+						cmp	dword ptr [ecx+08h],	"tind"
+						jne	_lFlLoc_T_24
+						cmp	dword ptr [ecx+0ch],	" noi"
+						jne	_lFlLoc_T_24
+						add	ecx,			10h
+						jmp	_lFlLoc_T_Add
+
+						_lFlLoc_T_24:
+						_lFlLoc_GetNext:
+						inc	ecx
+						cmp	word ptr [ecx-02h],	0a0dh	;; nl
+						jne	_lFlLoc_GetNext
+						jmp	_lFlLoc_00
+
+						_lFlLoc_T_Add:
+						cmp	dword ptr [ecx],	"arra"
+						jne	_lFlLoc_T_AddEX
+						cmp	word ptr [ecx+04h],	" y"
+						je	_lFlLoc_GetNext
+						_lFlLoc_T_AddEX:
+						push	ecx
+
+						_lFlLoc_T_IsInit:
+						inc	ecx
+						cmp	byte ptr [ecx],		"="
+						je	_lFlLoc_T_Init
+						cmp	word ptr [ecx],		0a0dh
+						jne	_lFlLoc_T_IsInit
+						add	ecx,			02h
+						push	00h			;; var is null
+						jmp	_lFlLoc_00
+
+						_lFlLoc_T_Init:
+						cmp	dword ptr [ecx+01h],	"llun"
+						jne	_lFlLoc_T_InitEX
+						cmp	word ptr [ecx+05h],	0a0dh	;; nl
+						jne	_lFlLoc_T_InitEX
+						push	00h			;; var is null
+						jmp	_lFlLoc_GetNext
+
+						_lFlLoc_T_InitEX:
+						push	01h			;; var is't null
+						jmp	_lFlLoc_GetNext
+						;;----------------
+
+						;;----------------
+						_lFlLoc_Skip:
+						inc	ecx
+						cmp	word ptr [ecx - 02h],	0a0dh
+						jne	_lFlLoc_Skip
+						jmp	_lFlLoc_00
+						;;----------------
+
+					_lFlLoc_LSE:
+					;;----------------
+
+					;;----------------
+					;; scan code
+
+					;; 0 variables
+					cmp	dword ptr [esp + 04h],		00h
+					je	_lFlushLocals_EndEx
+
+				mov	dword ptr [_dFlushLocalsExBlock],	01h
+
+					mov	ecx,				dword ptr [_dCodeOffset]
+				;	xor	edx,				edx	;; block counter
+
+					_lFlLoc_SC_Start:
+					mov	eax,				dword ptr [ecx]
+
+					cmp	al,			00h
+					je	_lFlLoc_SC_End
+
+					cmp	ax,			"fi"
+					je	_lFlLoc_SC_If
+
+					cmp	eax,			"esle"
+					je	_lFlLoc_SC_Else
+
+					cmp	eax,			"idne"
+					je	_lFlLoc_SC_Endif
+
+					cmp	eax,			"pool"
+					je	_lFlLoc_SC_Loop
+
+					cmp	eax,			"ldne"
+					je	_lFlLoc_SC_Endloop
+
+					cmp	eax,			"uter"
+					je	_lFlLoc_SC_Return
+
+					cmp	eax,			" tes"
+					jne	_lFlLoc_SC_GetNextLine
+					
+						;;----------------
+						;; set
+						add	ecx,			04h
+						mov	ebp,			esp
+						xor	eax,			eax
+
+						_lFlLoc_SC_GetVal_00:
+						mov	ebx,			dword ptr [ebp + 04h]
+						test	ebx,			ebx
+						jz	_lFlLoc_SC_GetNextLine
+
+							;;----------------
+							;; check
+							push	ecx
+							_lFlLoc_SC_CheckVal_00:
+							mov	al,				byte ptr [ecx]
+							cmp	byte ptr [_bAscii_00 + eax],	ah
+							jz	_lFlLoc_SC_CheckVal_01
+
+							cmp	byte ptr [ebx],			al
+							jne	_lFlLoc_SC_GetVal_Next
+							inc	ecx
+							inc	ebx
+							jmp	_lFlLoc_SC_CheckVal_00
+
+							_lFlLoc_SC_CheckVal_01:
+							mov	al,				byte ptr [ebx]
+							cmp	byte ptr [_bAscii_00 + eax],	ah
+							jz	_lFlLoc_SC_GetVal_Found
+							;;----------------
+
+						_lFlLoc_SC_GetVal_Next:
+						pop	ecx
+						add	ebp,			08h
+						jmp	_lFlLoc_SC_GetVal_00
+
+							;;----------------
+							;; found
+							_lFlLoc_SC_GetVal_Found:
+							add	esp,			04h
+							cmp	dword ptr [ecx + 01h],	"llun"
+							jne	_lFlLoc_SC_NotNullEx
+							cmp	word ptr [ecx + 05h],	0a0dh
+							jne	_lFlLoc_SC_NotNullEx
+				;			test	edx,			edx
+				;			jnz	_lFlLoc_SC_GetNextLine
+							mov	dword ptr [ebp],	00h
+							jmp	_lFlLoc_SC_GetNextLine
+
+							_lFlLoc_SC_NotNullEx:
+							cmp	dword ptr [ecx + 01h],	"llun"
+							jne	_lFlLoc_SC_NotNull
+							cmp	dword ptr [ecx + 05h],	"njc_"
+							jne	_lFlLoc_SC_NotNull
+							cmp	dword ptr [ecx + 09h],	"ellu"
+							jne	_lFlLoc_SC_NotNull
+							cmp	byte ptr [ecx + 0dh],	"x"
+							jne	_lFlLoc_SC_NotNull
+							cmp	word ptr [ecx + 0eh],	0a0dh
+							jne	_lFlLoc_SC_NotNull
+				;			test	edx,			edx
+				;			jnz	_lFlLoc_SC_GetNextLine
+							mov	dword ptr [ebp],	00h
+							jmp	_lFlLoc_SC_GetNextLine
+
+							_lFlLoc_SC_NotNull:
+							mov	dword ptr [ebp],	01h
+							jmp	_lFlLoc_SC_GetNextLine
+							;;----------------
+						;;----------------
+
+						;;----------------
+						;; if
+						_lFlLoc_SC_If:
+						cmp	byte ptr [ecx+02h],	28h
+						ja	_lFlLoc_SC_GetNextLine
+				;		inc	edx
+				push	00h
+				push	dword ptr [_dFlushLocalsExBlock]
+				mov	dword ptr [_dFlushLocalsExBlock],	01h
+				jmp	_lFlLoc_SC_BlockIn
+				;		jmp	_lFlLoc_SC_GetNextLine
+						;;----------------
+
+						;;----------------
+						;; else and elseif
+						_lFlLoc_SC_Else:
+						cmp	word ptr [ecx + 04h],	0a0dh
+						je	_lFlLoc_SC_ElseEx
+						cmp	word ptr [ecx + 04h],	"fi"
+						jne	_lFlLoc_SC_GetNextLine
+						cmp	byte ptr [ecx + 06h],	28h
+						ja	_lFlLoc_SC_GetNextLine
+
+						_lFlLoc_SC_ElseEx:
+				call	_lFlLoc_SC_BlockOut
+				push	00h
+				push	dword ptr [_dFlushLocalsExBlock]
+				mov	dword ptr [_dFlushLocalsExBlock],	01h
+				jmp	_lFlLoc_SC_BlockIn
+				;		jmp	_lFlLoc_SC_GetNextLine
+						;;----------------
+
+						;;----------------
+						;; endif
+						_lFlLoc_SC_Endif:
+						cmp	word ptr [ecx + 03h],	"fi"
+						jne	_lFlLoc_SC_GetNextLine
+						cmp	byte ptr [ecx + 05h],	28h
+						ja	_lFlLoc_SC_GetNextLine
+				;		dec	edx
+				call	_lFlLoc_SC_BlockOut
+						jmp	_lFlLoc_SC_GetNextLine
+						;;----------------
+
+						;;----------------
+						;; loop
+						_lFlLoc_SC_Loop:
+						cmp	byte ptr [ecx + 04h],	28h
+						ja	_lFlLoc_SC_GetNextLine
+				;		inc	edx
+				push	00h
+				push	dword ptr [_dFlushLocalsExBlock]
+				mov	dword ptr [_dFlushLocalsExBlock],	02h
+				jmp	_lFlLoc_SC_BlockIn
+				;		jmp	_lFlLoc_SC_GetNextLine
+						;;----------------
+
+						;;----------------
+						;; endloop
+						_lFlLoc_SC_Endloop:
+						cmp	dword ptr [ecx + 03h],	"pool"
+						jne	_lFlLoc_SC_GetNextLine
+						cmp	byte ptr [ecx + 07h],	28h
+						ja	_lFlLoc_SC_GetNextLine
+				;		dec	edx
+				call	_lFlLoc_SC_BlockOut
+						jmp	_lFlLoc_SC_GetNextLine
+						;;----------------
+
+						;;----------------
+						;; return
+						_lFlLoc_SC_Return:
+						cmp	word ptr [ecx + 04h],	"nr"
+						jne	_lFlLoc_SC_GetNextLine
+						cmp	byte ptr [ecx + 06h],	28h
+						ja	_lFlLoc_SC_GetNextLine
+
+				;;----------------
+				cmp	dword ptr [_dFlushLocalsExBlock],	02h
+				je	_lFlLoc_SC_GetNextLine
+
+				mov	edx,				esp
+
+				_lFlLoc_SC_ReturnFix:
+				mov	dword ptr [edx],		00h
+				add	edx,				08h
+				cmp	dword ptr [edx + 04h],		00h
+				jne	_lFlLoc_SC_ReturnFix
+				;;----------------
+
+						jmp	_lFlLoc_SC_GetNextLine
+						;;----------------
+
+						;;----------------
+						;; get next line
+						_lFlLoc_SC_GetNextLine:
+						inc	ecx
+						cmp	word ptr [ecx - 02h],	0a0dh	;; nl
+						jne	_lFlLoc_SC_GetNextLine
+						jmp	_lFlLoc_SC_Start
+						;;----------------
+
+				;;----------------
+				;; block in
+				_lFlLoc_SC_BlockIn:
+				mov	edx,			dword ptr [_dFlushLocalsStackPos]
+
+				_lFlLoc_SC_BlockIn_Start:
+				mov	eax,			dword ptr [edx - 04h]
+				test	eax,			eax
+				je	_lFlLoc_SC_GetNextLine
+
+				push	eax
+				mov	eax,			dword ptr [edx - 08h]
+				push	eax
+
+				sub	edx,			08h
+				jmp	_lFlLoc_SC_BlockIn_Start
+				;;----------------
+
+				;;----------------
+				;; block out
+				_lFlLoc_SC_BlockOut:
+				pop	ebp			;; ret addr
+
+				mov	edx,			esp
+				_lFlLoc_SC_BlockOut_Get:
+				add	edx,			08h
+				cmp	dword ptr [edx + 04h],	00h
+				jne	_lFlLoc_SC_BlockOut_Get
+				add	edx,			08h
+
+				_lFlLoc_SC_BlockOut_Start:
+				pop	eax
+				add	esp,			04h
+				or	eax,			dword ptr [edx]
+				add	edx,			08h
+				cmp	dword ptr [esp + 04h],	00h
+				jne	_lFlLoc_SC_BlockOut_Start
+
+				pop	dword ptr [_dFlushLocalsExBlock]
+				add	esp,			04h
+
+				jmp	ebp
+				;;----------------
+
+					_lFlLoc_SC_End:
+					;;----------------
+
+					;;----------------
+					;; process return expression
+					cmp	byte ptr [_bALFReturnExpr],	00h
+					je	_lFLRetExpr_End
+
+					lea	ecx,			[esi + 05h]
+					xor	eax,			eax
+
+					_lFLRetExpr_Start:
+					inc	ecx
+					_lFLRetExpr_StartEx:
+					cmp	word ptr [ecx],		0a0dh
+					je	_lFLRetExpr_End
+
+					mov	al,				byte ptr [ecx]
+					cmp	byte ptr [_bAscii_00 + eax],	ah
+					je	_lFLRetExpr_Start
+
+						;;----------------
+						;; check word
+						lea	ebp,				[esp - 08h]
+
+						_lFLRetExpr_Check:
+						add	ebp,				08h
+						mov	edx,				ecx
+						mov	ebx,				dword ptr [ebp + 04h]
+						test	ebx,				ebx
+						jz	_lFLRetExpr_NextWord
+
+						_lFLRetExpr_Check_00:
+						mov	al,				byte ptr [edx]
+						cmp	byte ptr [_bAscii_00 + eax],	ah
+						je	_lFLRetExpr_Check_01
+						cmp	al,				byte ptr [ebx]
+						jne	_lFLRetExpr_Check
+						inc	ebx
+						inc	edx
+						jmp	_lFLRetExpr_Check_00
+
+						_lFLRetExpr_Check_01:
+						mov	al,				byte ptr [ebx]
+						cmp	byte ptr [_bAscii_00 + eax],	ah
+						jne	_lFLRetExpr_Check
+
+				cmp	dword ptr [ebp],			00h
+				je	_lFLRetExpr_NextWord
+
+							;;----------------
+							;; use generated globals
+							mov	eax,				dword ptr [_sFuncType]
+
+							mov	dword ptr [edi],		" tes"
+							mov	dword ptr [edi + 04h],		"v_jc"
+							mov	dword ptr [edi + 08h],		"_666"
+							add	edi,				0ch
+
+							call	_lGetGlobals_Start
+
+							mov	byte ptr [edi],			"="
+							inc	edi
+
+							add	esi,				06h
+							_lFLRetExpr_CopyExpr:
+							movsb
+							cmp	word ptr [edi - 02h],		0a0dh
+							jne	_lFLRetExpr_CopyExpr
+
+							mov	byte ptr [_bALFReturnExprUse],	01h
+							jmp	_lFLRetExpr_End
+							;;----------------
+
+						_lFLRetExpr_NextWord:
+						inc	ecx
+						mov	al,				byte ptr [ecx]
+						cmp	byte ptr [_bAscii_00 + eax],	ah
+						jne	_lFLRetExpr_NextWord
+						jmp	_lFLRetExpr_StartEx
+						;;----------------
+
+					_lFLRetExpr_End:
+					;;----------------
+
+					;;----------------
+					;; final
+					mov	byte ptr [_bFlushFlagBlock],	01h
+
+					_lFlLoc_FinalNext:
+					pop	eax	;; is null
+					pop	ebx	;; val name
+
+					test	ebx,			ebx
+					jz	_lFlLoc_FinalEnd
+
+					cmp	byte ptr [_bFlushFlagBlock],	00h
+					je	_lFlLoc_FinalNext
+
+					test	eax,			eax
+					jz	_lFlLoc_FinalNext
+
+						;;----------------
+						mov	dword ptr [edi],		" tes"
+						add	edi,				04h
+
+						_lFlLoc_Final_00:
+						mov	al,				byte ptr [ebx]
+						cmp	byte ptr [_bAscii_00+eax],	ah
+						jz	_lFlLoc_Final_01
+						mov	byte ptr [edi],			al
+						inc	ebx
+						inc	edi
+						jmp	_lFlLoc_Final_00
+
+						_lFlLoc_Final_01:
+						mov	dword ptr [edi],		"lun="
+						mov	dword ptr [edi+04h],		000a0d6ch	;; l nl _
+						add	edi,				07h
+						jmp	_lFlLoc_FinalNext
+						;;----------------
+
+					_lFlLoc_FinalEnd:
+					mov	byte ptr [_bFlushFlagBlock],	00h
+					test	eax,			eax
+					jnz	_lFlLoc_FinalNext
+					;;----------------
+
+					;;----------------
+					;; return expr ex
+					cmp	byte ptr [_bALFReturnExprUse],	00h
+					je	_lFlLoc_RetnExprEx_End
+
+					mov	byte ptr [_bALFReturnLast],	01h
+
+					mov	dword ptr [edi],		"uter"
+					mov	dword ptr [edi + 04h],		"c nr"
+					mov	dword ptr [edi + 08h],		"6v_j"
+					mov	dword ptr [edi + 0ch],		"__66"
+
+					add	edi,				0fh
+
+					mov	ecx,				dword ptr [_sFuncType]
+					xor	eax,				eax
+
+					_lFlLoc_RetnExprEx_CopyType:
+					mov	al,				byte ptr [ecx]
+					cmp	byte ptr [_bAscii_00 + eax],	ah
+					je	_lFlLoc_RetnExprEx_CopyTypeEnd
+					stosb
+					inc	ecx
+					jmp	_lFlLoc_RetnExprEx_CopyType
+
+					_lFlLoc_RetnExprEx_CopyTypeEnd:
+					mov	word ptr [edi],			0a0dh
+					add	edi,				02h
+
+				;	_lFlLoc_RetnExprEx_Correct:
+				;	inc	esi
+				;	cmp	word ptr [esi - 02h],		0a0dh
+				;	jmp	_lFlLoc_RetnExprEx_Correct
+
+					_lFlLoc_RetnExprEx_End:
+					;;----------------
+
+				_lFlushLocals_End:
+				retn
+
+				_lFlushLocals_EndEx:
+				add	esp,				08h
+				retn
+				;;----------------
 
 			;;----------------
 
@@ -11038,7 +11015,8 @@ retn
 			jmp	_lFNPInjAddAnon_00_EX
 
 			_lFNPInjAddAnon_01:
-			mov	byte ptr [ecx],		20h		;; bs
+;			mov	byte ptr [ecx],		20h		;; bs
+mov	byte ptr [ecx],		1ah		;; bs
 			inc	eax
 			jmp	_lFNPInjAddAnon_00
 
@@ -11283,7 +11261,7 @@ add	esi,			09h
 		cmp	byte ptr [ecx],			"("
 		jne	_lCallbackErr
 		cmp	byte ptr [ecx + 01h],		")"
-		je	_lCallback_NoArg
+		je	_lCallback_ArgEnd
 
 		cmp	byte ptr [edx + 01h],		00h
 		je	_lCallbackErr
@@ -11291,9 +11269,74 @@ add	esi,			09h
 		lea	eax,				[ecx + 01h]
 		mov	dword ptr [ebp + 08h],		eax
 
-		_lCallback_NoArg:
-		mov	eax,				ebx
-		and	eax,				10b
+		_lCallback_ArgEnd:
+
+;;----------------
+;; add anon blocks
+xor	eax,			eax
+
+_lCallback_AnonPre:
+inc	ecx
+cmp	byte ptr [ecx],		00h
+;; je err
+cmp	word ptr [ecx - 01h],	0a0dh
+jne	_lCallback_AnonPre
+
+_lCallback_AnonChar:
+inc	ecx
+
+_lCallback_AnonCharEx:
+cmp	byte ptr [ecx],		18h		;; anon block
+je	_lCallback_Anon_00
+
+cmp	dword ptr [ecx],	6e650a0dh	;; nl en
+je	_lCallback_Anon_03
+
+cmp	word ptr [ecx],		7801h		;; #x
+je	_lCallback_Anon_02
+cmp	word ptr [ecx],		7901h		;; #y
+jne	_lCallback_AnonChar
+
+_lCallback_Anon_02:
+add	ecx,			06h
+jmp	_lCallback_AnonCharEx
+
+_lCallback_Anon_00:
+inc	eax
+test	ebx,			ebx
+jz	_lCallback_AnonFunc
+
+mov	dword ptr [ecx - 08h],	"siht"
+mov	dword ptr [ecx - 04h],	"epyt"
+mov	dword ptr [ecx],	"."
+jmp	_lCallback_AnonChar
+
+_lCallback_AnonFunc:
+mov	byte ptr [ecx],		" "
+jmp	_lCallback_AnonChar
+
+_lCallback_Anon_03:
+cmp	dword ptr [ecx + 04h],	"lacd"
+jne	_lCallback_AnonChar
+cmp	dword ptr [ecx + 08h],	"cabl"
+jne	_lCallback_AnonChar
+cmp	byte ptr [ecx + 0ch],	"k"
+jne	_lCallback_AnonChar
+cmp	byte ptr [ecx + 0d],	20h
+ja	_lCallback_AnonChar
+
+test	eax,			eax
+jz	_lCallback_AnonEnd
+
+push	offset _lCallback_AnonEnd
+test	ebx,			ebx
+jz	_lFNPAnonFuncAdd
+jmp	_lFNPAnonMethodAdd
+
+_lCallback_AnonEnd:
+;;----------------
+
+		test	ebx,				ebx
 		jnz	_lCallback_Method
 
 		_lCallback_Func:
@@ -11365,21 +11408,21 @@ add	esi,			09h
 		mov	dword ptr [_dBCP],	edi	;; system in
 		or	ebx,			01h
 
-_lCallback_CorrectCodeOffset:
-inc	esi
-cmp	word ptr [esi],		0a0dh
-jne	_lCallback_CorrectCodeOffset
+		_lCallback_CorrectCodeOffset:
+		inc	esi
+		cmp	word ptr [esi],		0a0dh
+		jne	_lCallback_CorrectCodeOffset
 
 		mov	dword ptr [_dFCL],	offset _bFuncCodeLocals
 		mov	dword ptr [_dFCB],	offset _bFuncCodeBase
 
-mov	dword ptr [_dInFuncBlockMax],		00h
-mov	dword ptr [_dInFuncBlockStack],		00h
-mov	dword ptr [_dInFuncBlockPnt],		offset _dInFuncBlockStack + 04h
+		mov	dword ptr [_dInFuncBlockMax],		00h
+		mov	dword ptr [_dInFuncBlockStack],		00h
+		mov	dword ptr [_dInFuncBlockPnt],		offset _dInFuncBlockStack + 04h
 
-mov	byte ptr [_bFuncCodeNop],		00h
+		mov	byte ptr [_bFuncCodeNop],		00h
 
-mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
+		mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 
 		jmp	_lFNPLine
 		;;----------------
@@ -11405,17 +11448,6 @@ mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 		jmp	_lErrIn
 		;;----------------
 	;;----------------
-
-;_lbl:
-;cmp	eax,			"cdne"
-;jne	_next
-;cmp	dword ptr [esi + 03h],	"llac"
-;jne	_next
-;cmp	dword ptr [esi + 07h],	"blkcabla"
-;jne	_next
-;cmp	byte ptr [esi + 0bh],	" "
-;jg	_next
-
 ;;----------------
 
 		_lbl:
@@ -11531,7 +11563,7 @@ mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 				cmp	byte ptr [ecx],		18h		;; anon block
 				je	_lFNPMetAddAnon_01
 
-				cmp	dword ptr [ecx],	6e650a0dh	;; nl en
+;				cmp	dword ptr [ecx],	6e650a0dh	;; nl en
 				je	_lFNPMetAddAnon_02
 
 				cmp	word ptr [ecx],		7801h		;; #x
@@ -11547,19 +11579,23 @@ mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 					;; add struct name
 					_lFNPMetAddAnon_01:
 					inc	eax
-					mov	byte ptr [ecx],		"."
-
-					mov	ebp,			ecx
-					mov	edx,			dword ptr [_dCStructName]
-
-					_lFNPMetAddAnon_01_EX:
-					mov	bh,			byte ptr [edx]
-					cmp	bh,			20h	;; bs
-					je	_lFNPMetAddAnon_00
-					dec	ebp
-					mov	byte ptr [ebp],			bh
-					dec	edx
-					jmp	_lFNPMetAddAnon_01_EX
+mov	dword ptr [ecx - 09h],		"siht"
+mov	dword ptr [ecx - 05h],		"epyt"
+mov	byte ptr [ecx],			" "
+jmp	_lFNPMetAddAnon_00
+;					mov	byte ptr [ecx],		"."
+;
+;					mov	ebp,			ecx
+;					mov	edx,			dword ptr [_dCStructName]
+;
+;					_lFNPMetAddAnon_01_EX:
+;					mov	bh,			byte ptr [edx]
+;					cmp	bh,			20h	;; bs
+;					je	_lFNPMetAddAnon_00
+;					dec	ebp
+;					mov	byte ptr [ebp],			bh
+;					dec	edx
+;					jmp	_lFNPMetAddAnon_01_EX
 					;;----------------
 
 				_lFNPMetAddAnon_02:
@@ -11573,7 +11609,7 @@ mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 				test	eax,				eax
 				jz	_lFNPCopyFuncInEx
 
-				xor	bh,				bh
+;				xor	bh,				bh
 				push	offset _lFNPCopyFuncInEx
 				jmp	_lFNPAnonMethodAdd
 				;;----------------
@@ -11761,25 +11797,25 @@ mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 							mov	esi,				dword ptr [esi]
 							sub	ecx,				esi
 
-									;;----------------
-									;; remove 18h
-									push	ecx
-									push	edi
-									mov	edi,				esi
-									mov	al,				18h
+								;;----------------
+								;; remove 18h
+								push	ecx
+								push	edi
+								mov	edi,				esi
+								mov	al,				18h
 
-									_lFNPAnonFuncAdd_00:
-									repnz	scasb
-									test	ecx,				ecx
-									jz	_lFNPAnonFuncAdd_01
+								_lFNPAnonFuncAdd_00:
+								repnz	scasb
+								test	ecx,				ecx
+								jz	_lFNPAnonFuncAdd_01
 
-									mov	byte ptr [edi-01h],		" "
-									jmp	_lFNPAnonFuncAdd_00
+								mov	byte ptr [edi-01h],		" "
+								jmp	_lFNPAnonFuncAdd_00
 
-									_lFNPAnonFuncAdd_01:
-									pop	edi
-									pop	ecx
-									;;----------------
+								_lFNPAnonFuncAdd_01:
+								pop	edi
+								pop	ecx
+								;;----------------
 
 							rep	movsb
 
@@ -11823,13 +11859,9 @@ mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 									mov	dword ptr [edx+08h],		"ohte"
 									mov	byte ptr [edx+0ch],		"d"
 
-						;mov	edx,				dword ptr [ebp+1ch]
-						;test	edx,				edx
-						;cmovz	edx,				eax
-
-						mov	edx,				dword ptr [ebp+08h]
-						mov	dword ptr [edx+03h],		"htem"
-						mov	dword ptr [edx+07h],		"  do"
+									mov	edx,				dword ptr [ebp+08h]
+									mov	dword ptr [edx+03h],		"htem"
+									mov	dword ptr [edx+07h],		"  do"
 
 									_lFNPAnonMethodAdd_02: 
 									add	ebp,				10h
@@ -11852,18 +11884,21 @@ mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 									test	ecx,				ecx
 									jz	_lFNPAnonMethodAdd_04
 
-									lea	ebp,				[edi-01h]
-									mov	edx,				dword ptr [_dCStructName]
-									mov	byte ptr [ebp],			"."
+;									lea	ebp,				[edi-01h]
+;									mov	edx,				dword ptr [_dCStructName]
+									mov	dword ptr [edi - 08h],		"siht"
+									mov	dword ptr [edi - 04h],		"epyt"
+									mov	byte ptr [edi],			"."
+jmp	_lFNPAnonMethodAdd_03
 
-									_lFNPAnonMethodAdd_05:
-									mov	bh,				byte ptr [edx]
-									cmp	bh,				20h	;; bs
-									je	_lFNPAnonMethodAdd_03
-									dec	ebp
-									mov	byte ptr [ebp],			bh
-									dec	edx
-									jmp	_lFNPAnonMethodAdd_05
+;									_lFNPAnonMethodAdd_05:
+;									mov	bh,				byte ptr [edx]
+;									cmp	bh,				20h	;; bs
+;									je	_lFNPAnonMethodAdd_03
+;									dec	ebp
+;									mov	byte ptr [ebp],			bh
+;									dec	edx
+;									jmp	_lFNPAnonMethodAdd_05
 
 									_lFNPAnonMethodAdd_04:
 									pop	edi
@@ -12096,33 +12131,43 @@ mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 				;; process 18h
 				_lFNPExFuncDefAddAnon_02:
 				inc	eax
-				mov	byte ptr [ecx],		20h	;; bs
 
-				test	ebx,			ebx
-				jz	_lFNPExFuncDefAddAnon_01
+mov	byte ptr [ecx],		" "
+test	ebx,			ebx
+jz	_lFNPExFuncDefAddAnon_01
+mov	dword ptr [ecx - 08h],	"siht"
+mov	dword ptr [ecx - 04h],	"epyt"
+mov	byte ptr [ecx],		"."
 
-					;;----------------
-					;; add struct name
-					push	eax
-					push	ecx
-					mov	byte ptr [ecx],			"."
-					mov	edx,				dword ptr [_dCStructName]
-
-					_lFNPExFuncDefAddAnon_02_EX:
-					mov	bh,				byte ptr [edx]
-					cmp	bh,				20h	;; bs
-					je	_lFNPExFuncDefAddAnon_02_FX
-					dec	ecx
-					mov	byte ptr [ecx],			bh
-					dec	edx
-					jmp	_lFNPExFuncDefAddAnon_02_EX
-
-					_lFNPExFuncDefAddAnon_02_FX:
-					xor	bh,				bh
-					pop	ecx
-					pop	eax
-					jmp	_lFNPExFuncDefAddAnon_01
-					;;----------------
+jmp	_lFNPExFuncDefAddAnon_01
+;				mov	byte ptr [ecx],		20h	;; bs
+;
+;				test	ebx,			ebx
+;
+;				jz	_lFNPExFuncDefAddAnon_01
+;
+;					;;----------------
+;					;; add struct name
+;					push	eax
+;					push	ecx
+;					mov	byte ptr [ecx],			"."
+;					mov	edx,				dword ptr [_dCStructName]
+;
+;					_lFNPExFuncDefAddAnon_02_EX:
+;					mov	bh,				byte ptr [edx]
+;					cmp	bh,				20h	;; bs
+;					je	_lFNPExFuncDefAddAnon_02_FX
+;					dec	ecx
+;					mov	byte ptr [ecx],			bh
+;					dec	edx
+;					jmp	_lFNPExFuncDefAddAnon_02_EX
+;
+;					_lFNPExFuncDefAddAnon_02_FX:
+;					xor	bh,				bh
+;					pop	ecx
+;					pop	eax
+;					jmp	_lFNPExFuncDefAddAnon_01
+;					;;----------------
 				;;----------------
 
 			_lFNPExFuncDefAddAnon_03:
@@ -12297,13 +12342,13 @@ mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 		mov	dword ptr [_dFCL],	offset _bFuncCodeLocals
 		mov	dword ptr [_dFCB],	offset _bFuncCodeBase
 
-mov	dword ptr [_dInFuncBlockMax],		00h
-mov	dword ptr [_dInFuncBlockStack],		00h
-mov	dword ptr [_dInFuncBlockPnt],		offset _dInFuncBlockStack + 04h
+		mov	dword ptr [_dInFuncBlockMax],		00h
+		mov	dword ptr [_dInFuncBlockStack],		00h
+		mov	dword ptr [_dInFuncBlockPnt],		offset _dInFuncBlockStack + 04h
 
-mov	byte ptr [_bFuncCodeNop],		00h
+		mov	byte ptr [_bFuncCodeNop],		00h
 
-mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
+		mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 
 		jmp	_lFNPLine
 		;;----------------
@@ -12507,13 +12552,13 @@ mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 		mov	dword ptr [_dFCL],	offset _bFuncCodeLocals
 		mov	dword ptr [_dFCB],	offset _bFuncCodeBase
 
-mov	dword ptr [_dInFuncBlockMax],		00h
-mov	dword ptr [_dInFuncBlockStack],		00h
-mov	dword ptr [_dInFuncBlockPnt],		offset _dInFuncBlockStack + 04h
+		mov	dword ptr [_dInFuncBlockMax],		00h
+		mov	dword ptr [_dInFuncBlockStack],		00h
+		mov	dword ptr [_dInFuncBlockPnt],		offset _dInFuncBlockStack + 04h
 
-mov	byte ptr [_bFuncCodeNop],		00h
+		mov	byte ptr [_bFuncCodeNop],		00h
 
-mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
+		mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 
 		jmp	_lFNPLine
 
@@ -13293,39 +13338,39 @@ mov	dword ptr [_dGeneratedLocalsID],	0ffffffffh
 						rep	movsb
 						mov	dword ptr [_dFCPL],	offset _bFuncPostEX
 
-;;----------------
-;; code nop
-cmp	byte ptr [_bFuncCodeNop],		02h
-je	_lIsCodeNop_End
-cmp	byte ptr [_bFuncCodeNop],		01h
-jne	_lIsCodeNop_Check
+							;;----------------
+							;; code nop
+							cmp	byte ptr [_bFuncCodeNop],		02h
+							je	_lIsCodeNop_End
+							cmp	byte ptr [_bFuncCodeNop],		01h
+							jne	_lIsCodeNop_Check
 
-mov	byte ptr [_bFuncCodeNop],		02h
-jmp	_lIsCodeNop_End
+							mov	byte ptr [_bFuncCodeNop],		02h
+							jmp	_lIsCodeNop_End
 
-_lIsCodeNop_Check:
-cmp	dword ptr [_bFuncCodeOneLine],		"olbv"
-jne	_lIsCodeNop_Ex
-cmp	word ptr [_bFuncCodeOneLine + 04h],	"kc"
-jne	_lIsCodeNop_Ex
-cmp	byte ptr [_bFuncCodeOneLine + 06h],	20h
-jbe	_lIsCodeNop_End
+							_lIsCodeNop_Check:
+							cmp	dword ptr [_bFuncCodeOneLine],		"olbv"
+							jne	_lIsCodeNop_Ex
+							cmp	word ptr [_bFuncCodeOneLine + 04h],	"kc"
+							jne	_lIsCodeNop_Ex
+							cmp	byte ptr [_bFuncCodeOneLine + 06h],	20h
+							jbe	_lIsCodeNop_End
 
-_lIsCodeNop_Ex:
-cmp	dword ptr [_bFuncCodeOneLine],		"vdne"
-jne	_lIsCodeNop_Fx
-cmp	dword ptr [_bFuncCodeOneLine + 04h],	"colb"
-jne	_lIsCodeNop_Fx
-cmp	byte ptr [_bFuncCodeOneLine + 08h],	"k"
-jne	_lIsCodeNop_Fx
-cmp	byte ptr [_bFuncCodeOneLine + 09h],	20h
-jbe	_lIsCodeNop_End
+							_lIsCodeNop_Ex:
+							cmp	dword ptr [_bFuncCodeOneLine],		"vdne"
+							jne	_lIsCodeNop_Fx
+							cmp	dword ptr [_bFuncCodeOneLine + 04h],	"colb"
+							jne	_lIsCodeNop_Fx
+							cmp	byte ptr [_bFuncCodeOneLine + 08h],	"k"
+							jne	_lIsCodeNop_Fx
+							cmp	byte ptr [_bFuncCodeOneLine + 09h],	20h
+							jbe	_lIsCodeNop_End
 
-_lIsCodeNop_Fx:
-mov	byte ptr [_bFuncCodeNop],		01h
+							_lIsCodeNop_Fx:
+							mov	byte ptr [_bFuncCodeNop],		01h
 
-_lIsCodeNop_End:
-;;----------------
+							_lIsCodeNop_End:
+							;;----------------
 
 							;;----------------
 							;; locals
