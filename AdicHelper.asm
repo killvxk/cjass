@@ -368,6 +368,7 @@ extern	_imp__SFileCloseFile@4:dword
 				db	"group cjgrfgt_", 01h, "h", 0dh, 0ah
 				db	"endglobals", 0dh, 0ah
 				db	"cjgrfgt_", 01h, "k=", 82h, 0dh, 0ah
+				db	"cj_tmpgr_copy_nw509ert7=cjgrfgt_", 01h, "k", 0dh, 0ah
 				db	"GroupClear(cj_tmpgr_copy_nw509ert7)", 0dh, 0ah
 				db	"ForGroup(cjgrfgt_", 01h, "k,function cj_group_copy_75hJKJ3745gf)", 0dh, 0ah
 				db	"loop", 0dh, 0ah
