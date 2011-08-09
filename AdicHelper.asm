@@ -344,17 +344,20 @@ extern	_imp__SFileCloseFile@4:dword
 ;; hard pick
 	_sFor4Macro_GroupPick_E	db	"vblock", 0dh, 0ah
 				db	80h, 0dh, 0ah
-				db	"globals", 0dh, 0ah
-				db	"group cjgrfgt_", 01h, "h", 0dh, 0ah
-				db	"endglobals", 0dh, 0ah
-				db	"cjgrfgt_", 01h, "k=", 01h, "q", 81h, 01h, "n", 0dh, 0ah
-				db	"cj_tmpgr_copy_nw509ert7=cjgrfgt_", 01h, "k", 0dh, 0ah
+;				db	"globals", 0dh, 0ah
+;				db	"group cjgrfgt_", 01h, "h", 0dh, 0ah
+;				db	"endglobals", 0dh, 0ah
+;				db	"cjgrfgt_", 01h, "k=", 01h, "q", 81h, 01h, "n", 0dh, 0ah
+;				db	"cj_tmpgr_copy_nw509ert7=cjgrfgt_", 01h, "k", 0dh, 0ah
+db	"cj_tmpgr_copy_nw509ert7=", 82h, 0dh, 0ah
 				db	"GroupClear(cj_tmpgr_copy_nw509ert7)", 0dh, 0ah
 				db	"ForGroup(", 01h, "q", 81h, 01h, "n,function cj_group_copy_75hJKJ3745gf)", 0dh, 0ah
 				db	"loop", 0dh, 0ah
-				db	01h, "q", 80h, 01h, "v=FirstOfGroup(cjgrfgt_", 01h, "k)", 0dh, 0ah
+;				db	01h, "q", 80h, 01h, "v=FirstOfGroup(cjgrfgt_", 01h, "k)", 0dh, 0ah
+db	01h, "q", 80h, 01h, "v=FirstOfGroup(", 82h, ")", 0dh, 0ah
 				db	"exitwhen ", 01h, "q", 80h, 01h, "v==null", 0dh, 0ah
-				db	"GroupRemoveUnit(cjgrfgt_", 01h, "k,", 01h, "q", 80h, 01h, "v)", 0dh, 0ah
+;				db	"GroupRemoveUnit(cjgrfgt_", 01h, "k,", 01h, "q", 80h, 01h, "v)", 0dh, 0ah
+db	"GroupRemoveUnit(", 82h, ",", 01h, "q", 80h, 01h, "v)", 0dh, 0ah
 				db	83h, 0dh, 0ah
 				db	"endloop", 0dh, 0ah
 				db	01h, "q", 80h, 01h, "v=null_cjnullex", 0dh, 0ah
