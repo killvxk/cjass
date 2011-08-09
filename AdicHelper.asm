@@ -9661,10 +9661,29 @@ call	_lCheckInFuncVars
 	cmp	al,				"."
 	je	_lCopyCode_WordCopyFx
 
+	cmp	al,				22h
+	je	_lCopyCode_String
+
 	cmp	byte ptr [_bAscii_00 + eax],	ah
 	jne	_lCopyCode_WordNew
 	movsb
 	jmp	_lCopyCode_Word
+
+		;;----------------
+		;; copy string
+		_lCopyCode_String:
+		movsb
+		_lCopyCode_StringEX:
+		cmp	byte ptr [esi],			5ch	;; \ 
+		jne	_lCopyCode_StringDX
+		movsw
+		jmp	_lCopyCode_StringEX
+		_lCopyCode_StringDX:
+		cmp	byte ptr [esi],			22h
+		jne	_lCopyCode_String
+
+		jmp	_lCopyCode_Word
+		;;----------------
 
 		;;----------------
 		;; check next word
@@ -11352,7 +11371,7 @@ _lCallback_AnonEnd:
 		lea	eax,				[edi + 09h]
 		mov	dword ptr [ebp],		eax
 		add	edi,				15h
-mov	dword ptr [_dLastFuncName],			eax
+		mov	dword ptr [_dLastFuncName],			eax
 		jmp	_lCallback_AddName
 
 		_lCallback_Method:
@@ -11368,7 +11387,7 @@ mov	dword ptr [_dLastFuncName],			eax
 		lea	eax,				[edi + 0eh]
 		mov	dword ptr [ebp],		eax
 		add	edi,				1ah
-mov	dword ptr [_dLastFuncName],			eax
+		mov	dword ptr [_dLastFuncName],			eax
 
 		_lCallback_AddName:
 		mov	ebp,				dword ptr [_dCallbackListNext]
@@ -13705,9 +13724,11 @@ mov	eax,				dword ptr [eax]
 
 			_lFNPLoc_GG_New_ExInit_Str:
 			inc	ebx
+			_lFNPLoc_GG_New_ExInit_StrDx:
 			cmp	byte ptr [ebx],			5ch	;; \ 
-			je	_lFNPLoc_GG_New_ExInit_StrEx
+			jne	_lFNPLoc_GG_New_ExInit_StrEx
 			add	ebx,				02h
+			jmp	_lFNPLoc_GG_New_ExInit_StrDx
 			_lFNPLoc_GG_New_ExInit_StrEx:
 			cmp	byte ptr [ebx],			22h	;; "
 			jne	_lFNPLoc_GG_New_ExInit_Str
@@ -13898,9 +13919,11 @@ jmp	_lFNPIncDecSTXEndSFXD
 
 									_lFNPLoc_03_Str:
 									inc	ecx
+									_lFNPLoc_03_StrOX:
 									cmp	byte ptr [ecx],		5ch	;; \ 
 									jne	_lFNPLoc_03_StrEX
 									add	ecx,			02h
+									jmp	_lFNPLoc_03_StrOX
 									_lFNPLoc_03_StrEX:
 									cmp	byte ptr [ecx],		22h	;; "
 									jne	_lFNPLoc_03_Str
