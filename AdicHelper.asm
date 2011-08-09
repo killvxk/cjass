@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 1.4.2.28
+;;	v 1.4.2.30
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -103,8 +103,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.28", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.28", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.30", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.30", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -244,13 +244,15 @@ extern	_imp__SFileCloseFile@4:dword
 
 	_sForGroupEnumTypesEx	db	"UnitsInGroup", 00h
 
+	_sForGroupEnumTypesFx	db	"GroupRemovePickedUnit()", 00h
+
 	;;----------------
 	_sFor3Macro		dw	0a0dh
 				db	01h, "q", 01h, "q", 81h, 01h, "t", 01h, "O"
-				dd	offset _sForGroupEnumTypes, _sFor3Macro_GroupEnum, _sFor3Macro_Next_00
+				dd	offset _sForGroupEnumTypes, offset _sFor3Macro_GroupEnum, offset _sFor3Macro_Next_00
 
 	_sFor3Macro_Next_00	db	01h, "q", 01h, "q", 81h, 01h, "t", 01h, "O"
-				dd	offset _sForGroupEnumTypesEx, _sFor3Macro_Group, _sFor3Macro_For
+				dd	offset _sForGroupEnumTypesEx, offset _sFor3Macro_Group, offset _sFor3Macro_For
 
 	_sFor3Macro_GroupEnum	db	"vblock", 0dh, 0ah
 				db	80h, 0dh, 0ah
@@ -266,35 +268,21 @@ extern	_imp__SFileCloseFile@4:dword
 				db	"endvblock", 0dh, 0ah
 				db	03h
 
-	_sFor3Macro_Group	db	01h, "q", 01h, "q", 81h, 01h, "n", 01h, "P"
-				dd	offset _sFor3Macro_Group_A, offset _sFor3Macro_Group_B
-
-	_sFor3Macro_Group_A	db	"vblock", 0dh, 0ah
-;				db	80h, 0dh, 0ah
-;				db	"cjgrfgn_", 01h, "h", 0dh, 0ah
-;				db	"loop", 0dh, 0ah
-;				db	01h, "q", 80h, 01h, "v=FirstOfGroup(", 01h, "q", 81h, 01h, "n)", 0dh, 0ah
-;				db	"exitwhen ", 01h, "q", 80h, 01h, "v==null", 0dh, 0ah
-;
-;				db	"endloop", 0dh, 0ah
-;				db	"loop", 0dh, 0ah
-;
-;				db	"endloop", 0dh, 0ah
-;				db	"endvblock", 0dh, 0ah
-;				db	03h
-
-	_sFor3Macro_Group_B	db	"vblock", 0dh, 0ah
-;				db	80h, 0dh, 0ah
-;				db	"cjgrfgn_", 01h, "h", 0dh, 0ah
-; declare group
-;				db	"loop", 0dh, 0ah
-;
-;				db	"endloop", 0dh, 0ah
-;				db	"loop", 0dh, 0ah
-;
-;				db	"endloop", 0dh, 0ah
-;				db	"endvblock", 0dh, 0ah
-;				db	03h
+	_sFor3Macro_Group	db	"vblock", 0dh, 0ah
+				db	80h, 0dh, 0ah
+				db	"cjgrfgn_", 01h, "h", 0dh, 0ah
+				db	"cj_tmpgr_copy_nw509ert7=cjgrfgn_", 01h, "k", 0dh, 0ah
+				db	"GroupClear(cj_tmpgr_copy_nw509ert7)", 0dh, 0ah
+				db	"ForGroup(", 01h, "q", 81h, 01h, "n,function cj_group_copy_75hJKJ3745gf)", 0dh, 0ah
+				db	"loop", 0dh, 0ah
+				db	01h, "q", 80h, 01h, "v=FirstOfGroup(cjgrfgn_", 01h, "k)", 0dh, 0ah
+				db	"exitwhen ", 01h, "q", 80h, 01h, "v==null", 0dh, 0ah
+				db	"GroupRemoveUnit(cjgrfgn_", 01h, "k,", 01h, "q", 80h, 01h, "v)", 0dh, 0ah
+				db	82h, 0dh, 0ah
+				db	"endloop", 0dh, 0ah
+				db	01h, "q", 80h, 01h, "v=null_cjnullex", 0dh, 0ah
+				db	"endvblock", 0dh, 0ah
+				db	03h
 
 	_sFor3Macro_For		db	"vblock", 0dh, 0ah
 				db	80h, 0dh, 0ah
@@ -308,11 +296,94 @@ extern	_imp__SFileCloseFile@4:dword
 	;;----------------
 	_sFor4Macro		dw	0a0dh
 				db	01h, "q", 01h, "q", 81h, 01h, "t", 01h, "O"
-				dd	offset _sForGroupEnumTypes, offset _sFor4Macro_GroupEnumX, offset _sFor4Macro_For
+				dd	offset _sForGroupEnumTypes, offset _sFor4Macro_GroupEnumX, offset _sFor4Macro_Next_00
+
+	_sFor4Macro_Next_00	db	01h, "q", 01h, "q", 81h, 01h, "t", 01h, "O"
+				dd	offset _sForGroupEnumTypesEx, offset _sFor4Macro_Group, offset _sFor4Macro_For
+
+	_sFor4Macro_Group	db	01h, "q", 82h, 01h, "O"
+				dd	offset _sForGroupEnumTypesFx, offset _sFor4Macro_GroupPick_A, offset _sFor4Macro_GroupPick_B
+
+
+	_sFor4Macro_GroupPick_A	db	01h, "q", 01h, "q", 81h, 01h, "n", 01h, "P"
+				dd	offset _sFor4Macro_GroupPick_C, offset _sFor4Macro_GroupPick_D
+
+;; lite pick
+	_sFor4Macro_GroupPick_C	db	"vblock", 0dh, 0ah
+				db	80h, 0dh, 0ah
+				db	"loop", 0dh, 0ah
+				db	01h, "q", 80h, 01h, "v=FirstOfGroup(", 01h, "q", 81h, 01h, "n)", 0dh, 0ah
+				db	"exitwhen ", 01h, "q", 80h, 01h, "v==null", 0dh, 0ah
+				db	"GroupRemoveUnit(", 01h, "q", 81h, 01h, "n,", 01h, "q", 80h, 01h, "v)", 0dh, 0ah
+				db	83h, 0dh, 0ah
+				db	"endloop", 0dh, 0ah
+				db	01h, "q", 80h, 01h, "v=null_cjnullex", 0dh, 0ah
+				db	"endvblock", 0dh, 0ah
+				db	03h
+
+;; lite pick use additional group
+	_sFor4Macro_GroupPick_D	db	"vblock", 0dh, 0ah
+				db	80h, 0dh, 0ah
+				db	"globals", 0dh, 0ah
+				db	"group cjgrfgt_", 01h, "h", 0dh, 0ah
+				db	"endglobals", 0dh, 0ah
+				db	"cjgrfgt_", 01h, "k=", 01h, "q", 81h, 01h, "n", 0dh, 0ah
+				db	"loop", 0dh, 0ah
+				db	01h, "q", 80h, 01h, "v=FirstOfGroup(cjgrfgt_", 01h, "k)", 0dh, 0ah
+				db	"exitwhen ", 01h, "q", 80h, 01h, "v==null", 0dh, 0ah
+				db	"GroupRemoveUnit(cjgrfgt_", 01h, "k,", 01h, "q", 80h, 01h, "v)", 0dh, 0ah
+				db	83h, 0dh, 0ah
+				db	"endloop", 0dh, 0ah
+				db	01h, "q", 80h, 01h, "v=null_cjnullex", 0dh, 0ah
+				db	"endvblock", 0dh, 0ah
+				db	03h
+
+	_sFor4Macro_GroupPick_B	db	01h, "q", 82h, 01h, "P"
+				dd	offset _sFor4Macro_GroupPick_E, offset _sFor4Macro_GroupPick_F
+
+;; hard pick
+	_sFor4Macro_GroupPick_E	db	"vblock", 0dh, 0ah
+				db	80h, 0dh, 0ah
+				db	"globals", 0dh, 0ah
+				db	"group cjgrfgt_", 01h, "h", 0dh, 0ah
+				db	"endglobals", 0dh, 0ah
+				db	"cjgrfgt_", 01h, "k=", 01h, "q", 81h, 01h, "n", 0dh, 0ah
+				db	"cj_tmpgr_copy_nw509ert7=cjgrfgt_", 01h, "k", 0dh, 0ah
+				db	"GroupClear(cj_tmpgr_copy_nw509ert7)", 0dh, 0ah
+				db	"ForGroup(", 01h, "q", 81h, 01h, "n,function cj_group_copy_75hJKJ3745gf)", 0dh, 0ah
+				db	"loop", 0dh, 0ah
+				db	01h, "q", 80h, 01h, "v=FirstOfGroup(cjgrfgt_", 01h, "k)", 0dh, 0ah
+				db	"exitwhen ", 01h, "q", 80h, 01h, "v==null", 0dh, 0ah
+				db	"GroupRemoveUnit(cjgrfgt_", 01h, "k,", 01h, "q", 80h, 01h, "v)", 0dh, 0ah
+				db	83h, 0dh, 0ah
+				db	"endloop", 0dh, 0ah
+				db	01h, "q", 80h, 01h, "v=null_cjnullex", 0dh, 0ah
+				db	"endvblock", 0dh, 0ah
+				db	03h
+
+;; hard pick use additional pick
+	_sFor4Macro_GroupPick_F	db	"vblock", 0dh, 0ah
+				db	80h, 0dh, 0ah
+				db	"globals", 0dh, 0ah
+				db	"group cjgrfgt_", 01h, "h", 0dh, 0ah
+				db	"endglobals", 0dh, 0ah
+				db	"cjgrfgt_", 01h, "k=", 82h, 0dh, 0ah
+				db	"GroupClear(cj_tmpgr_copy_nw509ert7)", 0dh, 0ah
+				db	"ForGroup(cjgrfgt_", 01h, "k,function cj_group_copy_75hJKJ3745gf)", 0dh, 0ah
+				db	"loop", 0dh, 0ah
+				db	01h, "q", 80h, 01h, "v=FirstOfGroup(cjgrfgt_", 01h, "k)", 0dh, 0ah
+				db	"exitwhen ", 01h, "q", 80h, 01h, "v==null", 0dh, 0ah
+				db	"GroupRemoveUnit(cjgrfgt_", 01h, "k,", 01h, "q", 80h, 01h, "v)", 0dh, 0ah
+				db	83h, 0dh, 0ah
+				db	"endloop", 0dh, 0ah
+				db	01h, "q", 80h, 01h, "v=null_cjnullex", 0dh, 0ah
+				db	"endvblock", 0dh, 0ah
+				db	03h
 
 	_sFor4Macro_GroupEnumX	db	01h, "q", 82h, 01h, "P"
 				dd	offset _sFor4Macro_GroupEnum_A, offset _sFor4Macro_GroupEnum_B
 
+;; lite enum
 	_sFor4Macro_GroupEnum_A	db	"vblock", 0dh, 0ah
 				db	80h, 0dh, 0ah
 				db	"GroupEnum", 01h, "q", 81h, 01h, "t(", 82h, ",", 01h, "q", 81h, 01h, "n, null)", 0dh, 0ah
@@ -326,6 +397,7 @@ extern	_imp__SFileCloseFile@4:dword
 				db	"endvblock", 0dh, 0ah
 				db	03h
 
+;; hard enum
 	_sFor4Macro_GroupEnum_B	db	"vblock", 0dh, 0ah
 				db	80h, 0dh, 0ah
 				db	"globals", 0dh, 0ah
@@ -343,6 +415,7 @@ extern	_imp__SFileCloseFile@4:dword
 				db	"endvblock", 0dh, 0ah
 				db	03h
 
+;; for
 	_sFor4Macro_For		db	"vblock", 0dh, 0ah
 				db	80h, 0dh, 0ah
 				db	"whilenot !(", 81h, ")", 0dh, 0ah
@@ -621,6 +694,15 @@ _sEndMacroExStr		db	"cjpreprocendmacrodetectionen_8H4f855w9Ioen68EgE337gy", 0dh,
 _sEndMacroExStrSize	equ	$ - offset _sEndMacroExStr
 
 _sVXPreProcCmdLine	db	"--nooptimize --macromode cj_null.j bj_null.j macro_preprocessing_in.j macro_preprocessing_out.j"
+
+_sGroupCopyCode		db	"globals", 0dh, 0ah
+			db	"group cj_tmpgr_copy_nw509ert7", 0dh, 0ah
+			db	"endglobals", 0dh, 0ah
+			db	"function cj_group_copy_75hJKJ3745gf takes nothing returns nothing", 0dh, 0ah
+			db	"//# optional", 0dh, 0ah
+			db	"call GroupAddUnit(cj_tmpgr_copy_nw509ert7,GetEnumUnit())", 0dh, 0ah
+			db	"endfunction", 0dh ,0ah
+_sGroupCopyCodeSize	equ	$ - offset _sGroupCopyCode
 
 ;;_dAonBlockBaseFuncS	dd	0ffffffffh	;; base anon block's function
 ;;_dAonBlockBaseFuncE	dd	0ffffffffh
@@ -6740,7 +6822,7 @@ _lXFP_1c_Ex:
 dec	edi
 cmp	word ptr [edi - 02h],		7101h
 je	_lXFP_1c_Equ
-mov	al,				byte ptr [edx]
+mov	al,				byte ptr [edi]
 cmp	byte ptr [_bAscii_00 + eax],	ah
 jne	_lXFP_1c_Ex
 
@@ -8294,33 +8376,33 @@ inc	edi
 		add	eax,				offset _dAnonFuncTable
 		mov	dword ptr [_dAnonFuncCnt],	eax
 
-		;;----------------
-		;; build anon blocks
-		mov	eax,			offset _dAnonFuncTable - 10h
-		xor	edx,			edx
-		xor	ecx,			ecx
+			;;----------------
+			;; build anon blocks
+			mov	eax,			offset _dAnonFuncTable - 10h
+			xor	edx,			edx
+			xor	ecx,			ecx
 
-		_lFNPAnonBlockBld_Str:
-		add	eax,			10h
+			_lFNPAnonBlockBld_Str:
+			add	eax,			10h
 
-		mov	ebp,			dword ptr [eax]
-		test	ebp,			ebp
-		jz	_lFNPAnonBlockBld_End
+			mov	ebp,			dword ptr [eax]
+			test	ebp,			ebp
+			jz	_lFNPAnonBlockBld_End
 
-		cmp	edx,			ebp
-		jb	_lFNPAnonBlockBld_New
-		cmp	ecx,			ebp
-		jb	_lFNPAnonBlockBld_Str
+			cmp	edx,			ebp
+			jb	_lFNPAnonBlockBld_New
+			cmp	ecx,			ebp
+			jb	_lFNPAnonBlockBld_Str
 
-		_lFNPAnonBlockBld_New:
-		mov	ecx,			ebp
-		mov	edx,			dword ptr [eax+04h]
-		mov	dword ptr [eax-10h],	00h
-		jmp	_lFNPAnonBlockBld_Str
+			_lFNPAnonBlockBld_New:
+			mov	ecx,			ebp
+			mov	edx,			dword ptr [eax+04h]
+			mov	dword ptr [eax-10h],	00h
+			jmp	_lFNPAnonBlockBld_Str
 
-		_lFNPAnonBlockBld_End:
-		mov	dword ptr [eax-10h],	00h
-		;;----------------
+			_lFNPAnonBlockBld_End:
+			mov	dword ptr [eax-10h],	00h
+			;;----------------
 
 		_lFNPAnonStr:
 		mov	eax,				dword ptr [_dAnonFuncCnt]
@@ -8452,6 +8534,16 @@ inc	edi
 			;;----------------
 
 		;;----------------
+
+;;----------------
+;; add copy group code
+push	esi
+mov	ecx,			_sGroupCopyCodeSize
+mov	esi,			offset _sGroupCopyCode
+rep	movsb
+
+pop	esi
+;;----------------
 
 	jmp	_lFNPLine
 
@@ -10014,7 +10106,7 @@ pop	ebx
 					push	00h
 					push	00h
 
-				mov	dword ptr [_dFlushLocalsStackPos],	esp
+					mov	dword ptr [_dFlushLocalsStackPos],	esp
 
 					mov	ecx,			dword ptr [_dLocalsOffset]
 
@@ -10030,7 +10122,7 @@ pop	ebx
 
 						;;----------------
 						;; check types
-				;; correct types
+						;; correct types
 						mov	eax,			dword ptr [ecx]
 						cmp	eax,			"neve"
 						jne	_lFlLoc_T_00
@@ -10442,7 +10534,7 @@ pop	ebx
 					cmp	dword ptr [esp + 04h],		00h
 					je	_lFlushLocals_EndEx
 
-				mov	dword ptr [_dFlushLocalsExBlock],	01h
+					mov	dword ptr [_dFlushLocalsExBlock],	01h
 
 					mov	ecx,				dword ptr [_dCodeOffset]
 				;	xor	edx,				edx	;; block counter
@@ -10551,10 +10643,10 @@ pop	ebx
 						cmp	byte ptr [ecx+02h],	28h
 						ja	_lFlLoc_SC_GetNextLine
 				;		inc	edx
-				push	00h
-				push	dword ptr [_dFlushLocalsExBlock]
-				mov	dword ptr [_dFlushLocalsExBlock],	01h
-				jmp	_lFlLoc_SC_BlockIn
+						push	00h
+						push	dword ptr [_dFlushLocalsExBlock]
+						mov	dword ptr [_dFlushLocalsExBlock],	01h
+						jmp	_lFlLoc_SC_BlockIn
 				;		jmp	_lFlLoc_SC_GetNextLine
 						;;----------------
 
@@ -10569,11 +10661,11 @@ pop	ebx
 						ja	_lFlLoc_SC_GetNextLine
 
 						_lFlLoc_SC_ElseEx:
-				call	_lFlLoc_SC_BlockOut
-				push	00h
-				push	dword ptr [_dFlushLocalsExBlock]
-				mov	dword ptr [_dFlushLocalsExBlock],	01h
-				jmp	_lFlLoc_SC_BlockIn
+						call	_lFlLoc_SC_BlockOut
+						push	00h
+						push	dword ptr [_dFlushLocalsExBlock]
+						mov	dword ptr [_dFlushLocalsExBlock],	01h
+						jmp	_lFlLoc_SC_BlockIn
 				;		jmp	_lFlLoc_SC_GetNextLine
 						;;----------------
 
@@ -10585,7 +10677,7 @@ pop	ebx
 						cmp	byte ptr [ecx + 05h],	28h
 						ja	_lFlLoc_SC_GetNextLine
 				;		dec	edx
-				call	_lFlLoc_SC_BlockOut
+						call	_lFlLoc_SC_BlockOut
 						jmp	_lFlLoc_SC_GetNextLine
 						;;----------------
 
@@ -10595,10 +10687,10 @@ pop	ebx
 						cmp	byte ptr [ecx + 04h],	28h
 						ja	_lFlLoc_SC_GetNextLine
 				;		inc	edx
-				push	00h
-				push	dword ptr [_dFlushLocalsExBlock]
-				mov	dword ptr [_dFlushLocalsExBlock],	02h
-				jmp	_lFlLoc_SC_BlockIn
+						push	00h
+						push	dword ptr [_dFlushLocalsExBlock]
+						mov	dword ptr [_dFlushLocalsExBlock],	02h
+						jmp	_lFlLoc_SC_BlockIn
 				;		jmp	_lFlLoc_SC_GetNextLine
 						;;----------------
 
@@ -10610,7 +10702,7 @@ pop	ebx
 						cmp	byte ptr [ecx + 07h],	28h
 						ja	_lFlLoc_SC_GetNextLine
 				;		dec	edx
-				call	_lFlLoc_SC_BlockOut
+						call	_lFlLoc_SC_BlockOut
 						jmp	_lFlLoc_SC_GetNextLine
 						;;----------------
 
@@ -10622,18 +10714,18 @@ pop	ebx
 						cmp	byte ptr [ecx + 06h],	28h
 						ja	_lFlLoc_SC_GetNextLine
 
-				;;----------------
-				cmp	dword ptr [_dFlushLocalsExBlock],	02h
-				je	_lFlLoc_SC_GetNextLine
+							;;----------------
+							cmp	dword ptr [_dFlushLocalsExBlock],	02h
+							je	_lFlLoc_SC_GetNextLine
 
-				mov	edx,				esp
+							mov	edx,				esp
 
-				_lFlLoc_SC_ReturnFix:
-				mov	dword ptr [edx],		00h
-				add	edx,				08h
-				cmp	dword ptr [edx + 04h],		00h
-				jne	_lFlLoc_SC_ReturnFix
-				;;----------------
+							_lFlLoc_SC_ReturnFix:
+							mov	dword ptr [edx],		00h
+							add	edx,				08h
+							cmp	dword ptr [edx + 04h],		00h
+							jne	_lFlLoc_SC_ReturnFix
+							;;----------------
 
 						jmp	_lFlLoc_SC_GetNextLine
 						;;----------------
@@ -10680,7 +10772,7 @@ pop	ebx
 				_lFlLoc_SC_BlockOut_Start:
 				pop	eax
 				add	esp,			04h
-				or	eax,			dword ptr [edx]
+				or	dword ptr [edx],	eax		
 				add	edx,			08h
 				cmp	dword ptr [esp + 04h],	00h
 				jne	_lFlLoc_SC_BlockOut_Start
