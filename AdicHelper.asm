@@ -11289,6 +11289,9 @@ _lCallback_AnonCharEx:
 cmp	byte ptr [ecx],		18h		;; anon block
 je	_lCallback_Anon_00
 
+cmp	byte ptr [ecx],		00h
+;; je err
+
 cmp	dword ptr [ecx],	6e650a0dh	;; nl en
 je	_lCallback_Anon_03
 
@@ -11308,7 +11311,7 @@ jz	_lCallback_AnonFunc
 
 mov	dword ptr [ecx - 08h],	"siht"
 mov	dword ptr [ecx - 04h],	"epyt"
-mov	dword ptr [ecx],	"."
+mov	byte ptr [ecx],	 	"."
 jmp	_lCallback_AnonChar
 
 _lCallback_AnonFunc:
@@ -11349,6 +11352,7 @@ _lCallback_AnonEnd:
 		lea	eax,				[edi + 09h]
 		mov	dword ptr [ebp],		eax
 		add	edi,				15h
+mov	dword ptr [_dLastFuncName],			eax
 		jmp	_lCallback_AddName
 
 		_lCallback_Method:
@@ -11364,6 +11368,7 @@ _lCallback_AnonEnd:
 		lea	eax,				[edi + 0eh]
 		mov	dword ptr [ebp],		eax
 		add	edi,				1ah
+mov	dword ptr [_dLastFuncName],			eax
 
 		_lCallback_AddName:
 		mov	ebp,				dword ptr [_dCallbackListNext]
@@ -11563,7 +11568,7 @@ _lCallback_AnonEnd:
 				cmp	byte ptr [ecx],		18h		;; anon block
 				je	_lFNPMetAddAnon_01
 
-;				cmp	dword ptr [ecx],	6e650a0dh	;; nl en
+				cmp	dword ptr [ecx],	6e650a0dh	;; nl en
 				je	_lFNPMetAddAnon_02
 
 				cmp	word ptr [ecx],		7801h		;; #x
@@ -11579,9 +11584,9 @@ _lCallback_AnonEnd:
 					;; add struct name
 					_lFNPMetAddAnon_01:
 					inc	eax
-mov	dword ptr [ecx - 09h],		"siht"
-mov	dword ptr [ecx - 05h],		"epyt"
-mov	byte ptr [ecx],			" "
+mov	dword ptr [ecx - 08h],		"siht"
+mov	dword ptr [ecx - 04h],		"epyt"
+mov	byte ptr [ecx],			"."
 jmp	_lFNPMetAddAnon_00
 ;					mov	byte ptr [ecx],		"."
 ;
@@ -11886,9 +11891,9 @@ jmp	_lFNPMetAddAnon_00
 
 ;									lea	ebp,				[edi-01h]
 ;									mov	edx,				dword ptr [_dCStructName]
-									mov	dword ptr [edi - 08h],		"siht"
-									mov	dword ptr [edi - 04h],		"epyt"
-									mov	byte ptr [edi],			"."
+									mov	dword ptr [edi - 09h],		"siht"
+									mov	dword ptr [edi - 05h],		"epyt"
+									mov	byte ptr [edi - 01h],		"."
 jmp	_lFNPAnonMethodAdd_03
 
 ;									_lFNPAnonMethodAdd_05:
