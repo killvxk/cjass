@@ -4656,63 +4656,63 @@ _lCRCloseBlockEx:
 			mov	dword ptr [ebx+94h],		offset _sAnonym
 			;;----------------
 
-;;----------------
-;; afl flag
-mov	dword ptr [ebx+00a0h],		offset _sAFLDefL
-mov	dword ptr [ebx+00a4h],		offset _sAFLDef
-;;----------------
+			;;----------------
+			;; afl flag
+			mov	dword ptr [ebx+00a0h],		offset _sAFLDefL
+			mov	dword ptr [ebx+00a4h],		offset _sAFLDef
+			;;----------------
 
-;;----------------
-;; while
-mov	dword ptr [ebx+00b0h],		offset _sWhileMcrL
-mov	dword ptr [ebx+00b4h],		offset _sWhileMcr
+			;;----------------
+			;; while
+			mov	dword ptr [ebx+00b0h],		offset _sWhileMcrL
+			mov	dword ptr [ebx+00b4h],		offset _sWhileMcr
 
-mov	dword ptr [ebx+00c0h],		offset _sEndWhileMcrL
-mov	dword ptr [ebx+00c4h],		offset _sEndWhileMcr
-;;----------------
+			mov	dword ptr [ebx+00c0h],		offset _sEndWhileMcrL
+			mov	dword ptr [ebx+00c4h],		offset _sEndWhileMcr
+			;;----------------
 
-;;----------------
-;; custom j
-mov	dword ptr [ebx+00d0h],		offset _sImportBJL
-mov	dword ptr [ebx+00d4h],		offset _sImportBJ
+			;;----------------
+			;; custom j
+			mov	dword ptr [ebx+00d0h],		offset _sImportBJL
+			mov	dword ptr [ebx+00d4h],		offset _sImportBJ
 
-mov	dword ptr [ebx+00e0h],		offset _sImportCJL
-mov	dword ptr [ebx+00e4h],		offset _sImportCJ
-;;----------------
+			mov	dword ptr [ebx+00e0h],		offset _sImportCJL
+			mov	dword ptr [ebx+00e4h],		offset _sImportCJ
+			;;----------------
 
-;;----------------
-;; for
-mov	dword ptr [ebx+00f0h],		offset _sForpMacroL
-mov	dword ptr [ebx+00f4h],		offset _sForp3Macro
-mov	dword ptr [ebx+00fch],		03h
+			;;----------------
+			;; for
+			mov	dword ptr [ebx+00f0h],		offset _sForpMacroL
+			mov	dword ptr [ebx+00f4h],		offset _sForp3Macro
+			mov	dword ptr [ebx+00fch],		03h
 
-mov	dword ptr [ebx+0100h],		offset _sForpMacroL
-mov	dword ptr [ebx+0104h],		offset _sForp4Macro
-mov	dword ptr [ebx+010ch],		04h
+			mov	dword ptr [ebx+0100h],		offset _sForpMacroL
+			mov	dword ptr [ebx+0104h],		offset _sForp4Macro
+			mov	dword ptr [ebx+010ch],		04h
 
-mov	dword ptr [ebx+0110h],		offset _sForMacroL
-mov	dword ptr [ebx+0114h],		offset _sFor3Macro
-mov	dword ptr [ebx+011ch],		03h
+			mov	dword ptr [ebx+0110h],		offset _sForMacroL
+			mov	dword ptr [ebx+0114h],		offset _sFor3Macro
+			mov	dword ptr [ebx+011ch],		03h
 
-mov	dword ptr [ebx+0120h],		offset _sForMacroL
-mov	dword ptr [ebx+0124h],		offset _sFor4Macro
-mov	dword ptr [ebx+012ch],		04h
+			mov	dword ptr [ebx+0120h],		offset _sForMacroL
+			mov	dword ptr [ebx+0124h],		offset _sFor4Macro
+			mov	dword ptr [ebx+012ch],		04h
 
-mov	dword ptr [ebx+0130h],		offset _sForMacroL
-mov	dword ptr [ebx+0134h],		offset _sFor2Macro
-mov	dword ptr [ebx+013ch],		02h
+			mov	dword ptr [ebx+0130h],		offset _sForMacroL
+			mov	dword ptr [ebx+0134h],		offset _sFor2Macro
+			mov	dword ptr [ebx+013ch],		02h
 
-mov	dword ptr [ebx+0140h],		offset _sForpMacroL
-mov	dword ptr [ebx+0144h],		offset _sFor2Macro
-mov	dword ptr [ebx+014ch],		02h
-;;----------------
+			mov	dword ptr [ebx+0140h],		offset _sForpMacroL
+			mov	dword ptr [ebx+0144h],		offset _sFor2Macro
+			mov	dword ptr [ebx+014ch],		02h
+			;;----------------
 
-;;----------------
-;; def arsg
-mov	dword ptr [ebx+0150h],		offset _sArgMacrolL
-mov	dword ptr [ebx+0154h],		offset _sArgMacrol
-mov	dword ptr [ebx+015ch],		01h
-;;----------------
+			;;----------------
+			;; def arsg
+			mov	dword ptr [ebx+0150h],		offset _sArgMacrolL
+			mov	dword ptr [ebx+0154h],		offset _sArgMacrol
+			mov	dword ptr [ebx+015ch],		01h
+			;;----------------
 
 			;;----------------
 			;; debug
@@ -4727,26 +4727,26 @@ mov	dword ptr [ebx+015ch],		01h
 
 		add	ebx,				0160h
 
-;;----------------
-;; firstword
-mov	ecx,				offset _sFirstWord
-mov	eax,				01h
+			;;----------------
+			;; firstword
+			mov	ecx,				offset _sFirstWord
+			mov	eax,				01h
 
-_lFirstWordAdd:
-mov	dword ptr [ebx],		offset _sFirstWordL
-mov	dword ptr [ebx + 04h],		ecx
-mov	dword ptr [ebx + 0ch],		eax
+			_lFirstWordAdd:
+			mov	dword ptr [ebx],		offset _sFirstWordL
+			mov	dword ptr [ebx + 04h],		ecx
+			mov	dword ptr [ebx + 0ch],		eax
 
-inc	eax
-add	ebx,				10h
-cmp	eax,				11h
-je	_lFirstWordAddEnd
+			inc	eax
+			add	ebx,				10h
+			cmp	eax,				11h
+			je	_lFirstWordAddEnd
 
-lea	ecx,				[ecx + 05h + eax - 01h]
-jmp	_lFirstWordAdd
+			lea	ecx,				[ecx + 05h + eax - 01h]
+			jmp	_lFirstWordAdd
 
-_lFirstWordAddEnd:
-;;----------------
+			_lFirstWordAddEnd:
+			;;----------------
 		;;----------------
 
 	xor	ecx,		ecx		;; current scope = 00h
@@ -6096,6 +6096,24 @@ jmp	_lXFPStart
 		_lXFPDFF:
 		cmp	al,				41h
 		jb	_lXFPGetNextEx
+
+;;----------------
+;; hack for keyword
+cmp	word ptr [esi],		"of"
+jne	_lXFPDFF_ForHackEnd
+cmp	byte ptr [esi + 02h],	"r"
+jne	_lXFPDFF_ForHackEnd
+
+xor	edx,			edx
+mov	dl,			byte ptr [esi + 03h]
+cmp	byte ptr [_bAscii_00 + edx],	dh
+jne	_lXFPDFF_ForHackEnd
+
+cmp	word ptr [edi - 02h],	0a0dh
+jne	_lXFPGetNextEx
+
+_lXFPDFF_ForHackEnd:
+;;----------------
 
 		lea	edx,				[_dDefTable+eax*04h]
 		mov	edx,				dword ptr [edx]		;; edx = def block address
@@ -14677,17 +14695,14 @@ rep	movsb
 			_lCallbackReg_AddFunc_GetArged:
 			mov	byte ptr [_bCallbackArgPickType],	00h
 
-			_lCallbackReg_AddFunc_GetArgedEx:
-			mov	ecx,			offset _dCallbackList
-
 			mov	dword ptr [edi],	"i fi"
 			mov	word ptr [edi + 04h],	"=="
 			add	edi,			06h
-;			jmp	_lCallbackReg_AddFunc_GetArgedNext
+
+			_lCallbackReg_AddFunc_GetArgedEx:
+			mov	ecx,			offset _dCallbackList
 
 			_lCallbackReg_AddFunc_GetArgedNext:
-
-
 			cmp	byte ptr [ecx + 0ch],		bl
 			jne	_lCallbackReg_AddFunc_GetArgedSkip
 			cmp	dword ptr [ecx + 08h],		00h
