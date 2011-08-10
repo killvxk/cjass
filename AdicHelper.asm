@@ -14686,14 +14686,8 @@ rep	movsb
 ;			jmp	_lCallbackReg_AddFunc_GetArgedNext
 
 			_lCallbackReg_AddFunc_GetArgedNext:
-			cmp	byte ptr [_bCallbackArgPickType],	00h
-			je	_lCallbackReg_AddFunc_GetArgedNextEx
 
-			mov	dword ptr [edi],	"i fi"
-			mov	word ptr [edi + 04h],	"=="
-			add	edi,			06h
 
-			_lCallbackReg_AddFunc_GetArgedNextEx:
 			cmp	byte ptr [ecx + 0ch],		bl
 			jne	_lCallbackReg_AddFunc_GetArgedSkip
 			cmp	dword ptr [ecx + 08h],		00h
@@ -14708,6 +14702,14 @@ rep	movsb
 
 				;;----------------
 				;; copy arg and func name
+				cmp	byte ptr [_bCallbackArgPickType],	00h
+				je	_lCallbackReg_AddFunc_GetArgedCopyArgPre
+
+				mov	dword ptr [edi],	"i fi"
+				mov	word ptr [edi + 04h],	"=="
+				add	edi,			06h
+
+				_lCallbackReg_AddFunc_GetArgedCopyArgPre:
 				mov	esi,			dword ptr [ecx + 08h]
 				xor	ebp,			ebp
 				_lCallbackReg_AddFunc_GetArgedCopyArg:
