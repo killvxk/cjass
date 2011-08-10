@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 1.4.2.30
+;;	v 1.4.2.31
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -103,8 +103,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.30", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.30", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.31", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.31", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -344,20 +344,13 @@ extern	_imp__SFileCloseFile@4:dword
 ;; hard pick
 	_sFor4Macro_GroupPick_E	db	"vblock", 0dh, 0ah
 				db	80h, 0dh, 0ah
-;				db	"globals", 0dh, 0ah
-;				db	"group cjgrfgt_", 01h, "h", 0dh, 0ah
-;				db	"endglobals", 0dh, 0ah
-;				db	"cjgrfgt_", 01h, "k=", 01h, "q", 81h, 01h, "n", 0dh, 0ah
-;				db	"cj_tmpgr_copy_nw509ert7=cjgrfgt_", 01h, "k", 0dh, 0ah
-db	"cj_tmpgr_copy_nw509ert7=", 82h, 0dh, 0ah
+				db	"cj_tmpgr_copy_nw509ert7=", 82h, 0dh, 0ah
 				db	"GroupClear(cj_tmpgr_copy_nw509ert7)", 0dh, 0ah
 				db	"ForGroup(", 01h, "q", 81h, 01h, "n,function cj_group_copy_75hJKJ3745gf)", 0dh, 0ah
 				db	"loop", 0dh, 0ah
-;				db	01h, "q", 80h, 01h, "v=FirstOfGroup(cjgrfgt_", 01h, "k)", 0dh, 0ah
-db	01h, "q", 80h, 01h, "v=FirstOfGroup(", 82h, ")", 0dh, 0ah
+				db	01h, "q", 80h, 01h, "v=FirstOfGroup(", 82h, ")", 0dh, 0ah
 				db	"exitwhen ", 01h, "q", 80h, 01h, "v==null", 0dh, 0ah
-;				db	"GroupRemoveUnit(cjgrfgt_", 01h, "k,", 01h, "q", 80h, 01h, "v)", 0dh, 0ah
-db	"GroupRemoveUnit(", 82h, ",", 01h, "q", 80h, 01h, "v)", 0dh, 0ah
+				db	"GroupRemoveUnit(", 82h, ",", 01h, "q", 80h, 01h, "v)", 0dh, 0ah
 				db	83h, 0dh, 0ah
 				db	"endloop", 0dh, 0ah
 				db	01h, "q", 80h, 01h, "v=null_cjnullex", 0dh, 0ah
@@ -576,7 +569,7 @@ _xCallbacksTypes	db	"onInit", 			00h, 00h, _cbt_onInit
 			db	"onGameSave", 			00h, 00h, _cbt_onGameSave
 			db	00h, 00h, 00h, 00h
 
-_dCallbackListPnt	dd	offset _dCallbackList - 0dh
+_dCallbackListPnt	dd	offset _dCallbackList - _dCBSize
 _dCallbackListNext	dd	0ffffffffh
 
 _sCallbackReg_00_Str	equ	$
@@ -670,12 +663,10 @@ _sCallbackReg_11_Str	equ	$
 _sCallbackReg_11_End	equ	$
 
 _sCallbackReg_12_Str	equ	$
-;			db	"call TriggerAddAction(cj_callback_trg_0e, function reg_0e)", 0dh, 0ah
 			db	"call TriggerRegisterGameEvent(cj_callback_trg_0e, EVENT_GAME_LOADED)", 0dh ,0ah
 _sCallbackReg_12_End	equ	$
 
 _sCallbackReg_13_Str	equ	$
-;			db	"call TriggerAddAction(cj_callback_trg_0f, function reg_0f)", 0dh, 0ah
 			db	"call TriggerRegisterGameEvent(cj_callback_trg_0e, EVENT_GAME_SAVE)", 0dh ,0ah
 _sCallbackReg_13_End	equ	$
 
@@ -841,9 +832,9 @@ _sGroupCopyCodeSize	equ	$ - offset _sGroupCopyCode
 ;;-------------------------------------------------------------------------
 .data?
 
-_xForDefVal		db	2000h	dup(?)	;; used in #for
+	_xForDefVal		db	2000h	dup(?)	;; used in #for
 
-_dAddrDefArg		dd	0100h	dup(?)	;; def args addr
+	_dAddrDefArg		dd	0100h	dup(?)	;; def args addr
 
 	_xInclArg		dd	80h	dup(?)
 
@@ -865,8 +856,8 @@ _dAddrDefArg		dd	0100h	dup(?)	;; def args addr
 
 	_fScr			dd	?
 
-_fScr_BJ		dd	?
-_fScr_CJ		dd	?
+	_fScr_BJ		dd	?
+	_fScr_CJ		dd	?
 
 	_dUndefPnt		dd	?	;; script position in undefined
 
@@ -875,7 +866,6 @@ _fScr_CJ		dd	?
 	_hList			dd	?
 	_hBtn			dd	?	;; used in #if ...
 
-;;	_hIconCJ		dd	?	
 	_hTrd			dd	?
 
 	_dStackPos		dd	?
@@ -997,7 +987,10 @@ _fScr_CJ		dd	?
 	_dFlushLocalsStackPos	dd	?
 	_dFlushLocalsExBlock	dd	?		;; 01 - normal block (root or if), 02 - loop
 
-	_dCallbackList		db	6800h	dup(?)	
+	_dCallbackList		db	0800h * 10h	dup(?) ;; _dCBSize = 10h
+
+_bCallbackArgFam	dw	?
+_bCallbackArgPickType	db	?
 
 	_bIsExist_BaseOffset			equ	$
 	_bIsExist_onInit			db	?
@@ -1036,20 +1029,20 @@ _fScr_CJ		dd	?
 
 	_bFlushFlagBlock			db	?
 
-_dVJassParserAdd			dd	?
-_bUseMacroPrePorc			db	?
+	_dVJassParserAdd			dd	?
+	_bUseMacroPrePorc			db	?
 
-_hTempMacroIn				dd	?
+	_hTempMacroIn				dd	?
 
-_bMacroPreIsExist			db	?
+	_bMacroPreIsExist			db	?
 
-_xPrcInfo				PROCESS_INFORMATION	<?>
-_xStrInfo				STARTUPINFO		<?>
+	_xPrcInfo				PROCESS_INFORMATION	<?>
+	_xStrInfo				STARTUPINFO		<?>
 
-_dMacroPreMem				dd	?
-_dMacroPrePnt				dd	?	;; next run
+	_dMacroPreMem				dd	?
+	_dMacroPrePnt				dd	?	;; next run
 
-_dMacroPreESI				dd	?	;; save esi in #R
+	_dMacroPreESI				dd	?	;; save esi in #R
 
 ;_bCallbackTempType			db	?
 
@@ -1124,6 +1117,9 @@ _dMacroPreESI				dd	?	;; save esi in #R
 	;;	_hsStructName	dd	;; struct name
 	;;	_dArgAddr	dd	;; pointer to args
 	;;	_bType		db	;; type id
+	;;	_wFamily	dw	;; args block - 0, 1...fffe (ffff - removed)
+	;;	_bArgEx		db	;; functions int the arg
+		_dCBSize	equ	10h
 
 	;;	struct enumLabels	0ch
 	;;
@@ -11368,7 +11364,7 @@ add	esi,			09h
 		_lCallbackGetType_NoBlock:
 
 		mov	ebp,				dword ptr [_dCallbackListPnt]
-		add	ebp,				0dh
+		add	ebp,				_dCBSize
 		mov	dword ptr [_dCallbackListPnt],	ebp
 
 		mov	al,				byte ptr [edx + 02h]
@@ -14495,6 +14491,107 @@ je	_lCallbackReg_End
 
 push	esi
 
+	;;----------------
+	;; preprocess arguments
+	push	edi
+
+	mov	ecx,				offset _dCallbackList - _dCBSize
+	xor	eax,				eax
+
+	_lCallbackReg_ArgPre_Str:
+	add	ecx,				_dCBSize
+	cmp	dword ptr [ecx],		00h
+	je	_lCallbackReg_ArgPre_End
+
+	cmp	dword ptr [ecx + 08h],		00h
+	je	_lCallbackReg_ArgPre_Str
+
+	cmp	word ptr [ecx + 0dh],		00h
+	jne	_lCallbackReg_ArgPre_Str
+
+		;;----------------
+		;; function in arg?
+		mov	esi,				dword ptr [ecx + 08h]
+
+		_lCallbackReg_ArgPre_IsFunc:
+		inc	esi
+		cmp	byte ptr [esi],			")"
+		je	_lCallbackReg_ArgPre_IsFuncEnd
+		cmp	byte ptr [esi],			"("
+		jne	_lCallbackReg_ArgPre_IsFunc
+
+		mov	byte ptr [ecx + 0fh],		01h
+
+		_lCallbackReg_ArgPre_IsFuncEnd:
+		;;----------------
+
+	mov	edx,				ecx
+	_lCallbackReg_ArgPre_GetSame:
+	add	edx,				_dCBSize
+	cmp	dword ptr [edx],		00h
+	je	_lCallbackReg_ArgPre_Str
+
+	cmp	dword ptr [edx + 08h],		00h
+	je	_lCallbackReg_ArgPre_GetSame
+
+	mov	al,				byte ptr [ecx + 0ch]
+	cmp	al,				byte ptr [edx + 0ch]
+	jne	_lCallbackReg_ArgPre_GetSame
+
+	cmp	word ptr [edx + 0dh],		00h
+	jne	_lCallbackReg_ArgPre_GetSame
+
+		;;----------------
+		;; check arg
+		mov	esi,				dword ptr [ecx + 08h]
+		mov	edi,				dword ptr [edx + 08h]
+		xor	ebx,				ebx
+		dec	esi
+		dec	edi
+
+		_lCallbackReg_ArgPre_Check:
+		inc	esi
+		inc	edi
+		mov	al,				byte ptr [esi]
+		cmp	al,				byte ptr [edi]
+		je	_lCallbackReg_ArgPre_Check_00
+		jmp	_lCallbackReg_ArgPre_GetSame
+
+		_lCallbackReg_ArgPre_Check_00:
+		cmp	al,				"("
+		je	_lCallbackReg_ArgPre_Check_01
+		cmp	al,				")"
+		jne	_lCallbackReg_ArgPre_Check
+
+		dec	ebx
+		jns	_lCallbackReg_ArgPre_Check
+
+			;;----------------
+			mov	bx,				word ptr [ecx + 0dh]
+			test	bx,				bx
+			jnz	_lCallbackReg_ArgPre_Mod
+
+			mov	bx,				word ptr [_bCallbackArgFam]
+			inc	bx
+			mov	word ptr [ecx + 0dh],		bx
+			mov	word ptr [_bCallbackArgFam],	bx
+
+			_lCallbackReg_ArgPre_Mod:
+			mov	al,				byte ptr [ecx + 0fh]
+			mov	word ptr [edx + 0dh],		bx
+			mov	byte ptr [edx + 0fh],		al
+			jmp	_lCallbackReg_ArgPre_GetSame
+			;;----------------
+
+		_lCallbackReg_ArgPre_Check_01:
+		inc	ebx
+		jmp	_lCallbackReg_ArgPre_Check
+		;;----------------
+
+	_lCallbackReg_ArgPre_End:
+	pop	edi
+	;;----------------
+
 mov	esi,				_sCallbackReg_00_Str
 mov	ecx,				_sCallbackReg_00_End - _sCallbackReg_00_Str
 rep	movsb
@@ -14502,7 +14599,6 @@ rep	movsb
 	;;----------------
 	;; count types
 	mov	ecx,				offset _dCallbackList
-	xor	eax,				eax
 
 	_lCallbackReg_GetTypes:
 	cmp	dword ptr [ecx],		00h
@@ -14516,7 +14612,7 @@ rep	movsb
 	mov	byte ptr [_bIsExist_BaseOffset + eax * 02h + 01h],	01h
 
 	_lCallbackReg_GetTypes_NoArg:
-	add	ecx,				0dh
+	add	ecx,				_dCBSize
 	jmp	_lCallbackReg_GetTypes
 
 	_lCallbackReg_GetTypesEnd:
@@ -14579,6 +14675,9 @@ rep	movsb
 			;;----------------
 			;; add
 			_lCallbackReg_AddFunc_GetArged:
+			mov	byte ptr [_bCallbackArgPickType],	00h
+
+			_lCallbackReg_AddFunc_GetArgedEx:
 			mov	ecx,			offset _dCallbackList
 
 			mov	dword ptr [edi],	"i fi"
@@ -14587,10 +14686,25 @@ rep	movsb
 ;			jmp	_lCallbackReg_AddFunc_GetArgedNext
 
 			_lCallbackReg_AddFunc_GetArgedNext:
-			cmp	byte ptr [ecx + 0ch],	bl
+			cmp	byte ptr [_bCallbackArgPickType],	00h
+			je	_lCallbackReg_AddFunc_GetArgedNextEx
+
+			mov	dword ptr [edi],	"i fi"
+			mov	word ptr [edi + 04h],	"=="
+			add	edi,			06h
+
+			_lCallbackReg_AddFunc_GetArgedNextEx:
+			cmp	byte ptr [ecx + 0ch],		bl
 			jne	_lCallbackReg_AddFunc_GetArgedSkip
-			cmp	dword ptr [ecx + 08h],	00h
+			cmp	dword ptr [ecx + 08h],		00h
 			je	_lCallbackReg_AddFunc_GetArgedSkip
+
+			cmp	word ptr [ecx + 0dh],		0ffffh
+			je	_lCallbackReg_AddFunc_GetArgedSkip
+
+			mov	al,				byte ptr [ecx + 0fh]
+			cmp	al,				byte ptr [_bCallbackArgPickType]
+			jne	_lCallbackReg_AddFunc_GetArgedSkip
 
 				;;----------------
 				;; copy arg and func name
@@ -14670,23 +14784,108 @@ rep	movsb
 				jmp	_lCallbackReg_AddFunc_FuncEx
 
 				_lCallbackReg_AddFunc_FuncEnd:
-				mov	word ptr [edi],		")("
-				mov	dword ptr [edi + 02h],	6c650a0dh	;; nl el
-				mov	dword ptr [edi + 06h],	"fies"
-				mov	dword ptr [edi + 0ah],	"==i "
-				add	edi,			0eh
-;				jmp	_lCallbackReg_AddFunc_GetArgedNext
+				mov	dword ptr [edi],	0a0d2928h	;; () nl
+				add	edi,			04h
+				cmp	word ptr [ecx + 0dh],	00h
+				je	_lCallbackReg_AddFunc_FuncEndNoAdditional
+
+					;;----------------
+					;; add functions with same arg
+					push	edx
+
+					mov	edx,			ecx
+					mov	bp,			word ptr [ecx + 0dh]
+
+					_lCallbackReg_AddFunc_ArgEx:
+					add	edx,			_dCBSize
+					cmp	dword ptr [edx],	00h
+					je	_lCallbackReg_AddFunc_ArgExEnd
+
+					cmp	word ptr [edx + 0dh],	bp
+					jne	_lCallbackReg_AddFunc_ArgEx
+
+						;;----------------
+						mov	word ptr [edx + 0dh],	0ffffh
+
+						mov	dword ptr [edi],	"llac"
+						mov	byte ptr [edi + 04h],	" "
+						add	edi,			05h
+
+						mov	esi,			dword ptr [edx + 04h]
+						test	esi,			esi
+						jz	_lCallbackReg_AddFunc_ArgEx_Func
+
+						_lCallbackReg_AddFunc_ArgEx_Meth:
+						lodsb
+						cmp	byte ptr [_bAscii_00 + eax],	ah
+						je	_lCallbackReg_AddFunc_ArgEx_MethEnd
+						stosb
+						jmp	_lCallbackReg_AddFunc_ArgEx_Meth
+
+						_lCallbackReg_AddFunc_ArgEx_MethEnd:
+						mov	byte ptr [edi],		"."
+						inc	edi
+
+						_lCallbackReg_AddFunc_ArgEx_Func:
+						mov	esi,			dword ptr [edx]
+						_lCallbackReg_AddFunc_ArgEx_FuncEX:
+						lodsb
+						cmp	byte ptr [_bAscii_00 + eax],	ah
+						je	_lCallbackReg_AddFunc_ArgEx_FuncEnd
+						stosb
+						jmp	_lCallbackReg_AddFunc_ArgEx_FuncEX
+
+						_lCallbackReg_AddFunc_ArgEx_FuncEnd:
+						mov	dword ptr [edi],	0a0d2928h	;; () nl
+						add	edi,			04h
+
+						jmp	_lCallbackReg_AddFunc_ArgEx
+						;;----------------
+
+					_lCallbackReg_AddFunc_ArgExEnd:
+					pop	edx
+					;;----------------
+
+				_lCallbackReg_AddFunc_FuncEndNoAdditional:
+				cmp	byte ptr [_bCallbackArgPickType],	00h
+				jne	_lCallbackReg_AddFunc_FuncEndNoAdditionalEx
+				mov	word ptr [edi],		"le"
+				mov	dword ptr [edi + 02h],	"fies"
+				mov	dword ptr [edi + 06h],	"==i "
+				add	edi,			0ah
+				jmp	_lCallbackReg_AddFunc_GetArgedSkip
+
+				_lCallbackReg_AddFunc_FuncEndNoAdditionalEx:
+				mov	dword ptr [edi],	"idne"
+				mov	dword ptr [edi + 03h],	0a0d6669h	;; if nl
+				add	edi,			07h
 				;;----------------
 
 			_lCallbackReg_AddFunc_GetArgedSkip:
-			add	ecx,			0dh
+			add	ecx,			_dCBSize
 			cmp	dword ptr [ecx],	00h
 			jne	_lCallbackReg_AddFunc_GetArgedNext
+
+			cmp	byte ptr [_bCallbackArgPickType],	01h
+			je	_lCallbackReg_AddFunc_GetArgedSkipEx
 
 ;			sub	edi,			05h
 			mov	dword ptr [edi - 0ah],	"idne"
 			mov	dword ptr [edi - 06h],	"   f"
 			mov	word ptr [edi - 02h],	0a0dh
+
+			_lCallbackReg_AddFunc_GetArgedSkipEx:
+			;;----------------
+
+			;;----------------
+			;; add	with ex args
+			cmp	byte ptr [_bCallbackArgPickType],	01h
+			je	_lCallbackReg_AddFunc_ArgedEnd
+
+			mov	byte ptr [_bCallbackArgPickType],	01h
+			jmp	_lCallbackReg_AddFunc_GetArgedEx
+
+			_lCallbackReg_AddFunc_ArgedEnd:
 			;;----------------
 		;;----------------
 
@@ -14739,7 +14938,7 @@ rep	movsb
 			;;----------------
 
 		_lCallbackReg_AddFunc_NoArgedSkip:
-		add	ecx,			0dh
+		add	ecx,			_dCBSize
 		cmp	dword ptr [ecx],	00h
 		jne	_lCallbackReg_AddFunc_WithoutArgs_Str
 
@@ -14968,7 +15167,7 @@ rep	movsb
 		add	edi,			04h
 
 		_lCallbackReg_onInit_GetNext:
-		add	ecx,			0dh
+		add	ecx,			_dCBSize
 		cmp	byte ptr [ecx],		00h
 		jne	_lCallbackReg_onInit
 		;;----------------
