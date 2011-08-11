@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 1.4.2.31
+;;	v 1.4.2.32
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -103,8 +103,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.31", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.31", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.32", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.32", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -476,6 +476,7 @@ extern	_imp__SFileCloseFile@4:dword
 	_sErr_RedeclaredVar	db	"[22] Critical error: variables redeclared", 00h
 	_sErr_ForDeclaration	db	"[23] Critical error: missing ", 22h, "(", 22h, " in for declaration", 00h
 	_sErr_UnkCallback	db	"[24] Critical error: unknown callback type", 00h
+	_sErr_FileErr		db	"[25] Critical error: can't create temorary files in adicHelper directory", 00h
 
 	_bFCLL			db	40h		;; locals
 	_bFCLLMAX		db	40h		;; locals max
@@ -685,18 +686,20 @@ _sTempMacroOut		db	"macro_preprocessing_out.j", 00h
 _sTempMacroCJ		db	"cj_null.j", 00h
 _sTempMacroBJ		db	"bj_null.j", 00h
 
-_sEndMacroExStr		db	"cjpreprocendmacrodetectionen_8H4f855w9Ioen68EgE337gy", 0dh, 0ah
+_sEndMacroExStr		db	"//! cjpreprocendmacrodetectionen_8H4f855w9Ioen68EgE337gy", 0dh, 0ah
 _sEndMacroExStrSize	equ	$ - offset _sEndMacroExStr
 
-_sVXPreProcCmdLine	db	"--nooptimize --macromode cj_null.j bj_null.j macro_preprocessing_in.j macro_preprocessing_out.j"
+_sVXPreProcCmdLine	db	"--nooptimize --macromode cj_null.j bj_null.j macro_preprocessing_in.j macro_preprocessing_out.j", 00h
 
-_sGroupCopyCode		db	"globals", 0dh, 0ah
+_sGroupCopyCode		db	"library cjGroupCopyLib75hJKJ3745gf", 0dh, 0ah
+			db	"globals", 0dh, 0ah
 			db	"group cj_tmpgr_copy_nw509ert7", 0dh, 0ah
 			db	"endglobals", 0dh, 0ah
 			db	"function cj_group_copy_75hJKJ3745gf takes nothing returns nothing", 0dh, 0ah
 			db	"//# optional", 0dh, 0ah
 			db	"call GroupAddUnit(cj_tmpgr_copy_nw509ert7,GetEnumUnit())", 0dh, 0ah
 			db	"endfunction", 0dh ,0ah
+			db	"endlibrary", 0dh, 0ah
 _sGroupCopyCodeSize	equ	$ - offset _sGroupCopyCode
 
 ;;_dAonBlockBaseFuncS	dd	0ffffffffh	;; base anon block's function
@@ -1027,7 +1030,8 @@ _bCallbackArgPickType	db	?
 						db	?
 	_bIsExist_BaseOffsetEnd			equ	$
 
-	_bFlushFlagBlock			db	?
+;;	_bFlushFlagBlock			db	?
+	_bFlushFlagBlock			dd	?
 
 	_dVJassParserAdd			dd	?
 	_bUseMacroPrePorc			db	?
@@ -1962,6 +1966,8 @@ _lOptCC_FuncGetEndOX:
 	cmp	byte ptr [_bUseMacroPrePorc],	00h
 	je	_lMcrPre_End
 
+	mov	dword ptr [_dErrorCodeStart],	esi	;; for syntax error
+
 	push	esi
 	push	edi
 
@@ -1983,7 +1989,7 @@ _lOptCC_FuncGetEndOX:
 		call	_imp__CreateFileA@28
 
 		cmp	eax,				0ffffffffh
-;; je err
+		je	_lTempFileErr
 		push	eax
 		call	_imp__CloseHandle@4
 
@@ -1997,7 +2003,23 @@ _lOptCC_FuncGetEndOX:
 		call	_imp__CreateFileA@28
 
 		cmp	eax,				0ffffffffh
-;; je err
+		je	_lTempFileErr
+
+		;; clean out file
+		push	eax
+		call	_imp__CloseHandle@4
+
+		push	00h
+		push	FILE_ATTRIBUTE_NORMAL
+		push	CREATE_ALWAYS
+		push	00h
+		push	FILE_SHARE_READ + FILE_SHARE_WRITE
+		push	00h
+		push	offset _sTempMacroOut
+		call	_imp__CreateFileA@28
+
+		cmp	eax,				0ffffffffh
+		je	_lTempFileErr
 
 		push	eax
 		call	_imp__CloseHandle@4
@@ -2013,11 +2035,20 @@ _lOptCC_FuncGetEndOX:
 		call	_imp__CreateFileA@28
 
 		cmp	eax,				0ffffffffh
-;; je err
+		je	_lTempFileErr
 		mov	dword ptr [_hTempMacroIn],	eax
 		;;----------------
 
 	jmp	_lMcrPre_Get_LineEx
+
+		;;----------------
+		;; file err
+		_lTempFileErr:
+		mov	dword ptr [_xErrorTable],	offset _sErr_FileErr
+		mov	dword ptr [_xErrorTable+04h],	esi
+		mov	dword ptr [_xErrorTable+08h],	esi
+		jmp	_lErrIn
+		;;----------------
 
 	_lMcrPre_Get_Line:
 	inc	esi
@@ -2467,11 +2498,13 @@ mov	dword ptr [_sCstMapPath],		offset _sMapPathSX
 ;;----------------
 ;; macro pre out
 _lbl:
-cmp	eax,				"rpjc"
+cmp	eax,				" !//"
 jne	_next
-cmp	dword ptr [esi + 04h],		"orpe"
+cmp	dword ptr [esi + 04h],		"rpjc"
 jne	_next
-cmp	dword ptr [esi + 08h],		"dnec"
+cmp	dword ptr [esi + 08h],		"orpe"
+jne	_next
+cmp	dword ptr [esi + 0ch],		"dnec"
 jne	_next
 
 push	edi
@@ -4077,17 +4110,17 @@ je	_lCRScanLine
 		inc	esi
 		cmp	byte ptr [esi],		00h
 		je	_lCRErrorComm
-		cmp	word ptr [esi],		2f2fh		;; //
-		jne	_lCRCommNextX
-		inc	esi
-		_lCRCommRemX:
-		inc	esi
-		cmp	byte ptr [esi],		00h
-		je	_lCREnd
-		cmp	word ptr [esi],		0a0dh
-		jne	_lCRCommRemX
-		jmp	_lCRCommNextEx
-		_lCRCommNextX:
+;		cmp	word ptr [esi],		2f2fh		;; //
+;		jne	_lCRCommNextX
+;		inc	esi
+;		_lCRCommRemX:
+;		inc	esi
+;		cmp	byte ptr [esi],		00h
+;		je	_lCREnd
+;		cmp	word ptr [esi],		0a0dh
+;		jne	_lCRCommRemX
+;		jmp	_lCRCommNextEx
+;		_lCRCommNextX:
 		cmp	word ptr [esi],		2f2ah		;; */
 		je	_lCRCommSX
 		cmp	word ptr [esi],		2a2fh		;; /*
@@ -6110,6 +6143,9 @@ cmp	byte ptr [_bAscii_00 + edx],	dh
 jne	_lXFPDFF_ForHackEnd
 
 cmp	word ptr [edi - 02h],	0a0dh
+je	_lXFPDFF_ForHackEnd
+
+cmp	word ptr [edi - 06h],	7801h	;; #x
 jne	_lXFPGetNextEx
 
 _lXFPDFF_ForHackEnd:
@@ -10548,6 +10584,8 @@ pop	ebx
 					;;----------------
 					;; scan code
 
+mov	dword ptr [_bFlushFlagBlock],	00h
+
 					;; 0 variables
 					cmp	dword ptr [esp + 04h],		00h
 					je	_lFlushLocals_EndEx
@@ -10760,6 +10798,7 @@ pop	ebx
 				;;----------------
 				;; block in
 				_lFlLoc_SC_BlockIn:
+inc	dword ptr [_bFlushFlagBlock]
 				mov	edx,			dword ptr [_dFlushLocalsStackPos]
 
 				_lFlLoc_SC_BlockIn_Start:
@@ -10778,6 +10817,8 @@ pop	ebx
 				;;----------------
 				;; block out
 				_lFlLoc_SC_BlockOut:
+dec	dword ptr [_bFlushFlagBlock]
+;; js err
 				pop	ebp			;; ret addr
 
 				mov	edx,			esp
@@ -10848,8 +10889,8 @@ pop	ebx
 						cmp	byte ptr [_bAscii_00 + eax],	ah
 						jne	_lFLRetExpr_Check
 
-				cmp	dword ptr [ebp],			00h
-				je	_lFLRetExpr_NextWord
+						cmp	dword ptr [ebp],			00h
+						je	_lFLRetExpr_NextWord
 
 							;;----------------
 							;; use generated globals
@@ -10888,7 +10929,12 @@ pop	ebx
 
 					;;----------------
 					;; final
-					mov	byte ptr [_bFlushFlagBlock],	01h
+;					mov	byte ptr [_bFlushFlagBlock],	01h
+_lFlLoc_FinalStr:
+cmp	byte ptr [_bFlushFlagBlock],	00h
+je	_lFlLoc_FinalNext
+push	offset _lFlLoc_FinalStr
+call	_lFlLoc_SC_BlockOut
 
 					_lFlLoc_FinalNext:
 					pop	eax	;; is null
@@ -10897,8 +10943,8 @@ pop	ebx
 					test	ebx,			ebx
 					jz	_lFlLoc_FinalEnd
 
-					cmp	byte ptr [_bFlushFlagBlock],	00h
-					je	_lFlLoc_FinalNext
+;					cmp	byte ptr [_bFlushFlagBlock],	00h
+;					je	_lFlLoc_FinalNext
 
 					test	eax,			eax
 					jz	_lFlLoc_FinalNext
@@ -10924,15 +10970,17 @@ pop	ebx
 						;;----------------
 
 					_lFlLoc_FinalEnd:
-					mov	byte ptr [_bFlushFlagBlock],	00h
-					test	eax,			eax
-					jnz	_lFlLoc_FinalNext
+;					mov	byte ptr [_bFlushFlagBlock],	00h
+;					test	eax,			eax
+;					jnz	_lFlLoc_FinalNext
 					;;----------------
 
 					;;----------------
 					;; return expr ex
 					cmp	byte ptr [_bALFReturnExprUse],	00h
 					je	_lFlLoc_RetnExprEx_End
+
+mov	dword ptr [_bALFReturnExprUse],	00h
 
 					mov	byte ptr [_bALFReturnLast],	01h
 
