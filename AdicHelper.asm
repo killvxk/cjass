@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 1.4.2.32
+;;	v 1.4.2.33
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -103,8 +103,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.32", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.32", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.33", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.33", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -2211,6 +2211,8 @@ cmp	byte ptr [ebx],			00h
 			jne	_lMcrPre_Get_MacroIn_NextChar
 			cmp	dword ptr [ebp + 08h],		"orca"
 			jne	_lMcrPre_Get_MacroIn_NextChar
+cmp	word ptr [ebp + 0ch],			"//"
+je	_lMcrPre_Get_MacroIn_EndMacroEx
 			cmp	byte ptr [ebp + 0ch],		20h
 			ja	_lMcrPre_Get_MacroIn_NextChar
 
