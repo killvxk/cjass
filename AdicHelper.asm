@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 1.4.2.33
+;;	v 1.4.2.34
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -103,8 +103,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.33", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.33", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.34", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.34", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -10936,7 +10936,7 @@ _lFlLoc_FinalStr:
 cmp	byte ptr [_bFlushFlagBlock],	00h
 je	_lFlLoc_FinalNext
 push	offset _lFlLoc_FinalStr
-call	_lFlLoc_SC_BlockOut
+jmp	_lFlLoc_SC_BlockOut
 
 					_lFlLoc_FinalNext:
 					pop	eax	;; is null
