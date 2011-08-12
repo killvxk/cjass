@@ -46,6 +46,7 @@
 	extern	_imp__GetProcAddress@8:dword
 extern	_imp__CreateProcessA@40:dword
 extern	_imp__WaitForSingleObject@8:dword
+extern	_imp__GetExitCodeProcess@8:dword
 
 	extern	_imp__MessageBoxA@16:dword
 	extern	_imp__RegisterClassA@4:dword
@@ -477,6 +478,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_sErr_ForDeclaration	db	"[23] Critical error: missing ", 22h, "(", 22h, " in for declaration", 00h
 	_sErr_UnkCallback	db	"[24] Critical error: unknown callback type", 00h
 	_sErr_FileErr		db	"[25] Critical error: can't create temorary files in adicHelper directory", 00h
+	_sErr_MacroPreErr	db	"[26] Critical error: script preprocesor unknown error", 00h
+	_sErr_MacroPreDeclare	db	"[27] Critical error: in textmacro declaration", 00h
 
 	_bFCLL			db	40h		;; locals
 	_bFCLLMAX		db	40h		;; locals max
@@ -485,6 +488,8 @@ extern	_imp__SFileCloseFile@4:dword
 
 	_lDefXEX		dd	offset _lDefX
 	_xForDefValEX		dd	offset _xForDefVal
+
+	_sNewLine		db	0dh, 0ah
 
 	_sCodeConst		db	"true", 00h
 				db	"false", 00h
@@ -2058,7 +2063,7 @@ _lOptCC_FuncGetEndOX:
 	cmp	byte ptr [esi],			09h
 	je	_lMcrPre_Get_Line
 
-	cmp	word ptr [esi],			2f2fh	;; //
+	cmp	word ptr [esi],			"//"
 	jne	_lMcrPre_Get_NextLine
 	cmp	byte ptr [esi + 02h],		"!"
 	jne	_lMcrPre_Get_Comment
@@ -2100,10 +2105,11 @@ _lOptCC_FuncGetEndOX:
 			_lMcrPre_Get_MacroRun:
 			inc	ecx
 cmp	byte ptr [ecx],			00h
-;;
+je	_lMcrPre_Get_MacroRunEx
 			cmp	byte ptr [ecx],		0ah
 			jne	_lMcrPre_Get_MacroRun
 			inc	ecx
+			_lMcrPre_Get_MacroRunEx:
 
 				;;----------------
 				;; write it
@@ -2147,15 +2153,26 @@ cmp	byte ptr [ecx],			00h
 
 			;;----------------
 			;; declare macro
+
+				;;----------------
+				;; error
+				_lMcrPre_Get_MacroInErr:
+				dec	ebx
+				mov	dword ptr [_xErrorTable],	offset _sErr_MacroPreDeclare
+				mov	dword ptr [_xErrorTable+04h],	esi
+				mov	dword ptr [_xErrorTable+08h],	ebx
+				jmp	_lErrIn
+				;;----------------
+
 			_lMcrPre_Get_MacroIn:
 			mov	ebx,			esi
 
 			_lMcrPre_Get_MacroIn_NextChar:
 			inc	ebx
 			_lMcrPre_Get_MacroIn_NextCharEx:
-cmp	byte ptr [ebx],				00h
-;; err
-			cmp	word ptr [ebx],		2f2fh
+			cmp	byte ptr [ebx],				00h
+			je	_lMcrPre_Get_MacroInErr
+			cmp	word ptr [ebx],		"//"
 			je	_lMcrPre_Get_MacroIn_SkipLine
 
 			cmp	byte ptr [ebx],		22h
@@ -2180,8 +2197,8 @@ cmp	byte ptr [ebx],				00h
 
 			_lMcrPre_Get_MacroIn_SkipLine:
 			inc	ebx
-cmp	byte ptr [ebx],			00h
-;;
+			cmp	byte ptr [ebx],			00h
+			je	_lMcrPre_Get_MacroInErr
 			cmp	byte ptr [ebx],			0ah
 			jne	_lMcrPre_Get_MacroIn_SkipLine
 			jmp	_lMcrPre_Get_MacroIn_Line
@@ -2213,16 +2230,19 @@ cmp	byte ptr [ebx],			00h
 			jne	_lMcrPre_Get_MacroIn_NextChar
 cmp	word ptr [ebp + 0ch],			"//"
 je	_lMcrPre_Get_MacroIn_EndMacroEx
+cmp	word ptr [ebp + 0ch],			"*/"
+je	_lMcrPre_Get_MacroIn_EndMacroEx
 			cmp	byte ptr [ebp + 0ch],		20h
 			ja	_lMcrPre_Get_MacroIn_NextChar
 
 			_lMcrPre_Get_MacroIn_EndMacroEx:
-			inc	ebp
-cmp	byte ptr [ebp],			00h
+add	ebp,			0ch
+;			inc	ebp
+;cmp	byte ptr [ebp],			00h
 ;;
-			cmp	byte ptr [ebp],			0ah
-			jne	_lMcrPre_Get_MacroIn_EndMacroEx
-			inc	ebp
+;			cmp	byte ptr [ebp],			0ah
+;			jne	_lMcrPre_Get_MacroIn_EndMacroEx
+;			inc	ebp
 
 				;;----------------
 				;; write it
@@ -2237,12 +2257,19 @@ cmp	byte ptr [ebp],			00h
 				push	dword ptr [_hTempMacroIn]
 				call	_imp__WriteFile@20
 
+				push	00h
+				push	offset _dBuffer
+				push	02h
+				push	offset _sNewLine
+				push	dword ptr [_hTempMacroIn]
+				call	_imp__WriteFile@20
+
 				mov	al,				" "
 				mov	ecx,				ebp
 				mov	esi,				ebx
 				rep	stosb				
 
-				jmp	_lMcrPre_Get_LineEx
+				jmp	_lMcrPre_Get_NextLine
 				;;----------------
 			;;----------------
 		;;----------------
@@ -2250,8 +2277,8 @@ cmp	byte ptr [ebp],			00h
 		;;----------------
 		_lMcrPre_Get_Comment:
 		inc	esi
-cmp	byte ptr [esi],			00h
-;;
+		cmp	byte ptr [esi],			00h
+		je	_lMcrPre_EndEx
 		cmp	byte ptr [esi],			0ah
 		jne	_lMcrPre_Get_Comment
 		jmp	_lMcrPre_Get_LineEx
@@ -2289,15 +2316,27 @@ cmp	byte ptr [esi],			00h
 
 		;;----------------
 		;; skip ex comment /* */
+
+			;;----------------
+			;; error
+			_lSkipComment_Err:
+			dec	ecx
+			mov	dword ptr [_xErrorTable],	offset _sErr_UnclosedComment
+;;			mov	dword ptr [_xErrorTable+04h],	esi
+			mov	dword ptr [_xErrorTable+08h],	ecx
+			jmp	_lErrIn
+			;;----------------
+
 		_lSkipComment:
-		mov	ecx,			dword ptr [esp + 04h]
-		xor	edx,			edx
+		mov	ecx,				dword ptr [esp + 04h]
+		xor	edx,				edx
+		mov	dword ptr [_xErrorTable+04h],	ecx	;; for err
 
 		_lSkipComment_Next:
 		inc	ecx
 		_lSkipComment_NextEx:
-cmp	byte ptr [ecx],			00h
-;;
+		cmp	byte ptr [ecx],		00h
+		je	_lSkipComment_Err
 
 		cmp	byte ptr [ecx],		22h
 		jne	_lSkipComment_NextFx
@@ -2318,7 +2357,6 @@ cmp	byte ptr [ecx],			00h
 		lea	eax,			[ecx + 02h]
 		retn	04h
 
-
 		_lSkipComment_NextDx:
 		inc	edx
 		jmp	_lSkipComment_Next
@@ -2328,6 +2366,7 @@ cmp	byte ptr [ecx],			00h
 		;; skip line proc (addr)
 		_lSkipStr:
 		mov	eax,			dword ptr [esp + 04h]
+		mov	dword ptr [_xErrorTable+04h],	eax
 
 		_lMcrPre_Get_String:
 		inc	eax
@@ -2337,14 +2376,33 @@ cmp	byte ptr [ecx],			00h
 		add	eax,				02h
 		jmp	_lMcrPre_Get_StringEx
 		_lMcrPre_Get_String_Next:
-cmp	byte ptr [eax],			00h
-;;
+		cmp	byte ptr [eax],			00h
+		je	_lSkipStr_Err
 		cmp	byte ptr [eax],			22h
 		jne	_lMcrPre_Get_String
 
 		inc	eax
 
 		retn	04h
+
+			;;----------------
+			;; error
+			_lSkipStr_Err:
+			dec	eax
+			mov	dword ptr [_xErrorTable],	offset _sErr_UnclosedString
+;;			mov	dword ptr [_xErrorTable+04h],	esi
+			mov	dword ptr [_xErrorTable+08h],	eax
+			jmp	_lErrIn
+			;;----------------
+		;;----------------
+
+		;;----------------
+		;; script preprocessor err
+		_lMcrPre_Err:
+		mov	dword ptr [_xErrorTable],	offset _sErr_MacroPreErr
+		mov	dword ptr [_xErrorTable+04h],	esi
+		mov	dword ptr [_xErrorTable+08h],	esi
+		jmp	_lErrIn
 		;;----------------
 
 	_lMcrPre_EndEx:
@@ -2368,11 +2426,20 @@ cmp	byte ptr [eax],			00h
 	call	_imp__CreateProcessA@40
 
 	test	eax,				eax
-;; jz err
+	jz	_lMcrPre_Err
 
 	push	0ffffffffh
 	push	dword ptr [_xPrcInfo.hProcess]
 	call	_imp__WaitForSingleObject@8
+
+	push	offset _dBuffer
+	push	dword ptr [_xPrcInfo.hProcess]
+	call	_imp__GetExitCodeProcess@8
+
+	test	eax,				eax
+	jz	_lMcrPre_Err
+	cmp	dword ptr [_dBuffer],		00h
+	jne	_lMcrPre_Err
 
 		;;----------------
 		;; get parsed file
@@ -2386,7 +2453,7 @@ cmp	byte ptr [eax],			00h
 		call	_imp__CreateFileA@28
 
 		cmp	eax,			0ffffffffh
-;; je err cant read parsed file
+		je	_lMcrPre_Err
 
 		mov	ebx,			eax	;; ebx - file
 
@@ -10603,6 +10670,9 @@ mov	dword ptr [_bFlushFlagBlock],	00h
 					cmp	al,			00h
 					je	_lFlLoc_SC_End
 
+					cmp	eax,			"tats"
+					je	_lFlLoc_SC_StIf
+
 					cmp	ax,			"fi"
 					je	_lFlLoc_SC_If
 
@@ -10668,8 +10738,7 @@ mov	dword ptr [_bFlushFlagBlock],	00h
 							jne	_lFlLoc_SC_NotNullEx
 							cmp	word ptr [ecx + 05h],	0a0dh
 							jne	_lFlLoc_SC_NotNullEx
-				;			test	edx,			edx
-				;			jnz	_lFlLoc_SC_GetNextLine
+
 							mov	dword ptr [ebp],	00h
 							jmp	_lFlLoc_SC_GetNextLine
 
@@ -10684,8 +10753,7 @@ mov	dword ptr [_bFlushFlagBlock],	00h
 							jne	_lFlLoc_SC_NotNull
 							cmp	word ptr [ecx + 0eh],	0a0dh
 							jne	_lFlLoc_SC_NotNull
-				;			test	edx,			edx
-				;			jnz	_lFlLoc_SC_GetNextLine
+
 							mov	dword ptr [ebp],	00h
 							jmp	_lFlLoc_SC_GetNextLine
 
@@ -10696,16 +10764,29 @@ mov	dword ptr [_bFlushFlagBlock],	00h
 						;;----------------
 
 						;;----------------
-						;; if
-						_lFlLoc_SC_If:
-						cmp	byte ptr [ecx+02h],	28h
-						ja	_lFlLoc_SC_GetNextLine
-				;		inc	edx
+						;; static if
+						_lFlLoc_SC_StIf:
+						cmp	dword ptr [ecx + 04h],	"i ci"
+						jne	_lFlLoc_SC_GetNextLine
+						cmp	byte ptr [ecx + 08h],	"f"
+						jne	_lFlLoc_SC_GetNextLine
+
 						push	00h
 						push	dword ptr [_dFlushLocalsExBlock]
 						mov	dword ptr [_dFlushLocalsExBlock],	01h
 						jmp	_lFlLoc_SC_BlockIn
-				;		jmp	_lFlLoc_SC_GetNextLine
+						;;----------------
+
+						;;----------------
+						;; if
+						_lFlLoc_SC_If:
+						cmp	byte ptr [ecx+02h],	28h
+						ja	_lFlLoc_SC_GetNextLine
+
+						push	00h
+						push	dword ptr [_dFlushLocalsExBlock]
+						mov	dword ptr [_dFlushLocalsExBlock],	01h
+						jmp	_lFlLoc_SC_BlockIn
 						;;----------------
 
 						;;----------------
@@ -10724,7 +10805,6 @@ mov	dword ptr [_bFlushFlagBlock],	00h
 						push	dword ptr [_dFlushLocalsExBlock]
 						mov	dword ptr [_dFlushLocalsExBlock],	01h
 						jmp	_lFlLoc_SC_BlockIn
-				;		jmp	_lFlLoc_SC_GetNextLine
 						;;----------------
 
 						;;----------------
@@ -10734,7 +10814,7 @@ mov	dword ptr [_bFlushFlagBlock],	00h
 						jne	_lFlLoc_SC_GetNextLine
 						cmp	byte ptr [ecx + 05h],	28h
 						ja	_lFlLoc_SC_GetNextLine
-				;		dec	edx
+
 						call	_lFlLoc_SC_BlockOut
 						jmp	_lFlLoc_SC_GetNextLine
 						;;----------------
@@ -10744,12 +10824,11 @@ mov	dword ptr [_bFlushFlagBlock],	00h
 						_lFlLoc_SC_Loop:
 						cmp	byte ptr [ecx + 04h],	28h
 						ja	_lFlLoc_SC_GetNextLine
-				;		inc	edx
+
 						push	00h
 						push	dword ptr [_dFlushLocalsExBlock]
 						mov	dword ptr [_dFlushLocalsExBlock],	02h
 						jmp	_lFlLoc_SC_BlockIn
-				;		jmp	_lFlLoc_SC_GetNextLine
 						;;----------------
 
 						;;----------------
@@ -10759,7 +10838,7 @@ mov	dword ptr [_bFlushFlagBlock],	00h
 						jne	_lFlLoc_SC_GetNextLine
 						cmp	byte ptr [ecx + 07h],	28h
 						ja	_lFlLoc_SC_GetNextLine
-				;		dec	edx
+
 						call	_lFlLoc_SC_BlockOut
 						jmp	_lFlLoc_SC_GetNextLine
 						;;----------------
@@ -12369,11 +12448,14 @@ jmp	_lFNPExFuncDefAddAnon_01
 			_lFNPExFuncDefAddAnon_EndEX:
 			;;----------------
 
+		_lFNPExFuncDefGetName:
 		dec	ecx			;; ecx = func name
 		cmp	word ptr [ecx-02h],	0a0dh		;; nl
 		je	_lFNPCopy
+;		cmp	byte ptr [ecx-01h],	00h
+;		je	_lFNPCopy
 		cmp	byte ptr [ecx-01h],	20h		;; _
-		jne	_lFNPExFuncDef
+		jne	_lFNPExFuncDefGetName
 
 		;; is operator?
 		cmp	dword ptr [ecx-05h],	726f7461h	;; ator
@@ -12387,6 +12469,8 @@ jmp	_lFNPExFuncDefAddAnon_01
 		_lbl:				;; edx = type
 		dec	edx
 		cmp	word ptr [edx-02h],	0a0dh		;; new line
+		je	_lFNPExFuncDefDX
+		cmp	byte ptr [edx-01h],	00h
 		je	_lFNPExFuncDefDX
 		cmp	byte ptr [edx-01h],	20h		;; _
 		jne	_prew
