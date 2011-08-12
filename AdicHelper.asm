@@ -969,6 +969,7 @@ _sGroupCopyCodeSize	equ	$ - offset _sGroupCopyCode
 	_sCJGenGlobalsTypes	db	0800h	dup(?)	;; generated globals types
 
 	_sFuncType		dd	?		;; returns ***
+_bFuncTypeIsVoid	db	?	;; is function void
 
 	_dLocalsOffset		dd	?		;; addr of locals
 	_dCodeOffset		dd	?		;; addr of code
@@ -4370,11 +4371,28 @@ jne	_lCRPreForArsg
 		jmp	_lCRScanLine
 
 _lCRPreForArsg:
+inc	esi
+_lCRPreForArsgEx:
 dec	byte ptr [_bPreForArgs]
 mov	dword ptr [edi],		001a2c1bh	;; 1bh , 1ah
-inc	esi
 add	edi,				03h
 jmp	_lCRScan
+		;;----------------
+
+		;;----------------
+		;; use keyword
+		_lbl:
+		cmp	eax,				" esu"
+		jne	_next
+
+		cmp	byte ptr [_bPreForArgs],	00h
+		je	_next
+
+		cmp	byte ptr [edi - 01h],		")"
+		jne	_next
+
+		add	esi,				04h
+		jmp	_lCRPreForArsgEx
 		;;----------------
 
 		;;----------------
@@ -9390,6 +9408,19 @@ je	_lFNPIfBlockNull
 				jne	_lFNPFuncOutBX
 
 				mov	dword ptr [_sFuncType],		ecx
+
+mov	byte ptr [_bFuncTypeIsVoid],	00h
+
+				cmp	dword ptr [ecx],		"hton"
+				jne	_lFNPFuncOut_NotVoid
+				cmp	dword ptr [ecx + 03h],		"gnih"
+				jne	_lFNPFuncOut_NotVoid
+				cmp	word ptr [ecx + 07h],		0a0dh
+				jne	_lFNPFuncOut_NotVoid
+
+mov	byte ptr [_bFuncTypeIsVoid],	01h
+
+				_lFNPFuncOut_NotVoid:
 				;;----------------
 
 				;;----------------
@@ -9978,6 +10009,8 @@ _lCopyCode_WordCopyFx:
 	je	_lCodeCopy_EndEx
 	cmp	byte ptr [_bALFReturnLast],	01h
 	je	_lCodeCopy_EndEx
+cmp	byte ptr [_bFuncTypeIsVoid],	00h
+je	_lCodeCopy_EndEx
 	mov	byte ptr [_bALFReturnExpr],	00h
 	call	_lFlushLocals
 
@@ -10303,7 +10336,7 @@ pop	ebx
 						_lFlLoc_T_05:
 						cmp	eax,			"uorg"
 						jne	_lFlLoc_T_06
-						cmp	word ptr [ecx],		" p"
+						cmp	word ptr [ecx+04h],	" p"
 						jne	_lFlLoc_T_06
 						add	ecx,			06h
 						jmp	_lFlLoc_T_Add
