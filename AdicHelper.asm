@@ -1178,7 +1178,7 @@ _dModuleCompabilityMode		db	?
 	;;	_dArgAddr	dd	;; pointer to args
 	;;	_bType		db	;; type id
 	;;	_wFamily	dw	;; args block - 0, 1...fffe (ffff - removed)
-	;;	_bArgEx		db	;; functions int the arg
+	;;	_bArgEx		db	;; functions in the arg
 		_dCBSize	equ	10h
 
 	;;	struct enumLabels	0ch
@@ -9192,15 +9192,15 @@ _lGGTXX:
 		cmp	eax,			20746573h	;; set_
 		je	_lFNPCopyParse
 
-		_lbl:
-		cmp	eax,			"tats"
-		jne	_next
-		cmp	dword ptr [esi+04h],	"i ci"
-		jne	_next
-		cmp	byte ptr [esi+08h],	"f"
-		jne	_next
-		cmp	byte ptr [esi+09h],	"("
-		jbe	_lFNPCopyParse
+;		_lbl:
+;		cmp	eax,			"tats"
+;		jne	_next
+;		cmp	dword ptr [esi+04h],	"i ci"
+;		jne	_next
+;		cmp	byte ptr [esi+08h],	"f"
+;		jne	_next
+;		cmp	byte ptr [esi+09h],	"("
+;		jbe	_lFNPCopyParse
 
 _lbl:
 cmp	eax,			"lpmi"
@@ -9258,6 +9258,20 @@ cmp	word ptr [esi+08h],	" t"
 
 			;;----------------
 			;; if
+_lbl:
+cmp	eax,			"tats"
+jne	_next
+cmp	dword ptr [esi+04h],	"i ci"
+jne	_next
+cmp	byte ptr [esi+08h],	"f"
+jne	_next
+cmp	byte ptr [esi+09h],	2eh
+jg	_next
+
+call	_lInFuncBlockIn
+
+jmp	_FNPIf
+
 			_lbl:
 			cmp	ax,			6669h		;; if
 			jne	_next
@@ -15391,14 +15405,35 @@ push	esi
 		;;----------------
 		;; function in arg?
 		mov	esi,				dword ptr [ecx + 08h]
+		jmp	_lCallbackReg_ArgPre_IsFuncEx
 
 		_lCallbackReg_ArgPre_IsFunc:
 		inc	esi
+		_lCallbackReg_ArgPre_IsFuncEx:
 		cmp	byte ptr [esi],			")"
 		je	_lCallbackReg_ArgPre_IsFuncEnd
-		cmp	byte ptr [esi],			"("
-		jne	_lCallbackReg_ArgPre_IsFunc
 
+		mov	al,				byte ptr [esi]
+		cmp	byte ptr [_bAscii_00 + eax],	ah
+		je	_lCallbackReg_ArgPre_IsFunc
+
+		cmp	al,				39h	;; 9
+		ja	_lCallbackReg_ArgPre_IsFuncTrue
+
+			;;----------------
+			;; skip digit
+			_lCallbackReg_ArgPre_IsFuncSkip:
+			inc	esi
+			mov	al,				byte ptr [esi]
+			cmp	byte ptr [_bAscii_00 + eax],	ah
+			jne	_lCallbackReg_ArgPre_IsFuncSkip
+			jmp	_lCallbackReg_ArgPre_IsFuncEx
+			;;----------------
+
+;		cmp	byte ptr [esi],			"("
+;		jne	_lCallbackReg_ArgPre_IsFunc
+
+		_lCallbackReg_ArgPre_IsFuncTrue:
 		mov	byte ptr [ecx + 0fh],		01h
 
 		_lCallbackReg_ArgPre_IsFuncEnd:
@@ -15747,7 +15782,14 @@ rep	movsb
 			cmp	byte ptr [_bCallbackArgPickType],	01h
 			je	_lCallbackReg_AddFunc_GetArgedSkipEx
 
-;			sub	edi,			05h
+cmp	dword ptr [edi - 0ah],	"esle"
+je	_lCallbackReg_AddFunc_AddEndif
+mov	dword ptr [edi - 04h],	00h
+mov	word ptr [edi - 06h],	00h
+sub	edi,			06h
+jmp	_lCallbackReg_AddFunc_GetArgedSkipEx
+
+_lCallbackReg_AddFunc_AddEndif:
 			mov	dword ptr [edi - 0ah],	"idne"
 			mov	dword ptr [edi - 06h],	"   f"
 			mov	word ptr [edi - 02h],	0a0dh
