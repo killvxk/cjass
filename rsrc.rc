@@ -2,8 +2,8 @@
 64 cursor discardable "x.cur"
 
 1 versioninfo
-fileversion 1,4,2,34
-productversion 1,4,2,34
+fileversion 1,4,2,35
+productversion 1,4,2,35
 fileos 0x00000004
 filetype 0x00000001 {
 	block "StringFileInfo" {

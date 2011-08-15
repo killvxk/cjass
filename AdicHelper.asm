@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 1.4.2.34
+;;	v 1.4.2.35
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -104,8 +104,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.34", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.34", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.35", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.35", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -707,6 +707,11 @@ _sGroupCopyCode		db	"library cjGroupCopyLib75hJKJ3745gf", 0dh, 0ah
 			db	"endlibrary", 0dh, 0ah
 _sGroupCopyCodeSize	equ	$ - offset _sGroupCopyCode
 
+_dFreeScopesStackPnt	dd	offset _dFreeScopesStack
+
+_dModulesPnt		dd	offset _dModules
+_dModulesEntryPnt	dd	offset _dModulesEntry
+
 ;;_dAonBlockBaseFuncS	dd	0ffffffffh	;; base anon block's function
 ;;_dAonBlockBaseFuncE	dd	0ffffffffh
 
@@ -798,6 +803,28 @@ _sGroupCopyCodeSize	equ	$ - offset _sGroupCopyCode
 	db	"e0e1e2e3e4e5e6e7e8e9eaebecedeeef"
 	db	"f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
 	;;
+
+	;;
+	;; convert string (hex) to int
+	;;
+
+	_bHexStrToInt \
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 01h, 02h, 03h, 04h, 05h, 06h, 07h, 08h, 09h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 0ah, 0bh, 0ch, 0dh, 0eh, 0fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 0ah, 0bh, 0ch, 0dh, 0eh, 0fh, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
+	db	00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h, 00h
 
 	;;
 	;; remove bs 00
@@ -898,8 +925,15 @@ _sGroupCopyCodeSize	equ	$ - offset _sGroupCopyCode
 	align			10h	
 	_lDefX			dd	00010000h	dup(?)	;; 80h bits defBlocks
 
-	_dScopeIn		dd	0100h	dup(?)
-	_dScopeOut		dd	0100h	dup(?)
+	_dScopeIn		dd	0400h	dup(?)
+	_dScopeOut		dd	0400h	dup(?)
+
+_dScopeInPost		dd	0400h	dup(?)
+_dScopeOutPost		dd	0400h	dup(?)
+_dFreeScopeID		dd	?
+_dCurrScopeID		dd	?
+
+_dFreeScopesStack	dd	80h	dup(?)
 
 	_dDefTable		dd	0080h	dup(?)		;; used in f'n'p	;; used in code romoning (variables)
 	_dDefTableEX		dd	0080h	dup(?)					;; used in code romoning (function)
@@ -1054,7 +1088,23 @@ _bCallbackArgPickType	db	?
 
 	_dMacroPreESI				dd	?	;; save esi in #R
 
+_dPostProcessLine		dd	?
+;_dPostProcessLineNext		dd	?
+
+_bIsTernar			db	?
+_bIsIncDec			db	?
+
+_bPostProcessing_IsInStruct	db	?
+
+_dModules			db	0200h * 15h	dup(?)	;; _dModulesSize
+_dModulesEnd			equ	$
+
+_dModulesEntry			db	0200h		dup(?)	;; saves esi
+_dModulesEntryEnd		equ	$
+
 ;_bCallbackTempType			db	?
+
+_dModuleCompabilityMode		db	?
 
 	;;----------------
 	;; custom
@@ -1171,6 +1221,16 @@ _bCallbackArgPickType	db	?
 	;;	struct anonBlock	04h
 	;;
 	;;	_dAddrS		dd	;; addr - start
+
+	;;	struct module		15h
+	;;
+	;;	_dAddrN		dd	;; addr name
+	;;	_dAddrS		dd	;; addr start
+	;;	_dAddrE		dd	;; addr end
+	;;	_dLibID		dd	;; lib id
+	;;	_dCanon		dd	;; addr of first "canonical" implement (with lambdas)
+	;;	_bIsUse		db	;; is implement in this struct
+		_dModulesSize	equ	15h
 
 	;;-------------------------------------------------------------------------
 
@@ -4617,6 +4677,12 @@ _lCRCloseBlockEx:
 		pop	eax					;; for safe
 		;;----------------
 
+cmp	word ptr [edi - 02h],	0a0dh
+je	_next
+mov	word ptr [edi],		0a0dh
+add	edi,			02h
+_lbl:
+
 	mov	esi,			dword ptr [esp+04h]
 	add	edi,			04h
 	mov	dword ptr [_dSynDesc],	offset _xSynDesc	;; reset
@@ -5112,7 +5178,7 @@ inc	esi
 		_lLSIn:
 		push	ecx
 		inc	dword ptr [_dFreeScope]
-		mov	ecx,			_dFreeScope
+		mov	ecx,			dword ptr [_dFreeScope]
 		lea	eax,			[offset _dScopeIn+ecx*04h]
 		mov	dword ptr [eax],	esi
 		jmp	_lNextLineSx
@@ -6163,6 +6229,7 @@ jmp	_lDFArgNextWord
 	mov	edi,				dword ptr [esp]
 	mov	esi,				dword ptr [esp+08h]
 	xor	eax,				eax
+mov	dword ptr [_dPostProcessLine],	edi
 	jmp	_lXFPStart
 
 	_lXFPNewWord:
@@ -6790,12 +6857,32 @@ mov	dword ptr [_dAddrDefArgPnt],	eax
 			cmp	al,			0bh
 			je	_lXFPTMArg
 
+cmp	al,				"?"
+jne	_lXFPXX_OFX
+mov	byte ptr [_bIsTernar],		01h
+movsb
+jmp	_lXFPStart
+
+_lXFPXX_OFX:
 			cmp	word ptr [esi],		3801h	;; #8
 			jne	_lXFPXX_Next
 			movsw
 			jmp	_lXFPStart
 
 			_lXFPXX_Next:
+cmp	word ptr [esi],			"++"
+jne	_lXFPXX_Next_00
+mov	byte ptr [_bIsIncDec],		01h
+jmp	_lXFPNewWord
+
+_lXFPXX_Next_00:
+cmp	word ptr [esi],			"--"
+jne	_lXFPXX_Next_01
+mov	byte ptr [_bIsIncDec],		01h
+jmp	_lXFPNewWord
+
+_lXFPXX_Next_01:
+
 			cmp	word ptr [esi],		6401h	;; #d
 			je	_lXFP_00
 			cmp	word ptr [esi],		6701h	;; #g
@@ -6871,15 +6958,19 @@ mov	byte ptr [_bWhileCondCorrect],	00h
 mov	byte ptr [edi],			")"
 inc	edi
 
-			jmp	_lXFPNewWordEx
+;			jmp	_lXFPNewWordEx
 			;;----------------
 
 ;;----------------
 _lXFPNewWordEx:
 cmp	word ptr [edi - 02h],		0a0dh
-jne	_lXFPNewWord
+jne	_lXFPNewWordRx
 add	esi,				02h
 jmp	_lXFPStart
+
+_lXFPNewWordRx:
+movsw
+jmp	_lPostParseStr
 ;;----------------
 
 			;;----------------
@@ -8304,7 +8395,8 @@ inc	edi
 			mov	dword ptr [edx+02h],	edi
 			add	edi,			06h
 			add	esi,			04h
-			jmp	_lXFPStart
+;			jmp	_lXFPStart
+jmp	_lPostParseStr
 			;;----------------
 		;;----------------
 
@@ -8475,6 +8567,289 @@ inc	edi
 			;;----------------
 		;;----------------
 
+;;----------------
+;; post process line
+;;
+;; may to use eax ebx ecx edx ebp
+;;
+
+_lPostParseStr:
+
+	;;----------------
+	;; get instruction type
+	mov	ecx,				dword ptr [_dPostProcessLine]
+	mov	eax,				dword ptr [ecx]
+
+;	_lPostParseStrEx:
+;	cmp	eax,				"virp"
+;	jne	_next
+;	cmp	dword ptr [ecx + 04h],		" eta"
+;	jne	_next
+;	add	ecx,				08h
+;	jmp	_lPostParseStrEx
+
+	cmp	ax,				"fi"
+	jne	_next
+	cmp	byte ptr [ecx + 02h],		"("
+	je	_lPostParseStr_if
+	cmp	byte ptr [ecx + 02h],		22h
+	ja	_next
+	_lPostParseStr_if:
+	cmp	byte ptr [_bIsTernar],		01h
+;;je	err
+	jmp	_lPostParseStr_End
+
+	_lbl:
+	cmp	eax,				"esle"
+	jne	_next
+	cmp	word ptr [ecx + 04h],		"fi"
+	jne	_next
+	cmp	byte ptr [ecx + 02h],		"("
+	je	_lPostParseStr_elif
+	cmp	byte ptr [ecx + 02h],		22h
+	ja	_next
+	_lPostParseStr_elif:
+	cmp	byte ptr [_bIsTernar],		01h
+;;je	err
+	cmp	byte ptr [_bIsIncDec],		01h
+;;je	err	
+	jmp	_lPostParseStr_End
+
+cmp	byte ptr [_dModuleCompabilityMode],	00h
+je	_lPostParseStr_Ternar
+
+	_lbl:
+	cmp	eax,				"rbil"
+	jne	_next
+	cmp	dword ptr [ecx + 04h],		" yra"
+	jne	_next
+
+		;;----------------
+		;; lib in
+		_lPostParse_LibIn:
+		mov	ecx,				dword ptr [_dCurrScopeID]
+		mov	eax,				dword ptr [_dFreeScopesStackPnt]
+		mov	dword ptr [eax],		ecx
+		add	eax,				04h
+		mov	dword ptr [_dFreeScopesStackPnt],	eax
+
+		mov	eax,				dword ptr [_dFreeScopeID]
+		inc	eax
+
+cmp	eax,			03feh
+;; je	err - out of mem
+
+		mov	dword ptr [_dFreeScopeID],	eax	;; don't try to understand it...
+		mov	dword ptr [_dCurrScopeID],	eax	;;
+
+		lea	ecx,				[offset _dScopeInPost + eax * 04h]
+		mov	dword ptr [ecx],		edi
+
+		jmp	_lPostParseStr_End
+		;;----------------
+
+	_lbl:
+	cmp	eax,				"rbil"
+	jne	_next
+	cmp	dword ptr [ecx + 04h],		"_yra"
+	jne	_next
+	cmp	dword ptr [ecx + 08h],		"ecno"
+	jne	_next
+	cmp	byte ptr [ecx + 0ch],		" "
+	je	_lPostParse_LibIn
+
+	_lbl:
+	cmp	eax,				"pocs"
+	jne	_next
+	cmp	word ptr [ecx + 04h],		" e"
+	je	_lPostParse_LibIn
+
+	_lbl:
+	cmp	eax,				"ldne"
+	jne	_next
+	cmp	dword ptr [ecx + 04h],		"arbi"
+	jne	_next
+	cmp	word ptr [ecx + 08h],		"yr"
+	jne	_next
+	cmp	byte ptr [ecx + 0ah],		20h
+	ja	_next
+
+		;;----------------
+		;; lib out
+		_lPostParse_LibOut:
+		mov	eax,				dword ptr [_dCurrScopeID]
+		lea	ecx,				[offset _dScopeOutPost + eax * 04h]
+		mov	dword ptr [ecx],		edi
+
+		mov	ecx,				dword ptr [_dFreeScopesStackPnt]
+		sub	ecx,				04h
+
+cmp	ecx,			offset _dFreeScopesStack - 04h
+;; je err
+
+		mov	eax,				dword ptr [ecx]
+		mov	dword ptr [_dFreeScopesStackPnt],	ecx
+		mov	dword ptr [_dCurrScopeID],	eax
+
+		jmp	_lPostParseStr_End
+		;;----------------
+
+	_lbl:
+	cmp	eax,				"sdne"
+	jne	_next
+	cmp	dword ptr [ecx + 04h],		"epoc"
+	jne	_next
+	cmp	byte ptr [ecx + 08h],		20h
+	jbe	_lPostParse_LibOut
+
+	_lbl:
+	cmp	eax,				"sdne"
+	jne	_next
+	cmp	dword ptr [ecx + 04h],		"curt"
+	jne	_next
+	cmp	byte ptr [ecx + 08h],		"t"
+	jne	_next
+	cmp	byte ptr [ecx + 09h],		20h
+	ja	_next
+	mov	byte ptr [_bPostProcessing_IsInStruct],	01h
+	jmp	_lPostParseStr_End
+
+	_lbl:
+	cmp	eax,				"mdne"
+	jne	_next
+	cmp	dword ptr [ecx + 04h],		"ludo"
+	jne	_next
+	cmp	byte ptr [ecx + 08h],		"e"
+	jne	_next
+	cmp	byte ptr [ecx + 09h],		20h
+	ja	_next
+
+		;;----------------
+		;; module out
+		mov	eax,				dword ptr [_dModulesPnt]
+		
+		_lPostParseStr_CorrectEndmodule:
+		inc	ecx
+		cmp	byte ptr [ecx],			00h
+		je	_lPostParseStr_CorrectEndmoduleEx
+		cmp	word ptr [ecx - 02h],		0a0dh
+		jne	_lPostParseStr_CorrectEndmodule
+
+		_lPostParseStr_CorrectEndmoduleEx:
+		mov	dword ptr [eax + 08h],		ecx
+
+		add	eax,				_dModulesSize
+cmp	eax,			_dModulesEnd
+;; je err
+
+		mov	dword ptr [_dModulesPnt],	eax
+
+		jmp	_lPostParseStr_End
+		;;----------------
+
+	_lbl:
+	xor	edx,				edx		;; edx == is private
+	mov	ebx,				ecx
+	cmp	eax,				"virp"
+	jne	_next
+	cmp	dword ptr [ecx + 04h],		" eta"
+	jne	_next
+	add	ecx,				08h
+	mov	eax,				dword ptr [ecx]
+	mov	edx,				dword ptr [_dCurrScopeID]
+
+	_lbl:
+	cmp	eax,				"udom"
+	jne	_next
+	cmp	dword ptr [ecx + 03h],		" elu"
+	jne	_next
+
+		;;----------------
+		;; module in
+		mov	eax,				dword ptr [_dModulesPnt]
+		add	ecx,				07h
+
+		mov	dword ptr [eax],		ecx
+		mov	dword ptr [eax + 04h],		ebx
+		mov	dword ptr [eax + 0ch],		edx
+
+		jmp	_lPostParseStr_End
+		;;----------------
+
+	call	_lPostParseStr_BlockCheck
+	test	eax,				eax
+	jz	_lPostParseStr_End
+	mov	dword ptr [eax],		"mdne"
+	mov	dword ptr [eax + 04h],		"ludo"
+	mov	word ptr [eax + 08h],		"e"
+	jmp	_lPostParseStr_End
+
+	_lbl:
+	cmp	eax,				"urts"
+	jne	_next
+	cmp	word ptr [ecx + 04h],		"tc"
+	jne	_next
+	cmp	byte ptr [ecx + 06h],		" "
+	jne	_next
+	mov	byte ptr [_bPostProcessing_IsInStruct],	01h
+	call	_lPostParseStr_BlockCheck
+	test	eax,				eax
+	jz	_lPostParseStr_End
+	mov	dword ptr [eax],		"sdne"
+	mov	dword ptr [eax + 04h],		"curt"
+	mov	byte ptr [eax + 08h],		"t"
+	je	_lPostParseStr_End
+
+	_lbl:
+	_lPostParseStr_Ternar:
+	cmp	byte ptr [_bIsTernar],		00h
+	je	_lPostParseStr_End
+;; ternar processing
+	;;----------------
+
+	;;----------------
+	;; check block
+	_lPostParseStr_BlockCheck:
+	mov	edx,				ecx
+
+	_lPostParseStr_BlockCheck_00:
+	inc	edx
+cmp	byte ptr [edx],			00h
+;; je err
+	cmp	word ptr [edx],		0a0dh	;; nl
+	je	_lPostParseStr_BlockCheck_01
+	cmp	word ptr [edx],		7801h	;; #x
+	jne	_lPostParseStr_BlockCheck_00
+
+		;;----------------
+		mov	eax,			dword ptr [edx + 02h]
+		mov	dword ptr [edx],	06060606h
+		mov	word ptr [edx+04h],	0a0dh
+
+		cmp	word ptr [eax-02h],	0a0dh
+		je	_lPostParseStr_BlockCheck_02
+		mov	word ptr [eax],		0a0dh
+		add	eax,			02h
+		_lPostParseStr_BlockCheck_02:
+		retn
+		;;----------------
+
+		;;----------------
+		_lPostParseStr_BlockCheck_01:
+		xor	eax,			eax
+		retn
+		;;----------------
+	;;----------------
+
+
+_lPostParseStr_End:
+mov	byte ptr [_bIsTernar],		00h
+mov	byte ptr [_bIsIncDec],		00h
+mov	dword ptr [_dPostProcessLine],	edi
+xor	eax,				eax
+jmp	_lXFPStart
+;;----------------
+
 	_lXFPEnd:
 	mov	esp,			_dStackPos	;; load stack
 	add	esi,			04h
@@ -8487,6 +8862,32 @@ inc	edi
 
 	;;----------------
 	;; capture world...
+
+;;----------------
+;; check modules
+cmp	byte ptr [_dModuleCompabilityMode],	00h
+je	_lModuleSort_End
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_lModuleSort_End:
+;;----------------
+
 	mov	dword ptr [_dErrorCodeStart],	edi	;; for syntax error
 	mov	_dStackPos,			esp
 
@@ -8752,7 +9153,30 @@ pop	esi
 		cmp	al,			0ch		;; ;
 		je	_lFNPVarX
 
+cmp	byte ptr [_dModuleCompabilityMode],	00h
+je	_lGGTXX
+
+_lbl:
+cmp	eax,			"lpmi"
+jne	_next
+cmp	dword ptr [esi+04h],	"neme"
+jne	_next
+cmp	word ptr [esi+08h],	" t"
+je	_lModuleIn
+
+_lbl:
+cmp	eax,			"mdne"
+jne	_next
+cmp	dword ptr [esi + 04h],	"ludo"
+jne	_next
+cmp	byte ptr [esi + 08h],	"e"
+jne	_next
+cmp	byte ptr [esi + 09h],	20h
+jbe	_lModuleOut
+
+
 		_lbl:
+_lGGTXX:
 		test	ebx,			01b
 		jp	_lFNPOutside				;; globals ? ;; out the function
 		;;----------------
@@ -8778,13 +9202,13 @@ pop	esi
 		cmp	byte ptr [esi+09h],	"("
 		jbe	_lFNPCopyParse
 
-		_lbl:
-		cmp	eax,			"lpmi"
-		jne	_next
-		cmp	dword ptr [esi+04h],	"neme"
-		jne	_next
-		cmp	word ptr [esi+08h],	" t"
-		je	_lFNPCopy
+_lbl:
+cmp	eax,			"lpmi"
+jne	_next
+cmp	dword ptr [esi+04h],	"neme"
+jne	_next
+cmp	word ptr [esi+08h],	" t"
+;; je	error
 
 		_lbl:
 		cmp	eax,			"olbv"
@@ -9226,37 +9650,7 @@ je	_lFNPIfBlockNull
 
 				;;----------------
 				;; undef it
-
 				mov	byte ptr [ecx + 02h],		00h
-			;	mov	word ptr [edi],			"O#"
-			;	add	edi,				02h
-			;
-			;	add	ecx,				0dh
-			;	xor	ebx,				ebx
-			;
-			;	_lInFuncBlockOut_UndefGetName:
-			;	inc	ecx
-			;	cmp	byte ptr [ecx - 01h],		" "
-			;	jne	_lInFuncBlockOut_UndefGetName
-			;
-			;	cmp	dword ptr [ecx],		"arra"
-			;	jne	_lInFuncBlockOut_Undef
-			;	cmp	word ptr [ecx + 04h],		" y"
-			;	jne	_lInFuncBlockOut_Undef
-			;	add	ecx,				06h
-			;
-			;	_lInFuncBlockOut_Undef:
-			;	mov	bl,				byte ptr [ecx]
-			;	cmp	[_bAscii_00 + ebx],		bh
-			;	je	_lInFuncBlockOut_UndefEnd
-			;	mov	byte ptr [edi],			bl
-			;	inc	ecx
-			;	inc	edi
-			;	jmp	_lInFuncBlockOut_Undef
-			;
-			;	_lInFuncBlockOut_UndefEnd:
-			;	mov	word ptr [edi],			0a0dh
-			;	add	edi,				02h
 				;;----------------
 
 			_lInFuncBlockOut_CheckVarsGetNext:
@@ -9319,11 +9713,7 @@ je	_lFNPIfBlockNull
 			cmp	word ptr [esi+0ch],	0a0dh	;; nl
 			jne	_next
 
-			;;add	esi,			0ch
-
 			jmp	_lFNPCopyParse
-
-			;;jmp	_lFNPCopyParseNext	;; eax mast be null!
 			;;----------------
 
 			;;----------------
@@ -10685,7 +11075,6 @@ pop	ebx
 
 					;;----------------
 					;; scan code
-
 mov	dword ptr [_bFlushFlagBlock],	00h
 
 					;; 0 variables
@@ -11758,9 +12147,26 @@ _lCallback_AnonEnd:
 		jg	_next
 		mov	dword ptr [_dLastStructName],	00h
 		xor	ebx,			10b
-		jmp	_lFNPCopy
+cmp	byte ptr [_dModuleCompabilityMode],	00h
+je	_lFNPCopy
+
+;;----------------
+;; clean module calls
+mov	eax,			offset _dModules - _dModulesSize
+
+_lModulesClean:
+add	eax,			_dModulesSize
+cmp	dword ptr [eax],	00h
+je	_lFNPCopy
+
+mov	byte ptr [eax + 14h],	00h
+jmp	_lModulesClean
+;;----------------
+
 
 		_lbl:
+cmp	byte ptr [_dModuleCompabilityMode],	01h
+je	_next
 		cmp	eax,			6d646e65h	;; endm
 		jne	_next
 		cmp	dword ptr [esi+04h],	6c75646fh	;; odul
@@ -11799,6 +12205,8 @@ _lCallback_AnonEnd:
 			jbe	_lFNPCopy
 
 			_lbl:
+cmp	byte ptr [_dModuleCompabilityMode],	01h
+je	_next
 			cmp	eax,			6c706d69h	;; impl
 			jne	_next
 			cmp	dword ptr [esi+04h],	6e656d65h	;; emen
@@ -11872,6 +12280,18 @@ _lCallback_AnonEnd:
 				add	ecx,			06h
 				jmp	_lFNPMetAddAnon_00_EX
 
+_lFNPMetAddAnon_04:
+cmp	byte ptr [_dModuleCompabilityMode],	00h
+je	_lFNPMetAddAnon_00
+
+cmp	dword ptr [ecx + 04h],	"domd"
+jne	_lFNPMetAddAnon_00
+cmp	dword ptr [ecx + 07h],	"elud"
+jne	_lFNPMetAddAnon_00
+cmp	byte ptr [ecx + 0bh],	20h
+ja	_lFNPMetAddAnon_00
+jmp	_lFNPMetAddAnon_05
+
 					;;----------------
 					;; add struct name
 					_lFNPMetAddAnon_01:
@@ -11897,12 +12317,13 @@ jmp	_lFNPMetAddAnon_00
 
 				_lFNPMetAddAnon_02:
 				cmp	dword ptr [ecx+04h],	"temd"
-				jne	_lFNPMetAddAnon_00
+				jne	_lFNPMetAddAnon_04
 				cmp	dword ptr [ecx+07h],	"doht"
-				jne	_lFNPMetAddAnon_00
+				jne	_lFNPMetAddAnon_04
 				cmp	byte ptr [ecx+0bh],	20h
-				jg	_lFNPMetAddAnon_00
+				jg	_lFNPMetAddAnon_04
 
+_lFNPMetAddAnon_05:
 				test	eax,				eax
 				jz	_lFNPCopyFuncInEx
 
@@ -12254,30 +12675,7 @@ jmp	_lFNPAnonMethodAdd_03
 					mov	dword ptr [eax],	73646e65h	;; ends
 					mov	dword ptr [eax+04h],	63757274h	;; truc
 					mov	byte ptr [eax+08h],	74h		;; t
-					jmp	_lFNPGetStructName
-					;;----------------
-
-					;;----------------
-					;; module
-					_lbl:
-					cmp	eax,			75646f6dh	;; modu
-					jne	_next
-					cmp	word ptr [ecx+04h],	656ch		;; le
-					jne	_next
-					cmp	byte ptr [ecx+06h],	20h		;; _
-					jg	_next
-
-					lea	eax,			[ecx+07h]
-					mov	dword ptr [_dLastStructName],	eax
-
-					or	ebx,			10b
-					mov	edx,			ecx
-					call	_lFNPCheckBlock
-					test	eax,			eax
-					jz	_lFNPGetStructName
-					mov	dword ptr [eax],	6d646e65h	;; endm
-					mov	dword ptr [eax+04h],	6c75646fh	;; odul
-					mov	byte ptr [eax+08h],	65h		;; e
+;					jmp	_lFNPGetStructName
 
 						;;----------------
 						;; get struck/module name
@@ -12296,6 +12694,83 @@ jmp	_lFNPAnonMethodAdd_03
 						;;----------------
 
 					jmp	_lFNPCopy
+					;;----------------
+
+					;;----------------
+					;; module
+					_lbl:
+					cmp	eax,			75646f6dh	;; modu
+					jne	_next
+					cmp	word ptr [ecx+04h],	656ch		;; le
+					jne	_next
+					cmp	byte ptr [ecx+06h],	20h		;; _
+					jg	_next
+
+cmp	byte ptr [_dModuleCompabilityMode],	00h
+je	_lModuleClassicProcess
+
+;;----------------
+;; skip it
+mov	eax,			offset _dModules - _dModulesSize
+
+_lModuleSkip:
+add	eax,			_dModulesSize
+
+cmp	dword ptr [eax],	00h
+;; je err
+
+cmp	ecx,			dword ptr [eax + 04h]
+jne	_lModuleSkip
+
+mov	esi,			dword ptr [eax + 08h]
+
+	;;----------------
+	;; add link
+	mov	dword ptr [edi],	"udom"
+	mov	dword ptr [edi + 04h],	"  el"
+
+	mov	ecx,			eax
+	and	ecx,			0ff000000h
+	shr	ecx,			17h
+	mov	cx,			word ptr [ecx + _bIntToHexStr]
+	mov	word ptr [edi + 07h],	cx
+	mov	ecx,			eax
+	and	ecx,			00ff0000h
+	shr	ecx,			0fh
+	mov	cx,			word ptr [ecx + _bIntToHexStr]
+	mov	word ptr [edi + 09h],	cx
+	mov	ecx,			eax
+	and	ecx,			0000ff00h
+	shr	ecx,			07h
+	mov	cx,			word ptr [ecx + _bIntToHexStr]
+	mov	word ptr [edi + 0bh],	cx
+	mov	ecx,			eax
+	and	ecx,			000000ffh
+	shl	ecx,			01h
+	mov	cx,			word ptr [ecx + _bIntToHexStr]
+	mov	word ptr [edi + 0dh],	cx
+
+	mov	word ptr [edi + 0fh],	0a0dh
+	add	edi,			11h
+	;;----------------
+
+jmp	_lFNPLine
+;;----------------
+
+					_lModuleClassicProcess:
+					lea	eax,			[ecx+07h]
+					mov	dword ptr [_dLastStructName],	eax
+
+					or	ebx,			10b
+					mov	edx,			ecx
+					call	_lFNPCheckBlock
+					test	eax,			eax
+					jz	_lFNPGetStructName
+					mov	dword ptr [eax],	6d646e65h	;; endm
+					mov	dword ptr [eax+04h],	6c75646fh	;; odul
+					mov	byte ptr [eax+08h],	65h		;; e
+
+					jmp	_lFNPGetStructName
 					;;----------------
 
 
@@ -12437,34 +12912,7 @@ mov	dword ptr [ecx - 04h],	"epyt"
 mov	byte ptr [ecx],		"."
 
 jmp	_lFNPExFuncDefAddAnon_01
-;				mov	byte ptr [ecx],		20h	;; bs
-;
-;				test	ebx,			ebx
-;
-;				jz	_lFNPExFuncDefAddAnon_01
-;
-;					;;----------------
-;					;; add struct name
-;					push	eax
-;					push	ecx
-;					mov	byte ptr [ecx],			"."
-;					mov	edx,				dword ptr [_dCStructName]
-;
-;					_lFNPExFuncDefAddAnon_02_EX:
-;					mov	bh,				byte ptr [edx]
-;					cmp	bh,				20h	;; bs
-;					je	_lFNPExFuncDefAddAnon_02_FX
-;					dec	ecx
-;					mov	byte ptr [ecx],			bh
-;					dec	edx
-;					jmp	_lFNPExFuncDefAddAnon_02_EX
-;
-;					_lFNPExFuncDefAddAnon_02_FX:
-;					xor	bh,				bh
-;					pop	ecx
-;					pop	eax
-;					jmp	_lFNPExFuncDefAddAnon_01
-;					;;----------------
+
 				;;----------------
 
 			_lFNPExFuncDefAddAnon_03:
@@ -12756,6 +13204,8 @@ jmp	_lFNPExFuncDefAddAnon_01
 		mov	ecx,			esi
 		_lFNPCheckBlockEx:
 		inc	ecx
+cmp	byte ptr [ecx],		00h
+;; je err
 		cmp	word ptr [ecx],		0a0dh
 		je	_lFNPCheckBlockSx
 		cmp	word ptr [ecx],		7801h		;; #x
@@ -12881,6 +13331,249 @@ jmp	_lFNPExFuncDefAddAnon_01
 		mov	dword ptr [_xErrorTable+08h],	edi
 		jmp	_lErrIn
 		;;----------------
+
+;;----------------
+;; processing modules
+
+	;;----------------
+	;; in
+	_lModuleIn:
+	mov	eax,				ebx
+	and	eax,				10b
+;; jz err
+
+	xor	eax,				eax
+	add	esi,				0ah
+
+	cmp	dword ptr [esi],		"itpo"
+	jne	_lModuleIn_00
+	cmp	dword ptr [esi + 04h],		"lano"
+	jne	_lModuleIn_00
+	cmp	byte ptr [esi + 08h],		" "
+	jne	_lModuleIn_00
+push	00h	;; optional
+add	esi,				09h
+	jmp	_lModuleIn_01
+
+	_lModuleIn_00:
+push	01h	;; no optional
+
+	_lModuleIn_01:
+	mov	ecx,				offset _dModules - _dModulesSize
+
+	_lModuleIn_Get:
+	add	ecx,				_dModulesSize
+	cmp	dword ptr [ecx],		00h
+	je	_lModuleIn_NotFound
+
+		;;----------------
+		;; check
+		mov	edx,				dword ptr [ecx + 0ch]
+		test	edx,				edx
+		je	_lModuleIn_Get_00
+
+			;;----------------
+			;; check lib
+			cmp	esi,				dword ptr [_dScopeInPost + edx * 04h]
+			jb	_lModuleIn_Get
+			cmp	esi,				dword ptr [_dScopeOutPost + edx * 04h]
+			jg	_lModuleIn_Get
+			;;----------------
+
+		_lModuleIn_Get_00:
+		mov	ebp,				dword ptr [ecx]
+		mov	edx,				esi
+
+		_lModuleIn_Get_01:
+		mov	al,				byte ptr [ebp]
+		cmp	byte ptr [_bAscii_00 + eax],	ah
+		je	_lModuleIn_Get_02
+
+		cmp	al,				byte ptr [edx]
+		jne	_lModuleIn_Get
+
+		inc	edx
+		inc	ebp
+		jmp	_lModuleIn_Get_01
+
+		_lModuleIn_Get_02:
+		cmp	al,				byte ptr [edx]
+		jne	_lModuleIn_Get
+
+			;;----------------
+			;; in
+add	esp,			04h
+
+			cmp	byte ptr [ecx + 14h],		01h
+			je	_lModuleIn_Skip
+
+			_lModuleIn_Set:
+			inc	esi
+cmp	byte ptr [esi],		00h
+;; je err
+			cmp	word ptr [esi - 02h],	0a0dh
+			jne	_lModuleIn_Set
+
+			mov	edx,			dword ptr [_dModulesEntryPnt]
+			mov	dword ptr [edx],	esi
+			add	edx,			04h
+cmp	edx,			_dModulesEntryEnd
+;; je
+			mov	dword ptr [_dModulesEntryPnt],	edx
+
+			mov	esi,			dword ptr [ecx + 04h]
+
+			_lModuleIn_SetEx:
+			inc	esi
+cmp	byte ptr [esi],		00h
+;; je err
+			cmp	word ptr [esi - 02h],	0a0dh
+			jne	_lModuleIn_SetEx
+
+				;;----------------
+				;; add special instruction
+				mov	eax,			ebx
+				and	eax,			01b
+				jz	_lModuleIn_OutFunc	
+
+				_lModuleIn_InFunc:
+				mov	eax,			dword ptr [_dFCB]
+				mov	dword ptr [eax],	" #//"
+				mov	dword ptr [eax + 04h],	"omjc"
+				mov	dword ptr [eax + 08h],	"orpd"
+				mov	dword ptr [eax + 0ch],	" nic"
+
+mov	edx,			ecx
+and	edx,			0ff000000h
+shr	edx,			17h
+mov	dx,			word ptr [edx + _bIntToHexStr]
+mov	word ptr [eax + 10h],	dx
+mov	edx,			ecx
+and	edx,			00ff0000h
+shr	edx,			0fh
+mov	dx,			word ptr [edx + _bIntToHexStr]
+mov	word ptr [eax + 12h],	dx
+mov	edx,			ecx
+and	edx,			0000ff00h
+shr	edx,			07h
+mov	dx,			word ptr [edx + _bIntToHexStr]
+mov	word ptr [eax + 14h],	dx
+mov	edx,			ecx
+and	edx,			000000ffh
+shl	edx,			01h
+mov	dx,			word ptr [edx + _bIntToHexStr]
+mov	word ptr [eax + 16h],	dx
+
+mov	dword ptr [eax + 18h],	"    "
+mov	dword ptr [eax + 1ch],	"    "
+mov	dword ptr [eax + 20h],	"    "
+mov	dword ptr [eax + 24h],	"    "
+mov	dword ptr [eax + 28h],	"    "
+mov	dword ptr [eax + 2ch],	"    "
+mov	dword ptr [eax + 30h],	"    "
+mov	dword ptr [eax + 34h],	"    "
+
+				mov	word ptr [eax + 38h],	0a0dh
+				add	eax,			3ah
+				mov	dword ptr [_dFCB],	eax
+				jmp	_lFNPLine
+
+				_lModuleIn_OutFunc:
+				mov	dword ptr [edi],	" #//"
+				mov	dword ptr [edi + 04h],	"omjc"
+				mov	dword ptr [edi + 08h],	"orpd"
+				mov	dword ptr [edi + 0ch],	" nic"
+
+mov	edx,			ecx
+and	edx,			0ff000000h
+shr	edx,			17h
+mov	dx,			word ptr [edx + _bIntToHexStr]
+mov	word ptr [edi + 10h],	dx
+mov	edx,			ecx
+and	edx,			00ff0000h
+shr	edx,			0fh
+mov	dx,			word ptr [edx + _bIntToHexStr]
+mov	word ptr [edi + 12h],	dx
+mov	edx,			ecx
+and	edx,			0000ff00h
+shr	edx,			07h
+mov	dx,			word ptr [edx + _bIntToHexStr]
+mov	word ptr [edi + 14h],	dx
+mov	edx,			ecx
+and	edx,			000000ffh
+shl	edx,			01h
+mov	dx,			word ptr [edx + _bIntToHexStr]
+mov	word ptr [edi + 16h],	dx
+
+mov	dword ptr [edi + 18h],	"    "
+mov	dword ptr [edi + 1ch],	"    "
+mov	dword ptr [edi + 20h],	"    "
+mov	dword ptr [edi + 24h],	"    "
+mov	dword ptr [edi + 28h],	"    "
+mov	dword ptr [edi + 2ch],	"    "
+mov	dword ptr [edi + 30h],	"    "
+mov	dword ptr [edi + 34h],	"    "
+
+				mov	word ptr [edi + 38h],	0a0dh
+				add	edi,			3ah
+				jmp	_lFNPLine
+				;;----------------
+			;;----------------
+		;;----------------
+
+	_lModuleIn_NotFound:
+	pop	ecx
+	test	ecx,				ecx
+	je	_lModuleIn_Skip
+;; err - cant impl module
+
+	_lModuleIn_Skip:
+	inc	esi
+cmp	byte ptr [esi],			00h
+;; je err
+	cmp	word ptr [esi - 02h],	0a0dh
+	jne	_lModuleIn_Skip
+	jmp	_lFNPLine
+	;;----------------
+
+	;;----------------
+	;; out
+	_lModuleOut:
+	mov	ecx,			dword ptr [_dModulesEntryPnt]
+	sub	ecx,			04h
+cmp	ecx,			offset _dModulesEntry - 04h
+;; je err
+	mov	esi,			dword ptr [ecx]
+
+		;;----------------
+		;; add special instruction
+		mov	eax,			ebx
+		and	eax,			01b
+		jz	_lModuleOut_OutFunc	
+
+		_lModuleOut_InFunc:
+		mov	ecx,			dword ptr [_dFCB]
+		mov	dword ptr [ecx],	" #//"
+		mov	dword ptr [ecx + 04h],	"omjc"
+		mov	dword ptr [ecx + 08h],	"orpd"
+		mov	dword ptr [ecx + 0ch],	"tuoc"
+		mov	word ptr [ecx + 10h],	0a0dh
+		add	ecx,			12h
+		mov	dword ptr [_dFCB],	ecx
+		jmp	_lFNPLine
+
+
+		_lModuleOut_OutFunc:
+		mov	dword ptr [edi],	" #//"
+		mov	dword ptr [edi + 04h],	"omjc"
+		mov	dword ptr [edi + 08h],	"orpd"
+		mov	dword ptr [edi + 0ch],	"tuoc"
+		mov	word ptr [edi + 10h],	0a0dh
+		add	edi,			12h
+		jmp	_lFNPLine
+		;;----------------
+	;;----------------
+;;----------------
 
 		;;----------------
 		;; copy line (no parse)
@@ -13541,6 +14234,7 @@ jmp	_lFNPExFuncDefAddAnon_01
 						jmp	_lFNPIncDecSTXPost
 						;;----------------
 					;;----------------
+				;;----------------
 
 					;;----------------
 					;; copy code
@@ -15430,11 +16124,370 @@ _lCallbackReg_End:
 ;;----------------
 
 	;;----------------
-;;	add	esi,			04h
-mov	esi,			dword ptr [_dFinalParseOffset]	;; esi = code without anon functions
+	mov	esi,			dword ptr [_dFinalParseOffset]	;; esi = code without anon functions
 	mov	esp,			_dStackPos	;; restore esp
+	;;----------------
+
+;;----------------
+;; modules final
+cmp	byte ptr [_dModuleCompabilityMode],	00h
+je	_lModuleFinal_End
+
+	;;----------------
+	;; get body
+	mov	ecx,				esi
+
+	_lModuleFinal_ScanLine:
+	cmp	byte ptr [ecx],			00h
+	je	_lModuleFinal_ExEnd
+
+	cmp	dword ptr [ecx],		" #//"
+	jne	_lModuleFinal_GetNextLine
+	cmp	dword ptr [ecx + 04h],		"omjc"
+	jne	_lModuleFinal_GetNextLine
+	cmp	dword ptr [ecx + 08h],		"orpd"
+	jne	_lModuleFinal_GetNextLine
+	cmp	dword ptr [ecx + 0ch],		" nic"
+	jne	_lModuleFinal_GetNextLine
+
+		;;----------------
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 17h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		mov	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 16h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			04h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 15h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			08h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 14h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			0ch
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 13h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			10h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 12h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			14h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 11h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			18h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 10h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			1ch
+		or	eax,			edx
+
+		cmp	byte ptr [eax + 10h],	00h
+		jne	_lModuleFinal_GetNextLine
+
+		add	ecx,			3ah
+		mov	dword ptr [eax + 10h],	ecx
+		jmp	_lModuleFinal_ScanLine
+		;;----------------
+
+	_lModuleFinal_GetNextLine:
+	inc	ecx
+	_lModuleFinal_GetNextLineEx:
+	cmp	word ptr [ecx - 02h],		0a0dh
+	je	_lModuleFinal_ScanLine
+	cmp	byte ptr [ecx],			00h
+	jne	_lModuleFinal_GetNextLine
+
+	_lModuleFinal_ExEnd:
+	;;----------------
+
+	;;----------------
+	;; copy modules body to code
+	add	edi,				04h
+
+	_lModuleFinal_CopyLine:
+	cmp	byte ptr [esi],			00h
+	je	_lModuleFinal_CopyEnd
+
+	cmp	dword ptr [esi],		"udom"
+	jne	_lModuleFinal_GetNextLineCopyEx
+	cmp	word ptr [esi + 04h],		"el"
+	jne	_lModuleFinal_GetNextLineCopyEx
+	cmp	byte ptr [esi + 06h],		" "
+	jne	_lModuleFinal_GetNextLineCopyEx
+
+		;;----------------
+		xor	edx,			edx
+		mov	dl,			byte ptr [esi + 0eh]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		mov	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [esi + 0dh]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			04h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [esi + 0ch]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			08h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [esi + 0bh]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			0ch
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [esi + 0ah]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			10h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [esi + 09h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			14h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [esi + 08h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			18h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [esi + 07h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			1ch
+		or	eax,			edx
+
+		add	esi,			11h
+		cmp	dword ptr [eax + 10h],	00h
+		je	_lModuleFinal_RemoveModule
+
+			;;----------------
+			;; copy body
+			push	esi
+			mov	esi,			dword ptr [eax + 04h]
+
+			_lModuleFinal_CopyTitle:
+			movsb
+			cmp	word ptr [edi - 02h],	0a0dh
+			jne	_lModuleFinal_CopyTitle
+
+			mov	esi,			dword ptr [eax + 10h]
+			xor	edx,			edx
+
+			_lModuleFinal_CopyBodyLine:
+			cmp	dword ptr [esi],		" #//"
+			jne	_lModuleFinal_CopyBodyGetNext
+			cmp	dword ptr [esi + 04h],		"omjc"
+			jne	_lModuleFinal_CopyBodyGetNext
+			cmp	dword ptr [esi + 08h],		"orpd"
+
+			cmp	dword ptr [esi + 0ch],		" nic"
+			je	_lModuleFinal_CopyBodyIn
+
+			cmp	dword ptr [esi + 0ch],		"tuoc"
+			jne	_lModuleFinal_CopyBodyGetNext
+
+			dec	edx
+			jns	_lModuleFinal_CopyBodyGetNext
+
+			pop	esi
+			mov	dword ptr [edi],		"mdne"
+			mov	dword ptr [edi + 04h],		"ludo"
+			mov	dword ptr [edi + 08h],		000a0d65h	;; e nl
+			add	edi,				0bh
+			jmp	_lModuleFinal_CopyLine
+
+			_lModuleFinal_CopyBodyIn:
+			inc	edx
+
+			_lModuleFinal_CopyBodyGetNext:
+			movsb
+			cmp	word ptr [esi - 02h],	0a0dh
+			jne	_lModuleFinal_CopyBodyGetNext
+			jmp	_lModuleFinal_CopyBodyLine
+			;;----------------
+
+			;;----------------
+			;; remove module
+			_lModuleFinal_RemoveModule:
+			mov	dword ptr [esi - 04h],	"    "
+			mov	dword ptr [esi - 08h],	"    "
+			mov	dword ptr [esi - 0ch],	"    "
+			mov	dword ptr [esi - 10h],	"    "
+			mov	dword ptr [esi - 13h],	"    "
+
+			jmp	_lModuleFinal_CopyLine
+			;;----------------
+		;;----------------
+
+
+	_lModuleFinal_GetNextLineCopyEx:
+	movsb
+	_lModuleFinal_GetNextLineCopy:
+	cmp	byte ptr [esi],		00h
+	je	_lModuleFinal_CopyEnd
+	cmp	word ptr [esi - 02h],	0a0dh
+	jne	_lModuleFinal_GetNextLineCopyEx
+	jmp	_lModuleFinal_CopyLine
+
+	_lModuleFinal_CopyEnd:
+	;;----------------
+
+	;;----------------
+	;; add implement instruction
+	push	edi
+	add	esi,			04h
+	mov	ecx,			esi
+	xor	ebx,			ebx
+
+	_lModuleFinal_ImpLine:
+	cmp	byte ptr [ecx],			00h
+	je	_lModuleFinal_ImpEnd
+
+	cmp	dword ptr [ecx],		" #//"
+	jne	_lModuleFinal_ImpSkipEx
+	cmp	dword ptr [ecx + 04h],		"omjc"
+	jne	_lModuleFinal_ImpSkipEx
+	cmp	dword ptr [ecx + 08h],		"orpd"
+	jne	_lModuleFinal_ImpSkipEx
+
+	cmp	dword ptr [ecx + 0ch],		"tuoc"
+	je	_lModuleFinal_ImpOut
+
+	cmp	dword ptr [ecx + 0ch],		" nic"
+	jne	_lModuleFinal_ImpSkipEx
+
+		;;----------------
+		;; add implement istruction
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 17h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		mov	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 16h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			04h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 15h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			08h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 14h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			0ch
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 13h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			10h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 12h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			14h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 11h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			18h
+		or	eax,			edx
+
+		xor	edx,			edx
+		mov	dl,			byte ptr [ecx + 10h]
+		mov	dl,			byte ptr [_bHexStrToInt + edx]
+		shl	edx,			1ch
+		or	eax,			edx
+
+		inc	ebx
+
+		mov	dword ptr [ecx],	"lpmi"
+		mov	dword ptr [ecx + 04h],	"neme"
+		mov	dword ptr [ecx + 08h],	"   t"
+		mov	dword ptr [ecx + 0ch],	"    "
+		mov	dword ptr [ecx + 10h],	"    "
+		mov	dword ptr [ecx + 14h],	"    "
+
+		mov	edi,			dword ptr [eax]
+		lea	ebp,			[ecx + 0ah]
+
+		add	ecx,			3ah
+		xor	eax,			eax
+
+		_lModuleFinal_ImpCopyName:
+		mov	al,				byte ptr [edi]
+		cmp	byte ptr [_bAscii_00 + eax],	ah
+		je	_lModuleFinal_ImpLine
+		mov	byte ptr [ebp],			al
+		inc	edi
+		inc	ebp
+		jmp	_lModuleFinal_ImpCopyName
+		;;----------------
+
+	_lModuleFinal_ImpOut:
+	dec	ebx
+;;	jmp	_lModuleFinal_ImpSkipDx
+
+	_lModuleFinal_ImpSkipEx:
+	test	ebx,				ebx
+	jz	_lModuleFinal_ImpSkipDx
+	cmp	byte ptr [ecx],			0ah
+	je	_lModuleFinal_ImpSkipDx
+	cmp	byte ptr [ecx],			0dh
+	je	_lModuleFinal_ImpSkipDx
+	mov	byte ptr [ecx],			" "
+
+	_lModuleFinal_ImpSkipDx:
+	inc	ecx
+	_lModuleFinal_ImpSkip:
+	cmp	word ptr [ecx - 02h],		0a0dh
+	je	_lModuleFinal_ImpLine
+	cmp	byte ptr [ecx],			00h
+	jne	_lModuleFinal_ImpSkipEx
+
+	_lModuleFinal_ImpEnd:
+	pop	edi
+	;;----------------
+
+
+_lModuleFinal_End:
+;;----------------
+
+
+	;;----------------
 	sub	edi,			esi		;; edi = new script size
 	add	esp,			04h
+	;;----------------
 
 	;;----------------
 	mov	_dCurrStr,		offset _sProg_05
@@ -15554,7 +16607,7 @@ _lIgnoreCustomCJ:
 
 		;;----------------
 		;; get mem
-		shl	eax,				06h
+		shl	eax,				07h
 		add	eax,				00800000h	;; add 8 megabyte to include
 		push	eax
 		push	GMEM_ZEROINIT
@@ -15689,7 +16742,7 @@ _lbl:
 
 		;;----------------
 		;; get mem
-		shl	eax,				06h
+		shl	eax,				07h
 		add	eax,				00800000h	;; add 8 megabyte to include
 		push	eax
 		push	GMEM_ZEROINIT
@@ -15859,13 +16912,25 @@ jmp	_lCLScanStart
 		;; do not remove unused code
 		_lCLScanVerGH:
 		cmp	dword ptr [ebx],	"pon/"
-		jne	_lCLScanVerEX
+		jne	_lCLScanVerEXWX
 
 		add	ebx,			04h
 		mov	dword ptr [_dWarVerSL],	00h
 
 		jmp	_lCLScanStart
 		;;----------------
+
+;;----------------
+;; modules ex processing
+_lCLScanVerEXWX:
+cmp	dword ptr [ebx],	"mcm/"
+jne	_lCLScanVerEX
+
+add	ebx,			04h
+mov	byte ptr [_dModuleCompabilityMode],	01h
+
+jmp	_lCLScanStart
+;;----------------
 
 		;;----------------
 		;; version
