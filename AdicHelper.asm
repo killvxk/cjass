@@ -194,7 +194,9 @@ extern	_imp__SFileCloseFile@4:dword
 	_sAnonymL		db	"lambda", 02h
 	_sAFLDefL		db	"AUTOFLUSH_LOCALS", 02h
 	_sWhileMcrL		db	"while", 02h
-	_sEndWhileMcrL		db	"endwhile", 02h
+	_sWhileNotMcrL		db	"whilenot", 02h
+	_sDoWhileMcrL		db	"do", 02h
+;	_sEndWhileMcrL		db	"endwhile", 02h
 	_sFirstWordL		db	"FIRST_WORD", 02h
 	_sImportBJL		db	"IS_CUSTOM_BJ", 02h
 	_sImportCJL		db	"IS_CUSTOM_CJ", 02h
@@ -216,8 +218,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_sCountRes		db	01h, 42h, 03h
 	_sAnonym		db	01h, 44h, 03h
 	_sAFLDef		db	"0", 03h
-	_sWhileMcr		db	01h, 77h, "whilenot!(", 03h
-	_sEndWhileMcr		db	"endwhilenot", 03h
+;	_sWhileMcr		db	01h, 77h, "whilenot!(", 03h
+;	_sEndWhileMcr		db	"endwhilenot", 03h
 	_sFirstWord		db	01h, "q", 80h, 01h, "t", 03h
 				db	01h, "q", 80h, " ", 81h, 01h, "t", 03h
 				db	01h, "q", 80h, " ", 81h, " ", 82h, 01h, "t", 03h
@@ -421,6 +423,26 @@ extern	_imp__SFileCloseFile@4:dword
 				db	82h, 0dh, 0ah
 				db	"endwhilenot", 0dh, 0ah
 				db	"endvblock", 0dh, 0ah
+				db	03h
+	;;----------------
+
+	;;----------------
+	_sWhileMcr		db	"loop", 0dh, 0ah
+				db	"exitwhen !(", 80h, ")", 0dh, 0ah
+				db	81h, 0dh, 0ah
+				db	"endloop", 0dh, 0ah
+				db	03h
+
+	_sWhileNotMcr		db	"loop", 0dh, 0ah
+				db	"exitwhen ", 80h, 0dh, 0ah
+				db	81h, 0dh, 0ah
+				db	"endloop", 0dh, 0ah
+				db	03h
+
+	_sDoWhileMcr		db	"loop", 0dh, 0ah
+				db	80h, 0dh, 0ah
+				db	"exitwhen ", 81h, 0dh, 0ah
+				db	"endloop", 0dh, 0ah
 				db	03h
 	;;----------------
 
@@ -3362,6 +3384,152 @@ add	edi,				04h
 jmp	_lCRScanLine
 ;;----------------
 
+;;----------------
+;; while and whilenot
+_lbl:
+cmp	eax,				"lihw"
+jne	_next
+cmp	dword ptr [esi + 04h],		"tone"
+jne	_lWhilePreEx
+xor	ecx,				ecx
+mov	cl,				byte ptr [esi + 08h]
+cmp	byte ptr [_bAscii_00 + ecx],	ch
+jne	_next
+
+movsd
+movsd
+mov	word ptr [edi],			1a28h	;; (< 
+add	edi,				02h
+mov	byte ptr [_bPreForScope],	02h
+jmp	_lCRScan
+
+_lWhilePreEx:
+cmp	byte ptr [esi + 04h],		"e"
+jne	_next
+xor	ecx,				ecx
+mov	cl,				byte ptr [esi + 05h]
+cmp	byte ptr [_bAscii_00 + ecx],	ch
+jne	_next
+
+movsd
+movsb
+mov	word ptr [edi],			1a28h	;; (< 
+add	edi,				02h
+mov	byte ptr [_bPreForScope],	02h
+jmp	_lCRScan
+
+_lbl:
+cmp	eax,				"wdne"
+jne	_next
+cmp	dword ptr [esi + 04h],		"elih"
+jne	_next
+xor	ecx,				ecx
+mov	cl,				byte ptr [esi + 08h]
+cmp	byte ptr [_bAscii_00 + ecx],	ch
+jne	_lEndWhilePreEx
+
+mov	dword ptr [edi],		0a0d291bh	;; 1b ) nl
+add	esi,				08h
+add	edi,				04h	
+jmp	_lCRScanLine
+
+_lEndWhilePreEx:
+cmp	dword ptr [esi + 07h],		"tone"
+jne	_next
+xor	ecx,				ecx
+mov	cl,				byte ptr [esi + 0bh]
+cmp	byte ptr [_bAscii_00 + ecx],	ch
+jne	_lEndWhilePreEx
+
+mov	dword ptr [edi],		0a0d291bh	;; 1b ) nl
+add	esi,				0bh
+add	edi,				04h	
+jmp	_lCRScanLine
+;;----------------
+
+;;----------------
+;; do
+_lbl:
+cmp	ax,				"od"
+jne	_next
+xor	ecx,				ecx
+mov	cl,				byte ptr [esi + 03h]
+cmp	byte ptr [_bAscii_00 + ecx],	ch
+jne	_next
+
+movsw
+mov	ecx,				esi
+
+_lDoPre:
+inc	ecx
+cmp	byte ptr [ecx],			00h
+;; je err
+cmp	byte ptr [ecx],			" "
+je	_lDoPre
+cmp	byte ptr [ecx],			09h
+je	_lDoPre
+cmp	byte ptr [ecx],			0dh
+je	_lDoPre
+cmp	byte ptr [ecx],			0ah
+je	_lDoPreBs
+cmp	byte ptr [ecx],			"{"
+je	_lDoPreBl
+_lDoPreErr:
+;; err
+
+
+_lDoPreBl:
+push	0fffffffeh
+_lDoPreBs:
+lea	esi,				[ecx + 01h]
+mov	word ptr [edi],			1a28h	;; (< 
+add	edi,				02h
+jmp	_lCRScanLine
+
+_lbl:
+cmp	eax,				"ddne"
+jne	_next
+cmp	byte ptr [esi + 04h],		"o"
+jne	_next
+xor	ecx,				ecx
+mov	cl,				byte ptr [esi + 05h]
+cmp	byte ptr [_bAscii_00 + ecx],	ch
+jne	_next
+
+add	esi,				05h
+
+_lEnddoPre:
+mov	byte ptr [_bPreForScope],	03h
+mov	dword ptr [edi],		001a2c1bh	;; 1bh , 1ah
+add	edi,				03h
+
+lea	ecx,				[esi - 01h]
+_lEnddoPreScan:
+inc	ecx
+cmp	byte ptr [ecx],			" "
+je	_lEnddoPreScan
+cmp	byte ptr [ecx],			09h
+je	_lEnddoPreScan
+cmp	dword ptr [ecx],		"lihw"
+;; jne err
+cmp	dword ptr [ecx + 04h],		"tone"
+jne	_lEnddoPreScanEx
+lea	esi,				[ecx + 08h]
+jmp	_lCRScan
+
+_lEnddoPreScanEx:
+cmp	byte ptr [ecx + 04h],		"e"
+;; jne err
+mov	dword ptr [edi],		00287701h	;; while correct (
+add	edi,				03h
+lea	esi,				[ecx + 05h]
+jmp	_lCRScan
+
+_lEnddoPreBlock:
+inc	esi
+jmp	_lEnddoPre
+;;----------------
+
 		;;----------------
 		;; textmacros
 
@@ -3970,6 +4138,18 @@ jmp	_lCRScanLine
 		cmp	byte ptr [_bPreForScope],	00h
 		je	_lCRScanLine
 
+cmp	byte ptr [_bPreForScope],	03h
+jne	_lCRNewLinePreForFx
+mov	byte ptr [_bPreForScope],	00h
+mov	dword ptr [edi],		0a0d291bh	;; 1bh ) nl
+inc	esi
+add	edi,				04h
+jmp	_lCRScanLine
+
+_lCRNewLinePreForFx:
+cmp	byte ptr [_bPreForScope],	02h
+je	_lCRPreForBlockCorrectEx
+
 		dec	edi
 		cmp	byte ptr [edi],			")"
 		je	_lCRPreForBlockCorrectEx
@@ -4433,6 +4613,15 @@ mov	byte ptr [edi],			00h
 		cmp	al,			3bh		;; ;
 		jne	_next
 
+cmp	byte ptr [_bPreForScope],	03h
+jne	_lExNLFx
+mov	byte ptr [_bPreForScope],	00h
+mov	dword ptr [edi],		0a0d291bh	;; 1bh ) nl
+inc	esi
+add	edi,				04h
+jmp	_lCRScanLine
+
+_lExNLFx:
 cmp	byte ptr [_bPreForArgs],	00h
 jne	_lCRPreForArsg
 
@@ -4475,6 +4664,9 @@ jmp	_lCRScan
 cmp	byte ptr [_bPreForScope],	00h
 je	_lCRBlockCheck
 
+cmp	byte ptr [_bPreForScope],	02h
+je	_lCRPreForBlockCorrectRx
+
 dec	edi
 cmp	byte ptr [edi],			")"
 je	_lCRPreForBlockCorrect
@@ -4490,13 +4682,13 @@ je	_lCRPreForBlockCorrect
 
 _lCRPreForBlockCorrect:
 mov	byte ptr [_bPreForArgs],	00h
+_lCRPreForBlockCorrectRx:
 mov	byte ptr [_bPreForScope],	00h
 mov	dword ptr [edi],		001a2c1bh	;; 1bh , 1ah
 inc	esi
 add	edi,				03h
 push	0ffffffffh
 jmp	_lCRScanLine
-
 
 			_lCRBlockCheck:
 			cmp	word ptr [edi-02h],	0a0dh
@@ -4519,6 +4711,9 @@ jmp	_lCRScanLine
 			pop	eax
 			test	eax,			eax
 			jz	_lBlockErr
+
+cmp	eax,			0fffffffeh
+je	_lEnddoPreBlock
 
 cmp	eax,			0ffffffffh
 jne	_lCRCloseBlockEx
@@ -4858,55 +5053,61 @@ _lbl:
 			;;----------------
 
 			;;----------------
-			;; while
+			;; while, whilenot and do
 			mov	dword ptr [ebx+00b0h],		offset _sWhileMcrL
 			mov	dword ptr [ebx+00b4h],		offset _sWhileMcr
+			mov	dword ptr [ebx+00bch],		02h
 
-			mov	dword ptr [ebx+00c0h],		offset _sEndWhileMcrL
-			mov	dword ptr [ebx+00c4h],		offset _sEndWhileMcr
+			mov	dword ptr [ebx+00c0h],		offset _sWhileNotMcrL
+			mov	dword ptr [ebx+00c4h],		offset _sWhileNotMcr
+			mov	dword ptr [ebx+00cch],		02h
+
+			mov	dword ptr [ebx+00d0h],		offset _sDoWhileMcrL
+			mov	dword ptr [ebx+00d4h],		offset _sDoWhileMcr
+			mov	dword ptr [ebx+00dch],		02h
 			;;----------------
 
 			;;----------------
 			;; custom j
-			mov	dword ptr [ebx+00d0h],		offset _sImportBJL
-			mov	dword ptr [ebx+00d4h],		offset _sImportBJ
+			mov	dword ptr [ebx+00e0h],		offset _sImportBJL
+			mov	dword ptr [ebx+00e4h],		offset _sImportBJ
 
-			mov	dword ptr [ebx+00e0h],		offset _sImportCJL
-			mov	dword ptr [ebx+00e4h],		offset _sImportCJ
+			mov	dword ptr [ebx+00f0h],		offset _sImportCJL
+			mov	dword ptr [ebx+00f4h],		offset _sImportCJ
 			;;----------------
 
 			;;----------------
 			;; for
-			mov	dword ptr [ebx+00f0h],		offset _sForpMacroL
-			mov	dword ptr [ebx+00f4h],		offset _sForp3Macro
-			mov	dword ptr [ebx+00fch],		03h
-
 			mov	dword ptr [ebx+0100h],		offset _sForpMacroL
-			mov	dword ptr [ebx+0104h],		offset _sForp4Macro
-			mov	dword ptr [ebx+010ch],		04h
+			mov	dword ptr [ebx+0104h],		offset _sForp3Macro
+			mov	dword ptr [ebx+010ch],		03h
 
-			mov	dword ptr [ebx+0110h],		offset _sForMacroL
-			mov	dword ptr [ebx+0114h],		offset _sFor3Macro
-			mov	dword ptr [ebx+011ch],		03h
+			mov	dword ptr [ebx+0110h],		offset _sForpMacroL
+			mov	dword ptr [ebx+0114h],		offset _sForp4Macro
+			mov	dword ptr [ebx+011ch],		04h
 
 			mov	dword ptr [ebx+0120h],		offset _sForMacroL
-			mov	dword ptr [ebx+0124h],		offset _sFor4Macro
-			mov	dword ptr [ebx+012ch],		04h
+			mov	dword ptr [ebx+0124h],		offset _sFor3Macro
+			mov	dword ptr [ebx+012ch],		03h
 
 			mov	dword ptr [ebx+0130h],		offset _sForMacroL
-			mov	dword ptr [ebx+0134h],		offset _sFor2Macro
-			mov	dword ptr [ebx+013ch],		02h
+			mov	dword ptr [ebx+0134h],		offset _sFor4Macro
+			mov	dword ptr [ebx+013ch],		04h
 
-			mov	dword ptr [ebx+0140h],		offset _sForpMacroL
+			mov	dword ptr [ebx+0140h],		offset _sForMacroL
 			mov	dword ptr [ebx+0144h],		offset _sFor2Macro
 			mov	dword ptr [ebx+014ch],		02h
+
+			mov	dword ptr [ebx+0150h],		offset _sForpMacroL
+			mov	dword ptr [ebx+0154h],		offset _sFor2Macro
+			mov	dword ptr [ebx+015ch],		02h
 			;;----------------
 
 			;;----------------
 			;; def arsg
-			mov	dword ptr [ebx+0150h],		offset _sArgMacrolL
-			mov	dword ptr [ebx+0154h],		offset _sArgMacrol
-			mov	dword ptr [ebx+015ch],		01h
+			mov	dword ptr [ebx+0160h],		offset _sArgMacrolL
+			mov	dword ptr [ebx+0164h],		offset _sArgMacrol
+			mov	dword ptr [ebx+016ch],		01h
 			;;----------------
 
 			;;----------------
@@ -4914,8 +5115,8 @@ _lbl:
 			cmp	dword ptr [_dDbgOff],		offset _lCRDebugAdd
 			jne	_next
 
-			mov	dword ptr [ebx+0160h],		offset _sDebugL
-			mov	dword ptr [ebx+0164h],		offset _sTrue
+			mov	dword ptr [ebx+0170h],		offset _sDebugL
+			mov	dword ptr [ebx+0174h],		offset _sTrue
 			add	ebx,				10h
 			_lbl:
 			;;----------------
