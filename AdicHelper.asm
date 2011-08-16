@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 1.4.2.35
+;;	v 1.4.2.36
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -104,8 +104,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.35", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.35", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.36", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.36", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -480,6 +480,10 @@ extern	_imp__SFileCloseFile@4:dword
 	_sErr_FileErr		db	"[25] Critical error: can't create temorary files in adicHelper directory", 00h
 	_sErr_MacroPreErr	db	"[26] Critical error: script preprocesor unknown error", 00h
 	_sErr_MacroPreDeclare	db	"[27] Critical error: in textmacro declaration", 00h
+	_sErr_IncDecTernar	db	"[28] Critical error: you can't use inc, dec or ternar in this construction", 00h
+	_sErr_ModInStr		db	"[29] Critical error: module inside struct?", 00h
+	_sErr_StrInMod		db	"[30] Critical error: struct inside module?", 00h
+	_sErr_ModuleIncorrect	db	"[31] Critical error: unclosed or unopened function block in module, try to enable ", 22h, "module compatibility mode", 22h, 00h
 
 	_bFCLL			db	40h		;; locals
 	_bFCLLMAX		db	40h		;; locals max
@@ -1094,7 +1098,7 @@ _dPostProcessLine		dd	?
 _bIsTernar			db	?
 _bIsIncDec			db	?
 
-_bPostProcessing_IsInStruct	db	?
+;_bPostProcessing_IsInStruct	db	?
 
 _dModules			db	0200h * 15h	dup(?)	;; _dModulesSize
 _dModulesEnd			equ	$
@@ -1105,6 +1109,11 @@ _dModulesEntryEnd		equ	$
 ;_bCallbackTempType			db	?
 
 _dModuleCompabilityMode		db	?
+
+_dNLBlock			db	?	;; used in post parse
+
+_dLastStructIn			dd	?
+_dLastModuleIn			dd	?
 
 	;;----------------
 	;; custom
@@ -6870,19 +6879,18 @@ _lXFPXX_OFX:
 			jmp	_lXFPStart
 
 			_lXFPXX_Next:
-cmp	word ptr [esi],			"++"
-jne	_lXFPXX_Next_00
-mov	byte ptr [_bIsIncDec],		01h
-jmp	_lXFPNewWord
+			cmp	word ptr [esi],			"++"
+			jne	_lXFPXX_Next_00
+			mov	byte ptr [_bIsIncDec],		01h
+			jmp	_lXFPNewWord
 
-_lXFPXX_Next_00:
-cmp	word ptr [esi],			"--"
-jne	_lXFPXX_Next_01
-mov	byte ptr [_bIsIncDec],		01h
-jmp	_lXFPNewWord
+			_lXFPXX_Next_00:
+			cmp	word ptr [esi],			"--"
+			jne	_lXFPXX_Next_01
+			mov	byte ptr [_bIsIncDec],		01h
+			jmp	_lXFPNewWord
 
-_lXFPXX_Next_01:
-
+			_lXFPXX_Next_01:
 			cmp	word ptr [esi],		6401h	;; #d
 			je	_lXFP_00
 			cmp	word ptr [esi],		6701h	;; #g
@@ -6929,49 +6937,49 @@ _lXFPXX_Next_01:
 			je	_lXFP_10
 			cmp	word ptr [esi],		4c01h	;; #L
 			je	_lXFP_13
-cmp	word ptr [esi],		7701h		;; #w
-je	_lXFP_14
-cmp	word ptr [esi],		7101h		;; #q
-je	_lXFP_15
-cmp	word ptr [esi],		7401h		;; #t
-je	_lXFP_16
-cmp	word ptr [esi],		7601h		;; #v
-je	_lXFP_17
-cmp	word ptr [esi],		6801h		;; #h
-je	_lXFP_18
-cmp	word ptr [esi],		6b01h		;; #k
-je	_lXFP_19
-cmp	word ptr [esi],		6e01h		;; #n
-je	_lXFP_1a
-cmp	word ptr [esi],		4f01h		;; #O
-je	_lXFP_1b
-cmp	word ptr [esi],		5001h		;; #P
-je	_lXFP_1c
+			cmp	word ptr [esi],		7701h	;; #w
+			je	_lXFP_14
+			cmp	word ptr [esi],		7101h	;; #q
+			je	_lXFP_15
+			cmp	word ptr [esi],		7401h	;; #t
+			je	_lXFP_16
+			cmp	word ptr [esi],		7601h	;; #v
+			je	_lXFP_17
+			cmp	word ptr [esi],		6801h	;; #h
+			je	_lXFP_18
+			cmp	word ptr [esi],		6b01h	;; #k
+			je	_lXFP_19
+			cmp	word ptr [esi],		6e01h	;; #n
+			je	_lXFP_1a
+			cmp	word ptr [esi],		4f01h	;; #O
+			je	_lXFP_1b
+			cmp	word ptr [esi],		5001h	;; #P
+			je	_lXFP_1c
 			cmp	al,			00h
 			je	_lXFPEnd
 
-cmp	word ptr [esi],			0a0dh	;; nl
-jne	_lXFPNewWord
-cmp	byte ptr [_bWhileCondCorrect],	00h
-je	_lXFPNewWordEx
-mov	byte ptr [_bWhileCondCorrect],	00h
-mov	byte ptr [edi],			")"
-inc	edi
+			cmp	word ptr [esi],			0a0dh	;; nl
+			jne	_lXFPNewWord
+			cmp	byte ptr [_bWhileCondCorrect],	00h
+			je	_lXFPNewWordEx
+			mov	byte ptr [_bWhileCondCorrect],	00h
+			mov	byte ptr [edi],			")"
+			inc	edi
 
 ;			jmp	_lXFPNewWordEx
 			;;----------------
 
-;;----------------
-_lXFPNewWordEx:
-cmp	word ptr [edi - 02h],		0a0dh
-jne	_lXFPNewWordRx
-add	esi,				02h
-jmp	_lXFPStart
+			;;----------------
+			_lXFPNewWordEx:
+			cmp	word ptr [edi - 02h],		0a0dh
+			jne	_lXFPNewWordRx
+			add	esi,				02h
+			jmp	_lXFPStart
 
-_lXFPNewWordRx:
-movsw
-jmp	_lPostParseStr
-;;----------------
+			_lXFPNewWordRx:
+			movsw
+			jmp	_lPostParseStr
+			;;----------------
 
 			;;----------------
 			_lXFPTMArg:
@@ -8396,6 +8404,7 @@ inc	edi
 			add	edi,			06h
 			add	esi,			04h
 ;			jmp	_lXFPStart
+mov	byte ptr [_dNLBlock],		01h
 jmp	_lPostParseStr
 			;;----------------
 		;;----------------
@@ -8580,14 +8589,6 @@ _lPostParseStr:
 	mov	ecx,				dword ptr [_dPostProcessLine]
 	mov	eax,				dword ptr [ecx]
 
-;	_lPostParseStrEx:
-;	cmp	eax,				"virp"
-;	jne	_next
-;	cmp	dword ptr [ecx + 04h],		" eta"
-;	jne	_next
-;	add	ecx,				08h
-;	jmp	_lPostParseStrEx
-
 	cmp	ax,				"fi"
 	jne	_next
 	cmp	byte ptr [ecx + 02h],		"("
@@ -8596,7 +8597,7 @@ _lPostParseStr:
 	ja	_next
 	_lPostParseStr_if:
 	cmp	byte ptr [_bIsTernar],		01h
-;;je	err
+	je	_lPostParseStr_Err
 	jmp	_lPostParseStr_End
 
 	_lbl:
@@ -8610,10 +8611,28 @@ _lPostParseStr:
 	ja	_next
 	_lPostParseStr_elif:
 	cmp	byte ptr [_bIsTernar],		01h
-;;je	err
+	je	_lPostParseStr_Err
 	cmp	byte ptr [_bIsIncDec],		01h
-;;je	err	
+	je	_lPostParseStr_Err	
 	jmp	_lPostParseStr_End
+
+		;;----------------
+		;; errors with ++ -- ?
+		_lPostParseStr_Err:
+		mov	eax,				dword ptr [_dPostProcessLine]
+		mov	dword ptr [_xErrorTable],	offset _sErr_IncDecTernar
+		mov	dword ptr [_xErrorTable+04h],	eax
+
+		_lPostParseStr_ErrEx:
+		cmp	word ptr [eax],			0a0dh
+		je	_lPostParseStr_ErrDx
+		cmp	word ptr [eax],			7801h	;; #x
+		jne	_lPostParseStr_ErrEx
+
+		_lPostParseStr_ErrDx:
+		mov	dword ptr [_xErrorTable+08h],	eax
+		jmp	_lErrIn
+		;;----------------
 
 cmp	byte ptr [_dModuleCompabilityMode],	00h
 je	_lPostParseStr_Ternar
@@ -8711,7 +8730,8 @@ cmp	ecx,			offset _dFreeScopesStack - 04h
 	jne	_next
 	cmp	byte ptr [ecx + 09h],		20h
 	ja	_next
-	mov	byte ptr [_bPostProcessing_IsInStruct],	01h
+;	mov	byte ptr [_bPostProcessing_IsInStruct],	01h
+	mov	dword ptr [_dLastStructIn],	00h
 	jmp	_lPostParseStr_End
 
 	_lbl:
@@ -8726,6 +8746,8 @@ cmp	ecx,			offset _dFreeScopesStack - 04h
 
 		;;----------------
 		;; module out
+		mov	dword ptr [_dLastModuleIn],	00h
+
 		mov	eax,				dword ptr [_dModulesPnt]
 		
 		_lPostParseStr_CorrectEndmodule:
@@ -8766,6 +8788,20 @@ cmp	eax,			_dModulesEnd
 
 		;;----------------
 		;; module in
+		cmp	dword ptr [_dLastStructIn],	00h
+		je	_lPostParseStr_ModIn
+
+			;;----------------
+			mov	eax,				dword ptr [_dPostProcessLine]
+			mov	dword ptr [_xErrorTable],	offset _sErr_ModInStr
+			mov	dword ptr [_xErrorTable+04h],	eax
+			add	eax,				06h
+			mov	dword ptr [_xErrorTable+08h],	eax
+			jmp	_lErrIn
+			;;----------------
+
+		_lPostParseStr_ModIn:
+		mov	dword ptr [_dLastModuleIn],	ecx
 		mov	eax,				dword ptr [_dModulesPnt]
 		add	ecx,				07h
 
@@ -8782,6 +8818,8 @@ cmp	eax,			_dModulesEnd
 	mov	dword ptr [eax],		"mdne"
 	mov	dword ptr [eax + 04h],		"ludo"
 	mov	word ptr [eax + 08h],		"e"
+mov	dword ptr [edi - 06h],	06060606h
+mov	word ptr [edi - 02h],	0a0dh
 	jmp	_lPostParseStr_End
 
 	_lbl:
@@ -8791,13 +8829,27 @@ cmp	eax,			_dModulesEnd
 	jne	_next
 	cmp	byte ptr [ecx + 06h],		" "
 	jne	_next
-	mov	byte ptr [_bPostProcessing_IsInStruct],	01h
+;	mov	byte ptr [_bPostProcessing_IsInStruct],	01h
+	mov	dword ptr [_dLastStructIn],	ecx
+	cmp	dword ptr [_dLastModuleIn],	00h
+	je	_lPostParseStr_StrIn
+		;;----------------
+		mov	eax,				dword ptr [_dPostProcessLine]
+		mov	dword ptr [_xErrorTable],	offset _sErr_StrInMod
+		mov	dword ptr [_xErrorTable+04h],	eax
+		add	eax,				06h
+		mov	dword ptr [_xErrorTable+08h],	eax
+		jmp	_lErrIn
+		;;----------------
+	_lPostParseStr_StrIn:
 	call	_lPostParseStr_BlockCheck
 	test	eax,				eax
 	jz	_lPostParseStr_End
 	mov	dword ptr [eax],		"sdne"
 	mov	dword ptr [eax + 04h],		"curt"
 	mov	byte ptr [eax + 08h],		"t"
+mov	dword ptr [edi - 06h],	06060606h
+mov	word ptr [edi - 02h],	0a0dh
 	je	_lPostParseStr_End
 
 	_lbl:
@@ -8810,27 +8862,34 @@ cmp	eax,			_dModulesEnd
 	;;----------------
 	;; check block
 	_lPostParseStr_BlockCheck:
-	mov	edx,				ecx
-
-	_lPostParseStr_BlockCheck_00:
-	inc	edx
-cmp	byte ptr [edx],			00h
-;; je err
-	cmp	word ptr [edx],		0a0dh	;; nl
+	cmp	byte ptr [_dNLBlock],	00h
 	je	_lPostParseStr_BlockCheck_01
-	cmp	word ptr [edx],		7801h	;; #x
-	jne	_lPostParseStr_BlockCheck_00
+
+;cmp	word ptr [esi - 06h],		7801h
+;jne	_lPostParseStr_BlockCheck_01
+
+
+;	mov	edx,				ecx
+;
+;	_lPostParseStr_BlockCheck_00:
+;	inc	edx
+;cmp	byte ptr [edx],			00h
+;; je err
+;	cmp	word ptr [edx],		0a0dh	;; nl
+;	je	_lPostParseStr_BlockCheck_01
+;	cmp	word ptr [edx],		7801h	;; #x
+;	jne	_lPostParseStr_BlockCheck_00
 
 		;;----------------
-		mov	eax,			dword ptr [edx + 02h]
-		mov	dword ptr [edx],	06060606h
-		mov	word ptr [edx+04h],	0a0dh
-
-		cmp	word ptr [eax-02h],	0a0dh
-		je	_lPostParseStr_BlockCheck_02
-		mov	word ptr [eax],		0a0dh
-		add	eax,			02h
-		_lPostParseStr_BlockCheck_02:
+		mov	eax,			dword ptr [esi - 04h]
+;		mov	dword ptr [esi - 06h],	06060606h
+;		mov	word ptr [edx - 02h],	0a0dh
+;
+;		cmp	word ptr [eax-02h],	0a0dh
+;		je	_lPostParseStr_BlockCheck_02
+;		mov	word ptr [eax],		0a0dh
+;		add	eax,			02h
+;		_lPostParseStr_BlockCheck_02:
 		retn
 		;;----------------
 
@@ -8843,6 +8902,7 @@ cmp	byte ptr [edx],			00h
 
 
 _lPostParseStr_End:
+mov	byte ptr [_dNLBlock],		00h
 mov	byte ptr [_bIsTernar],		00h
 mov	byte ptr [_bIsIncDec],		00h
 mov	dword ptr [_dPostProcessLine],	edi
@@ -8851,6 +8911,21 @@ jmp	_lXFPStart
 ;;----------------
 
 	_lXFPEnd:
+mov	eax,			dword ptr [_dLastStructIn]
+or	eax,			dword ptr [_dLastModuleIn]
+jz	_lXFPEndEx
+
+;;----------------
+mov	eax,				dword ptr [_dLastStructIn]
+test	eax,				eax
+cmovz	eax,				dword ptr [_dLastModuleIn]
+mov	dword ptr [_xErrorTable],	offset _sErr_UnclosedBlock
+mov	dword ptr [_xErrorTable+04h],	eax
+mov	dword ptr [_xErrorTable+08h],	esi
+jmp	_lErrIn
+;;----------------
+
+	_lXFPEndEx:
 	mov	esp,			_dStackPos	;; load stack
 	add	esi,			04h
 	add	edi,			04h
@@ -9153,16 +9228,30 @@ pop	esi
 		cmp	al,			0ch		;; ;
 		je	_lFNPVarX
 
-cmp	byte ptr [_dModuleCompabilityMode],	00h
-je	_lGGTXX
-
 _lbl:
 cmp	eax,			"lpmi"
 jne	_next
 cmp	dword ptr [esi+04h],	"neme"
 jne	_next
 cmp	word ptr [esi+08h],	" t"
+jne	_next
+cmp	byte ptr [_dModuleCompabilityMode],	01h
 je	_lModuleIn
+
+	;;----------------
+	_lErr_Mcm:
+	mov	dword ptr [_xErrorTable],	offset _sErr_ModuleIncorrect
+	mov	dword ptr [_xErrorTable + 04h],	edi
+
+	_lErr_McmEx:
+	movsb
+	cmp	word ptr [esi],			0a0dh
+	jne	_lErr_McmEx
+
+	mov	dword ptr [_xErrorTable + 08h],	edi
+	jmp	_lErrIn
+	;;----------------
+
 
 _lbl:
 cmp	eax,			"mdne"
@@ -9172,11 +9261,12 @@ jne	_next
 cmp	byte ptr [esi + 08h],	"e"
 jne	_next
 cmp	byte ptr [esi + 09h],	20h
-jbe	_lModuleOut
-
+ja	_next
+cmp	byte ptr [_dModuleCompabilityMode],	01h
+je	_lModuleOut
+jmp	_lErr_Mcm
 
 		_lbl:
-_lGGTXX:
 		test	ebx,			01b
 		jp	_lFNPOutside				;; globals ? ;; out the function
 		;;----------------
@@ -9926,7 +10016,8 @@ inc	edx
 	shl	ebp,				01h
 	mov	ax,				word ptr [ebp + _bIntToHexStr]
 	mov	word ptr [edx + 0eh],		ax
-	add	edx,				11h
+mov	byte ptr [edx + 10h],		" "
+	add	edx,				12h
 
 	call	_lCheckInFuncVars
 
@@ -12725,6 +12816,17 @@ je	_lModuleClassicProcess
 
 ;;----------------
 ;; skip it
+cmp	dword ptr [ecx - 04h],	" eta"
+jne	_lModuleSkipBx
+sub	ecx,			08h
+jmp	_lModuleSkipCx
+
+_lModuleSkipBx:
+cmp	dword ptr [ecx - 04h],	" cil"
+jne	_lModuleSkipCx
+sub	ecx,			07h
+
+_lModuleSkipCx:
 mov	eax,			offset _dModules - _dModulesSize
 
 _lModuleSkip:
