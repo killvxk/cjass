@@ -289,9 +289,10 @@ extern	_imp__SFileCloseFile@4:dword
 
 	_sFor3Macro_For		db	"vblock", 0dh, 0ah
 				db	80h, 0dh, 0ah
-				db	"whilenot !(", 81h, ")", 0dh, 0ah
+				db	"loop", 0dh, 0ah
+				db	"exitwhen !(", 81h, ")", 0dh, 0ah
 				db	82h, 0dh, 0ah
-				db	"endwhilenot", 0dh, 0ah
+				db	"endloop", 0dh, 0ah
 				db	"endvblock", 0dh, 0ah
 				db	03h
 	;;----------------
@@ -418,10 +419,11 @@ extern	_imp__SFileCloseFile@4:dword
 ;; for
 	_sFor4Macro_For		db	"vblock", 0dh, 0ah
 				db	80h, 0dh, 0ah
-				db	"whilenot !(", 81h, ")", 0dh, 0ah
+				db	"loop", 0dh, 0ah
+				db	"exitwhen !(", 81h, ")", 0dh, 0ah
 				db	83h, 0dh, 0ah
 				db	82h, 0dh, 0ah
-				db	"endwhilenot", 0dh, 0ah
+				db	"endloop", 0dh, 0ah
 				db	"endvblock", 0dh, 0ah
 				db	03h
 	;;----------------
