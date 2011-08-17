@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 1.4.2.36
+;;	v 1.4.2.37
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -104,8 +104,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.36", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.36", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.37", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.37", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -514,7 +514,6 @@ extern	_imp__SFileCloseFile@4:dword
 
 	_dFCPL			dd	offset 	_bFuncPostEX		;; postix index - pointer
 
-	_lDefXEX		dd	offset _lDefX
 	_xForDefValEX		dd	offset _xForDefVal
 
 	_sNewLine		db	0dh, 0ah
@@ -895,6 +894,8 @@ _dModulesEntryPnt	dd	offset _dModulesEntry
 ;;-------------------------------------------------------------------------
 .data?
 
+	_lDefXEX		dd	?	;; offset _lDefX
+
 	_xForDefVal		db	2000h	dup(?)	;; used in #for
 
 	_dAddrDefArg		dd	0100h	dup(?)	;; def args addr
@@ -950,8 +951,9 @@ _dModulesEntryPnt	dd	offset _dModulesEntry
 	_sCurrDir		db	0200h	dup(?)
 	_dCurrDirEnd		dd	?
 
-	align			10h	
-	_lDefX			dd	00010000h	dup(?)	;; 80h bits defBlocks
+;	align			10h	
+;	_lDefX			dd	00010000h	dup(?)	;; 80h bits defBlocks
+	_lDefX			dd	?
 
 	_dScopeIn		dd	0400h	dup(?)
 	_dScopeOut		dd	0400h	dup(?)
@@ -975,10 +977,13 @@ _dFreeScopesStack	dd	80h	dup(?)
 
 	_dBCP			dd	?		;; base code pointer
 
-	align			10h
-	_bFuncCodeLocals	db	00010000h	dup(?)	;; locals			;; used also in string preprocessor	;; used in guard	;; used in removing unused code - variables
-	align			10h
-	_bFuncCodeBase		db	000a0000h	dup(?)	;; base code of function	;; used also in string preprocessor				;; used in removing unused code - functions
+;	align			10h
+;	_bFuncCodeLocals	db	00100000h	dup(?)	;; locals			;; used also in string preprocessor	;; used in guard	;; used in removing unused code - variables
+	_bFuncCodeLocals	dd	?
+;	align			10h
+;	_bFuncCodeBase		db	00a00000h	dup(?)	;; base code of function	;; used also in string preprocessor				;; used in removing unused code - functions
+	_bFuncCodeBase		dd	?
+				dd	?			;; 00h before _bFuncCodeOneLine
 	_bFuncCodeOneLine	db	00004000h	dup(?)	;; one line of func code
 	_bFuncPostEX		db	00000200h	dup(?)	;; postix index
 
@@ -1498,7 +1503,8 @@ inc	edi
 
 		;;----------------
 		;; variables
-		mov	ebx,				offset _bFuncCodeLocals
+;;		mov	ebx,				offset _bFuncCodeLocals
+		mov	ebx,				dword ptr [_bFuncCodeLocals]
 		add	esi,				0ch	;; globals_
 
 		_lOptCC_VarStr:
@@ -1516,15 +1522,21 @@ inc	edi
 			;;----------------
 			;; go to sort
 			push	esi			;; store esi before sort
-			cmp	ebx,			offset _bFuncCodeLocals+10h
+;;			cmp	ebx,			offset _bFuncCodeLocals+10h
+			mov	eax,			dword ptr [_bFuncCodeLocals]
+			add	eax,			10h
+			cmp	ebx,			eax
 			jbe	_lOptCC_VarNoSort
 
-			mov	ebp,			offset _bFuncCodeLocals
+;;			mov	ebp,			offset _bFuncCodeLocals
+			mov	ebp,			dword ptr [_bFuncCodeLocals]
 			sub	ebx,			ebp
 			call	_lOptCC_SortIn
 
 			_lOptCC_VarNoSort:
-			mov	eax,			offset _bFuncCodeLocals-10h
+;;			mov	eax,			offset _bFuncCodeLocals-10h
+			mov	eax,			dword ptr [_bFuncCodeLocals]
+			sub	eax,			10h
 			mov	edx,			offset _dDefTable
 			push	offset _lOptCC_Func
 			jmp	_lOptCC_BuildIn
@@ -1569,7 +1581,8 @@ inc	edi
 		;; functions
 		_lOptCC_Func:
 		pop	esi
-		mov	ebx,				offset _bFuncCodeBase
+;;		mov	ebx,				offset _bFuncCodeBase
+		mov	ebx,				dword ptr [_bFuncCodeBase]
 
 		_lOptCC_FuncStr:
 		cmp	byte ptr [esi],			00h
@@ -1577,15 +1590,21 @@ inc	edi
 
 			;;----------------
 			;; go to sort
-			cmp	ebx,			offset _bFuncCodeBase+10h
+;;			cmp	ebx,			offset _bFuncCodeBase+10h
+			mov	eax,			dword ptr [_bFuncCodeBase]
+			add	eax,			10h
+			cmp	ebx,			eax
 			jbe	_lOptCC_FuncNoSort
 
-			mov	ebp,			offset _bFuncCodeBase
+;;			mov	ebp,			offset _bFuncCodeBase
+			mov	ebp,			dword ptr [_bFuncCodeBase]
 			sub	ebx,			ebp
 			call	_lOptCC_SortIn
 
 			_lOptCC_FuncNoSort:
-			mov	eax,			offset _bFuncCodeBase-10h
+;;			mov	eax,			offset _bFuncCodeBase-10h
+			mov	eax,			dword ptr [_bFuncCodeBase]
+			sub	eax,			10h
 			mov	edx,			offset _dDefTableEX
 			push	offset _lOptCC_ChStr
 			jmp	_lOptCC_BuildIn
@@ -1763,7 +1782,8 @@ _lOptCC_FuncGetEndOX:
 			_lOptCC_ChNext:
 			xor	ebx,			ebx
 			_lOptCC_ChNextEX:
-			mov	eax,			offset _bFuncCodeBase
+;;			mov	eax,			offset _bFuncCodeBase
+			mov	eax,			dword ptr [_bFuncCodeBase]
 
 			_lOptCC_ChIn:
 			cmp	dword ptr [eax],	00h
@@ -1868,7 +1888,8 @@ _lOptCC_FuncGetEndOX:
 				jmp	_lOptCC_ChInFunc_GetWord
 
 				_lOptCC_ChInFunc_ReCheck:
-				cmp	edx,			offset _bFuncCodeBase
+;;				cmp	edx,			offset _bFuncCodeBase
+				cmp	edx,			dword ptr [_bFuncCodeBase]
 				jge	_lOptCC_ChInFunc_NextWord
 
 				mov	bl,			byte ptr [esi]
@@ -1887,7 +1908,9 @@ _lOptCC_FuncGetEndOX:
 
 				;;----------------
 				;; functions
-				mov	edx,			offset _bFuncCodeBase-10h
+;;				mov	edx,			offset _bFuncCodeBase-10h
+				mov	edx,			dword ptr [_bFuncCodeBase]
+				sub	edx,			10h
 
 				_lOptCC_RemFunc:
 				add	edx,			10h
@@ -1911,7 +1934,9 @@ _lOptCC_FuncGetEndOX:
 				;;----------------
 				;; variables
 				_lOptCC_RemVarIn:
-				mov	edx,			offset _bFuncCodeLocals-10h
+;;				mov	edx,			offset _bFuncCodeLocals-10h
+				mov	edx,			dword ptr [_bFuncCodeLocals]
+				sub	edx,			10h
 
 				_lOptCC_RemVar:
 				add	edx,			10h
@@ -2871,7 +2896,8 @@ jge	_lCRErrPrePorc
 			cmp	byte ptr [esi],		09h		;; tab
 			je	_lCRElif_GU_01
 
-			mov	ebp,			offset _bFuncCodeLocals
+;;			mov	ebp,			offset _bFuncCodeLocals
+			mov	ebp,			dword ptr [_bFuncCodeLocals]
 
 			_lCRElif_GU_02:
 			mov	edx,			esi
@@ -6215,14 +6241,18 @@ jmp	_lDFArgNextWord
 
 	;;----------------
 	;; sort define block
-	cmp	ebx,			offset _lDefX+10h
-	jbe	_lDFSortEnd
+;	mov	eax,			dword ptr [_lDefX]
+;	add	eax,			10h
+;	cmp	ebx,			eax
+;;	cmp	ebx,			offset _lDefX+10h
+;;	jbe	_lDFSortEnd
 
 		;;----------------
 		;; set step
 		mov	eax,			offset _dSortSteps-04h
 
-		sub	ebx,			offset _lDefX
+;;		sub	ebx,			offset _lDefX
+		sub	ebx,			dword ptr [_lDefX]
 ;;		shr	edx,			02h		;; ??? why ?!
 		_lbl:
 		add	eax,			04h
@@ -6234,7 +6264,9 @@ jmp	_lDFArgNextWord
 
 	_lDFSordStart:
 	mov	ecx,			dword ptr [eax]
-	lea	ebx,			dword ptr [_lDefX+ecx]
+;;	lea	ebx,			dword ptr [_lDefX+ecx]
+	mov	ebx,			dword ptr [_lDefX]
+	add	ebx,			ecx
 
 	_lDFSordGo:
 	mov	edi,			ebx
@@ -6245,8 +6277,14 @@ jmp	_lDFArgNextWord
 
 	_lbl:
 	sub	edi,			ecx
-	cmp	edi,			offset _lDefX-10h
+;;	cmp	edi,			offset _lDefX-10h
+push	edx
+	mov	edx,			dword ptr [_lDefX]
+	sub	edx,			10h
+	cmp	edi,			edx
+pop	edx
 	jbe	_lDFSortNext
+
 	mov	esi,			dword ptr [edi]
 	cmp	byte ptr [esi],		dl
 	jb	_lDFSortNext
@@ -6279,7 +6317,10 @@ jmp	_lDFArgNextWord
 
 	;;----------------
 	;; build find'n'replace table
-	mov	eax,			offset _lDefX-10h
+;;	mov	eax,			offset _lDefX-10h
+	mov	eax,			dword ptr [_lDefX]
+	sub	eax,			10h
+
 	mov	edx,			offset _dDefTable
 	xor	ebx,			ebx
 	xor	ecx,			ecx
@@ -6302,7 +6343,9 @@ jmp	_lDFArgNextWord
 
 	;;----------------
 	;; check defines table
-	mov	ebx,			offset _lDefX-10h
+;;	mov	ebx,			offset _lDefX-10h
+	mov	ebx,			dword ptr [_lDefX]
+	sub	edx,			10h
 
 	_lDFTableCheckNext:
 	add	ebx,			10h
@@ -6775,6 +6818,13 @@ xor	ebx,			ebx
 
 _lXFPHardArgNewEx:
 inc	esi
+
+_lXFPHardArgNewFx:
+cmp	word ptr [esi],		7801h	;; #x
+je	_lXFPHardArgNewDt
+cmp	word ptr [esi],		7901h	;; #y
+je	_lXFPHardArgNewDt
+
 cmp	byte ptr [esi],		1ah
 je	_lXFPHardArgNewInc
 cmp	byte ptr [esi],		1bh
@@ -6786,6 +6836,10 @@ pop	ebx
 mov	byte ptr [esi],		04h
 mov	dword ptr [eax],	1bh
 jmp	_lXFPMArgETT
+
+_lXFPHardArgNewDt:
+add	esi,			06h
+jmp	_lXFPHardArgNewFx
 ;;----------------
 
 			;;----------------
@@ -8620,7 +8674,8 @@ jmp	_lPostParseStr
 			_lXFPStrPrIn:
 			add	esi,				04h
 			mov	dword ptr [_dMapProcCode],	edi
-			mov	edi,				offset _bFuncCodeBase
+;;			mov	edi,				offset _bFuncCodeBase
+			mov	edi,				dword ptr [_bFuncCodeBase]
 			jmp	_lXFPStart
 			;;----------------
 
@@ -8630,8 +8685,10 @@ jmp	_lPostParseStr
 			movsd							;; copy !@@e
 
 			mov	dword ptr [_dWWWFont],		esi
-			mov	esi,				offset _bFuncCodeBase	;; esi = old buffer
-			mov	edi, 				offset _bFuncCodeLocals	;; edi = new buffer
+;			mov	esi,				offset _bFuncCodeBase	;; esi = old buffer
+;			mov	edi, 				offset _bFuncCodeLocals	;; edi = new buffer
+			mov	esi,				dword ptr [_bFuncCodeBase]
+			mov	edi,				dword ptr [_bFuncCodeLocals]
 
 			mov	ebx,				esi
 			_lXFPStrPrOutAX:
@@ -8660,7 +8717,8 @@ jmp	_lPostParseStr
 				mov	word ptr [edi],		7301h		;; #s
 				mov	ebx,			dword ptr [_dWWWFont]
 				mov	dword ptr [edi+02h],	ebx
-				mov	esi,			offset _bFuncCodeLocals
+;				mov	esi,			offset _bFuncCodeLocals
+				mov	esi,			dword ptr [_bFuncCodeLocals]
 				mov	edi,			dword ptr [_dMapProcCode]
 				jmp	_lXFPStart
 				;;----------------
@@ -9011,8 +9069,6 @@ cmp	eax,			_dModulesEnd
 		mov	dword ptr [eax],		ecx
 		mov	dword ptr [eax + 04h],		ebx
 		mov	dword ptr [eax + 0ch],		edx
-
-		jmp	_lPostParseStr_End
 		;;----------------
 
 	call	_lPostParseStr_BlockCheck
@@ -9020,7 +9076,7 @@ cmp	eax,			_dModulesEnd
 	jz	_lPostParseStr_End
 	mov	dword ptr [eax],		"mdne"
 	mov	dword ptr [eax + 04h],		"ludo"
-	mov	word ptr [eax + 08h],		"e"
+	mov	byte ptr [eax + 08h],		"e"
 mov	dword ptr [edi - 06h],	06060606h
 mov	word ptr [edi - 02h],	0a0dh
 	jmp	_lPostParseStr_End
@@ -9327,8 +9383,12 @@ _lModuleSort_End:
 			mov	dword ptr [_dBCP],			edi	;; system in
 			or	ebx,					01h
 
-			mov	dword ptr [_dFCL],			offset _bFuncCodeLocals
-			mov	dword ptr [_dFCB],			offset _bFuncCodeBase
+;			mov	dword ptr [_dFCL],			offset _bFuncCodeLocals
+;			mov	dword ptr [_dFCB],			offset _bFuncCodeBase
+			mov	eax,					dword ptr [_bFuncCodeLocals]
+			mov	dword ptr [_dFCL],			eax
+			mov	eax,					dword ptr [_bFuncCodeBase]
+			mov	dword ptr [_dFCB],			eax
 
 			mov	dword ptr [_dInFuncBlockMax],		00h
 			mov	dword ptr [_dInFuncBlockStack],		00h
@@ -9941,7 +10001,8 @@ je	_lFNPIfBlockNull
 			push	eax
 
 			mov	eax,				dword ptr [_dInFuncBlockPnt]
-			mov	ecx,				offset _bFuncCodeLocals
+;;			mov	ecx,				offset _bFuncCodeLocals
+			mov	ecx,				dword ptr [_bFuncCodeLocals]
 			;mov	eax,				dword ptr [eax - 04h]
 			mov	eax,				dword ptr [eax]
 
@@ -10165,7 +10226,8 @@ inc	edx
 
 	;;----------------
 	;; get static variables
-	mov	esi,				offset _bFuncCodeLocals
+;;	mov	esi,				offset _bFuncCodeLocals
+	mov	esi,				dword ptr [_bFuncCodeLocals]
 
 	_lGetStaticVariables:
 	cmp	esi,				dword ptr [_dFCL]
@@ -10257,7 +10319,8 @@ call	_lCheckInFuncVars
 
 	;;----------------
 	;; copy (with replacing) variables
-	mov	esi,				offset _bFuncCodeLocals
+;;	mov	esi,				offset _bFuncCodeLocals
+	mov	esi,				dword ptr [_bFuncCodeLocals]
 	mov	dword ptr [_dLocalsOffset],	edi
 
 	_lVarsCopy:
@@ -10378,7 +10441,8 @@ call	_lCheckInFuncVars
 
 	mov	dword ptr [_dFreeForGroupPnt],		offset _dFreeForGroup - 04h
 
-	mov	esi,				offset _bFuncCodeBase
+;;	mov	esi,				offset _bFuncCodeBase
+	mov	esi,				dword ptr [_bFuncCodeBase]
 	mov	dword ptr [_dCodeOffset],	edi
 
 	_lCodeCopy_Line:
@@ -12407,8 +12471,13 @@ _lCallback_AnonEnd:
 		cmp	word ptr [esi],		0a0dh
 		jne	_lCallback_CorrectCodeOffset
 
-		mov	dword ptr [_dFCL],	offset _bFuncCodeLocals
-		mov	dword ptr [_dFCB],	offset _bFuncCodeBase
+;;		mov	dword ptr [_dFCL],	offset _bFuncCodeLocals
+;;		mov	dword ptr [_dFCB],	offset _bFuncCodeBase
+
+		mov	eax,					dword ptr [_bFuncCodeLocals]
+		mov	dword ptr [_dFCL],			eax
+		mov	eax,					dword ptr [_bFuncCodeBase]
+		mov	dword ptr [_dFCB],			eax
 
 		mov	dword ptr [_dInFuncBlockMax],		00h
 		mov	dword ptr [_dInFuncBlockStack],		00h
@@ -13408,8 +13477,13 @@ jmp	_lFNPExFuncDefAddAnon_01
 		mov	dword ptr [_dBCP],	edi	;; system in
 		or	ebx,			01h
 
-		mov	dword ptr [_dFCL],	offset _bFuncCodeLocals
-		mov	dword ptr [_dFCB],	offset _bFuncCodeBase
+;;		mov	dword ptr [_dFCL],	offset _bFuncCodeLocals
+;;		mov	dword ptr [_dFCB],	offset _bFuncCodeBase
+
+		mov	eax,					dword ptr [_bFuncCodeLocals]
+		mov	dword ptr [_dFCL],			eax
+		mov	eax,					dword ptr [_bFuncCodeBase]
+		mov	dword ptr [_dFCB],			eax
 
 		mov	dword ptr [_dInFuncBlockMax],		00h
 		mov	dword ptr [_dInFuncBlockStack],		00h
@@ -13620,8 +13694,13 @@ cmp	byte ptr [ecx],		00h
 		mov	dword ptr [_dBCP],	edi
 		or	ebx,			01h
 
-		mov	dword ptr [_dFCL],	offset _bFuncCodeLocals
-		mov	dword ptr [_dFCB],	offset _bFuncCodeBase
+;;		mov	dword ptr [_dFCL],	offset _bFuncCodeLocals
+;;		mov	dword ptr [_dFCB],	offset _bFuncCodeBase
+
+		mov	eax,					dword ptr [_bFuncCodeLocals]
+		mov	dword ptr [_dFCL],			eax
+		mov	eax,					dword ptr [_bFuncCodeBase]
+		mov	dword ptr [_dFCB],			eax
 
 		mov	dword ptr [_dInFuncBlockMax],		00h
 		mov	dword ptr [_dInFuncBlockStack],		00h
@@ -14697,7 +14776,9 @@ cmp	ecx,			offset _dModulesEntry - 04h
 							mov	dword ptr [_dFCB],			edi
 							mov	edi,					dword ptr [_dFCL]
 							mov	esi,					offset _bFuncCodeOneLine
-							cmp	dword ptr [_dFCB],			offset _bFuncCodeBase
+;;							cmp	dword ptr [_dFCB],			offset _bFuncCodeBase
+							mov	eax,					dword ptr [_bFuncCodeBase]
+							cmp	dword ptr [_dFCB],			eax
 							jne	_lFNPLoc_06
 
 								;;----------------
@@ -14731,7 +14812,8 @@ push	edx
 push	ebx
 xor	eax,				eax
 
-mov	ecx,				offset _bFuncCodeLocals
+;;mov	ecx,				offset _bFuncCodeLocals
+mov	ecx,				dword ptr [_bFuncCodeLocals]
 
 	;;----------------
 	;; check other variables
@@ -17172,6 +17254,31 @@ _lbl:
 	;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	start:	;; <---
+
+	;;----------------
+	;; mem
+	push	0001002fh
+	push	GPTR
+	call	_imp__GlobalAlloc@8
+	add	eax,			20h
+	and	eax,			0fffffff0h
+	mov	dword ptr [_lDefX],	eax
+	mov	dword ptr [_lDefXEX],	eax
+
+	push	0010002fh
+	push	GPTR
+	call	_imp__GlobalAlloc@8
+	add	eax,			20h
+	and	eax,			0fffffff0h
+	mov	dword ptr [_bFuncCodeLocals],	eax
+
+	push	00a0002fh
+	push	GPTR
+	call	_imp__GlobalAlloc@8
+	add	eax,			20h
+	and	eax,			0fffffff0h
+	mov	dword ptr [_bFuncCodeBase],	eax
+	;;----------------
 	
 	;;----------------
 	;; command line
