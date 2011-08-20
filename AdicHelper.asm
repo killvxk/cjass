@@ -193,6 +193,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_sFuncNameL		db	"FUNCNAME", 02h
 	_sAnonymL		db	"lambda", 02h
 	_sAFLDefL		db	"AUTOFLUSH_LOCALS", 02h
+	_sDefBoolL		db	"DEF_BOOLEXPR_TRUE", 02h
+	_sDefBoolExL		db	"DEF_BOOLEXPR_TRUE_FUNC", 02h
 
 	_xLoopsMacroStr		equ	$
 	_sWhileMcrL		db	"while", 02h
@@ -207,6 +209,10 @@ extern	_imp__SFileCloseFile@4:dword
 	_sImportBJL		db	"IS_CUSTOM_BJ", 02h
 	_sImportCJL		db	"IS_CUSTOM_CJ", 02h
 	_sArgMacrolL		db	"WITHOUT_FIRST_WORD", 02h
+
+	_sDefBool		db	"null", 03h
+	_sDefBoolFx		db	"cj_true_bool_4896bnao87", 03h
+	_sDefBoolDx		db	"Condition(function cj_true_a497bnsor7)", 03h
 
 	_sArgMacrol		db	01h, "q", 80h, 01h, "n", 03h
 	_sInt			db	"integer", 03h
@@ -264,7 +270,7 @@ extern	_imp__SFileCloseFile@4:dword
 	_sFor3Macro_GroupEnum	db	"vblock", 0dh, 0ah
 				db	80h, 0dh, 0ah
 				db	"cjgrfgn_", 01h, "h", 0dh, 0ah
-				db	"GroupEnum", 01h, "q", 81h, 01h, "t(cjgrfgn_", 01h, "k,", 01h, "q", 81h, 01h, "n, null)", 0dh, 0ah
+				db	"GroupEnum", 01h, "q", 81h, 01h, "t(cjgrfgn_", 01h, "k,", 01h, "q", 81h, 01h, "n, DEF_BOOLEXPR_TRUE)", 0dh, 0ah
 				db	"loop", 0dh, 0ah
 				db	01h, "q", 80h, 01h, "v=FirstOfGroup(cjgrfgn_", 01h, "k)", 0dh, 0ah
 				db	"exitwhen ", 01h, "q", 80h, 01h, "v==null", 0dh, 0ah
@@ -391,7 +397,7 @@ extern	_imp__SFileCloseFile@4:dword
 ;; lite enum
 	_sFor4Macro_GroupEnum_A	db	"vblock", 0dh, 0ah
 				db	80h, 0dh, 0ah
-				db	"GroupEnum", 01h, "q", 81h, 01h, "t(", 82h, ",", 01h, "q", 81h, 01h, "n, null)", 0dh, 0ah
+				db	"GroupEnum", 01h, "q", 81h, 01h, "t(", 82h, ",", 01h, "q", 81h, 01h, "n, DEF_BOOLEXPR_TRUE)", 0dh, 0ah
 				db	"loop", 0dh, 0ah
 				db	01h, "q", 80h, 01h, "v=FirstOfGroup(", 82h, ")", 0dh, 0ah
 				db	"exitwhen ", 01h, "q", 80h, 01h, "v==null", 0dh, 0ah
@@ -409,7 +415,7 @@ extern	_imp__SFileCloseFile@4:dword
 				db	"group cjgrfgt_", 01h, "h", 0dh, 0ah
 				db	"endglobals", 0dh, 0ah
 				db	"cjgrfgt_", 01h, "k=", 82h, 0dh, 0ah
-				db	"GroupEnum", 01h, "q", 81h, 01h, "t(cjgrfgt_", 01h, "k,", 01h, "q", 81h, 01h, "n, null)", 0dh, 0ah
+				db	"GroupEnum", 01h, "q", 81h, 01h, "t(cjgrfgt_", 01h, "k,", 01h, "q", 81h, 01h, "n, DEF_BOOLEXPR_TRUE)", 0dh, 0ah
 				db	"loop", 0dh, 0ah
 				db	01h, "q", 80h, 01h, "v=FirstOfGroup(cjgrfgt_", 01h, "k)", 0dh, 0ah
 				db	"exitwhen ", 01h, "q", 80h, 01h, "v==null", 0dh, 0ah
@@ -727,7 +733,7 @@ _sEndMacroExStrSize	equ	$ - offset _sEndMacroExStr
 
 _sVXPreProcCmdLine	db	"--nooptimize --macromode cj_null.j bj_null.j macro_preprocessing_in.j macro_preprocessing_out.j", 00h
 
-_sGroupCopyCode		db	"library cjGroupCopyLib75hJKJ3745gf", 0dh, 0ah
+_sGroupCopyCode		db	"library cjLib75hJKJ374s4e597nba9o7w45gf", 0dh, 0ah
 			db	"globals", 0dh, 0ah
 			db	"group cj_tmpgr_copy_nw509ert7", 0dh, 0ah
 			db	"endglobals", 0dh, 0ah
@@ -737,6 +743,24 @@ _sGroupCopyCode		db	"library cjGroupCopyLib75hJKJ3745gf", 0dh, 0ah
 			db	"endfunction", 0dh ,0ah
 			db	"endlibrary", 0dh, 0ah
 _sGroupCopyCodeSize	equ	$ - offset _sGroupCopyCode
+
+_sDefBxprCode		db	"library cjLibw560nbs9b8nse46703948 initializer init", 0dh, 0ah
+			db	"globals", 0dh, 0ah
+			db	"boolexpr cj_true_bool_4896bnao87", 0dh, 0ah
+			db	"endglobals", 0dh, 0ah
+			db	"function cj_true_a497bnsor7 takes nothing returns boolean", 0dh, 0ah
+			db	"//# optional", 0dh, 0ah
+			db	"return true", 0dh, 0ah
+			db	"endfunction", 0dh ,0ah
+			db	"private function init takes nothing returns nothing", 0dh, 0ah
+			db	"set cj_true_bool_4896bnao87=Condition(function cj_true_a497bnsor7)", 0dh, 0ah
+			db	"endfunction", 0dh ,0ah
+			db	"endlibrary", 0dh, 0ah
+_sDefBxprCodeSize	equ	$ - offset _sDefBxprCode
+
+_sLibrariCJFix		db	" requires cjLib75hJKJ374s4e597nba9o7w45gf, optional cjLibw560nbs9b8nse46703948"
+_sLibrariCJFixSize	equ	$ - offset _sLibrariCJFix
+_sLibrariCJFixSizeEx	equ	$ - offset _sLibrariCJFix - 01h
 
 _dFreeScopesStackPnt	dd	offset _dFreeScopesStack
 
@@ -1124,6 +1148,8 @@ _bCallbackArgPickType	db	?
 	_dMacroPrePnt				dd	?	;; next run
 
 	_dMacroPreESI				dd	?	;; save esi in #R
+
+_bBoolExprEx			db	?
 
 _dPostProcessLine		dd	?
 ;_dPostProcessLineNext		dd	?
@@ -5143,17 +5169,37 @@ _lbl:
 			;;----------------
 
 			;;----------------
+			;; def boolexpr
+			mov	dword ptr [ebx+0170h],		offset _sDefBoolL
+			mov	dword ptr [ebx+0180h],		offset _sDefBoolExL
+
+			cmp	byte ptr [_bBoolExprEx],	01h
+			jne	_lDefBx_00
+
+			mov	dword ptr [ebx+0174h],		offset _sDefBool
+			mov	dword ptr [ebx+0184h],		offset _sDefBool
+			jmp	_lDefBx_01
+
+			_lDefBx_00:
+
+			mov	dword ptr [ebx+0174h],		offset _sDefBoolFx
+			mov	dword ptr [ebx+0184h],		offset _sDefBoolDx
+
+			_lDefBx_01:
+			;;----------------
+
+			;;----------------
 			;; debug
 			cmp	dword ptr [_dDbgOff],		offset _lCRDebugAdd
 			jne	_next
 
-			mov	dword ptr [ebx+0170h],		offset _sDebugL
-			mov	dword ptr [ebx+0174h],		offset _sTrue
+			mov	dword ptr [ebx+0190h],		offset _sDebugL
+			mov	dword ptr [ebx+0194h],		offset _sTrue
 			add	ebx,				10h
 			_lbl:
 			;;----------------
 
-		add	ebx,				0160h
+		add	ebx,				0190h
 
 			;;----------------
 			;; firstword
@@ -9446,9 +9492,19 @@ _lModuleSort_End:
 ;;----------------
 ;; add copy group code
 push	esi
+
 mov	ecx,			_sGroupCopyCodeSize
 mov	esi,			offset _sGroupCopyCode
 rep	movsb
+
+cmp	byte ptr [_bBoolExprEx],	00h
+jne	_next
+
+mov	ecx,			_sDefBxprCodeSize
+mov	esi,			offset _sDefBxprCode
+rep	movsb
+
+_lbl:
 
 pop	esi
 ;;----------------
@@ -12751,14 +12807,81 @@ _lFNPMetAddAnon_05:
 			jne	_lFNPLibTestEX
 			cmp	byte ptr [esi+0ch],	20h		;; _
 			jg	_next
-			_lFNPLibBlockEX:
-			call	_lFNPCheckBlock
-			test	eax,			eax
-			jz	_lFNPCopy
-			mov	dword ptr [eax],	6c646e65h	;; endl
-			mov	dword ptr [eax+04h],	61726269h	;; ibra
-			mov	word ptr [eax+08h],	7972h		;; ry
-			jmp	_lFNPCopy
+
+				;;----------------
+				;; copy keyword
+				_lFNPLibBlockEX:
+				movsb
+				cmp	byte ptr [esi - 01h],		" "
+				jne	_lFNPLibBlockEX
+
+				;; copy name
+				xor	eax,				eax
+				_lFNPLibPrdx:
+				lodsb
+				cmp	byte ptr [_bAscii_00 + eax],	ah
+				je	_lFNPLibPrdx_00
+				stosb
+				jmp	_lFNPLibPrdx
+
+				_lFNPLibPrdx_00:
+				dec	esi
+				cmp	word ptr [esi],			0a0dh
+				je	_lFNPLibPrdx_03
+
+				cmp	byte ptr [esi],			" "
+;;jne err
+				inc	esi
+
+				cmp	dword ptr [esi],		"sesu"
+				jne	_lFNPLibPrdx_01
+				cmp	byte ptr [esi + 04h],		" "
+				jne	_lFNPLibPrdx_01
+				add	esi,				05h
+
+				_lFNPLibPrdx_Ex:
+				push	esi
+				mov	esi,				offset _sLibrariCJFix
+				mov	ecx,				_sLibrariCJFixSize
+				rep	movsb
+				pop	esi
+				jmp	_lFNPCopyEx
+
+				_lFNPLibPrdx_01:
+				cmp	dword ptr [esi],		"uqer"
+				jne	_lFNPLibPrdx_02
+				cmp	dword ptr [esi + 04h],		"seri"
+				jne	_lFNPLibPrdx_02
+				cmp	byte ptr [esi + 08h],		" "
+				jne	_lFNPLibPrdx_02
+				add	esi,				09h
+
+				jmp	_lFNPLibPrdx_Ex
+
+				_lFNPLibPrdx_02:
+				cmp	dword ptr [esi],		"deen"
+;;jne	err
+				cmp	word ptr [esi + 04h],		" s"
+;;jne	err
+				add	esi,				06h
+				jmp	_lFNPLibPrdx_Ex
+
+				_lFNPLibPrdx_03:
+				push	esi
+				mov	esi,				offset _sLibrariCJFix
+				mov	ecx,				_sLibrariCJFixSizeEx
+				rep	movsb
+				pop	esi
+				jmp	_lFNPCopyEx
+				;;----------------
+
+;			call	_lFNPCheckBlock
+;			test	eax,			eax
+;			jz	_lFNPCopy
+;			mov	dword ptr [eax],	6c646e65h	;; endl
+;			mov	dword ptr [eax+04h],	61726269h	;; ibra
+;			mov	word ptr [eax+08h],	7972h		;; ry
+;			jmp	_lFNPCopy
 			_lFNPLibTestEX:
 			cmp	byte ptr [esi+07h],	20h		;; _
 			jbe	_lFNPLibBlockEX
@@ -12770,11 +12893,11 @@ _lFNPMetAddAnon_05:
 			jne	_next
 			cmp	byte ptr [esi+05h],	20h		;; _
 			jg	_next
-			call	_lFNPCheckBlock
-			test	eax,			eax
-			jz	_lFNPCopy
-			mov	dword ptr [eax],	73646e65h	;; ends
-			mov	dword ptr [eax+04h],	65706f63h	;; cope
+;			call	_lFNPCheckBlock
+;			test	eax,			eax
+;			jz	_lFNPCopy
+;			mov	dword ptr [eax],	73646e65h	;; ends
+;			mov	dword ptr [eax+04h],	65706f63h	;; cope
 			jmp	_lFNPCopy
 
 			_lbl:
@@ -17406,10 +17529,22 @@ jmp	_lCLScanStart
 ;; modules ex processing
 _lCLScanVerEXWX:
 cmp	dword ptr [ebx],	"mcm/"
-jne	_lCLScanVerEX
+jne	_lCLScanVerLO
 
 add	ebx,			04h
 mov	byte ptr [_dModuleCompabilityMode],	01h
+
+jmp	_lCLScanStart
+;;----------------
+
+;;----------------
+;; def boolexpr true
+_lCLScanVerLO:
+cmp	dword ptr [ebx],	"tbd/"
+jne	_lCLScanVerEX
+
+add	ebx,			04h
+mov	byte ptr [_bBoolExprEx],		01h
 
 jmp	_lCLScanStart
 ;;----------------
