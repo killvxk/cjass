@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 1.4.2.37
+;;	v 1.4.2.38
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -104,8 +104,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.37", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.37", 0dh, 0ah, "ADOLF aka ADX, 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.38", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.38", 0dh, 0ah, "adic3x aka ADOLF, 2009 - 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -193,15 +193,19 @@ extern	_imp__SFileCloseFile@4:dword
 	_sFuncNameL		db	"FUNCNAME", 02h
 	_sAnonymL		db	"lambda", 02h
 	_sAFLDefL		db	"AUTOFLUSH_LOCALS", 02h
+
+	_xLoopsMacroStr		equ	$
 	_sWhileMcrL		db	"while", 02h
 	_sWhileNotMcrL		db	"whilenot", 02h
 	_sDoWhileMcrL		db	"do", 02h
+	_sForpMacroL		db	"forp", 02h
+	_sForMacroL		db	"for", 02h
+	_xLoopsMacroEnd		equ	$
+
 ;	_sEndWhileMcrL		db	"endwhile", 02h
 	_sFirstWordL		db	"FIRST_WORD", 02h
 	_sImportBJL		db	"IS_CUSTOM_BJ", 02h
 	_sImportCJL		db	"IS_CUSTOM_CJ", 02h
-	_sForpMacroL		db	"forp", 02h
-	_sForMacroL		db	"for", 02h
 	_sArgMacrolL		db	"WITHOUT_FIRST_WORD", 02h
 
 	_sArgMacrol		db	01h, "q", 80h, 01h, "n", 03h
@@ -6540,24 +6544,25 @@ jmp	_lXFPStart
 		jb	_lXFPGetNextEx
 
 ;;----------------
-;; hack for keyword
-cmp	word ptr [esi],		"of"
-jne	_lXFPDFF_ForHackEnd
-cmp	byte ptr [esi + 02h],	"r"
-jne	_lXFPDFF_ForHackEnd
-
-xor	edx,			edx
-mov	dl,			byte ptr [esi + 03h]
-cmp	byte ptr [_bAscii_00 + edx],	dh
-jne	_lXFPDFF_ForHackEnd
-
-cmp	word ptr [edi - 02h],	0a0dh
-je	_lXFPDFF_ForHackEnd
-
-cmp	word ptr [edi - 06h],	7801h	;; #x
-jne	_lXFPGetNextEx
-
-_lXFPDFF_ForHackEnd:
+;; hack keyword
+;;
+;;cmp	word ptr [esi],		"of"
+;;jne	_lXFPDFF_ForHackEnd
+;;cmp	byte ptr [esi + 02h],	"r"
+;;jne	_lXFPDFF_ForHackEnd
+;;
+;;xor	edx,			edx
+;;mov	dl,			byte ptr [esi + 03h]
+;;cmp	byte ptr [_bAscii_00 + edx],	dh
+;;jne	_lXFPDFF_ForHackEnd
+;;
+;;cmp	word ptr [edi - 02h],	0a0dh
+;;je	_lXFPDFF_ForHackEnd
+;;
+;;cmp	word ptr [edi - 06h],	7801h	;; #x
+;;jne	_lXFPGetNextEx
+;;
+;;_lXFPDFF_ForHackEnd:
 ;;----------------
 
 		lea	edx,				[_dDefTable+eax*04h]
@@ -6569,6 +6574,23 @@ _lXFPDFF_ForHackEnd:
 		mov	dword ptr [_dUndefPnt],		esi			;; for undef
 		_lXFPCheck:
 		mov	ebx,				dword ptr [edx]
+
+;;----------------
+;; skip sys macros
+cmp	ebx,			_xLoopsMacroStr
+jb	_lXFPDFF_HackEnd
+cmp	ebx,			_xLoopsMacroEnd
+ja	_lXFPDFF_HackEnd
+
+cmp	word ptr [edi - 02h],	0a0dh
+je	_lXFPDFF_HackEnd
+
+cmp	word ptr [edi - 06h],	7801h	;; #x
+jne	_lXFPGetNext
+
+_lXFPDFF_HackEnd:
+;;----------------
+
 		mov	al,				byte ptr [esi]
 		cmp	al,				byte ptr [ebx]
 		jne	_lXFPGetNext
@@ -6810,6 +6832,16 @@ inc	ebx
 jmp	_lXFPHardArgNewEx
 
 _lXFPHardArgNew:
+
+	;;----------------
+	;; for err
+	mov	dword ptr [_xErrorTable],	offset _sErr_Base
+	mov	dword ptr [_xErrorTable+04h],	esi
+	inc	esi
+	mov	dword ptr [_xErrorTable+08h],	esi
+	dec	esi
+	;;----------------
+
 inc	ebx
 inc	dword ptr [eax-04h]
 push	ebx
@@ -6824,6 +6856,9 @@ cmp	word ptr [esi],		7801h	;; #x
 je	_lXFPHardArgNewDt
 cmp	word ptr [esi],		7901h	;; #y
 je	_lXFPHardArgNewDt
+
+cmp	byte ptr [esi],		00h
+je	_lErrIn
 
 cmp	byte ptr [esi],		1ah
 je	_lXFPHardArgNewInc
@@ -7067,6 +7102,30 @@ mov	dword ptr [_dAddrDefArgPnt],	eax
 		_lbl:
 		cmp	al,			20h
 		jb	_lXFPXX
+
+cmp	al,				"?"
+jne	_lXFPXX_OFX
+mov	byte ptr [_bIsTernar],		01h
+movsb
+jmp	_lXFPStart
+
+_lXFPXX_OFX:
+cmp	word ptr [esi],			"++"
+jne	_lXFPXX_DFX
+mov	byte ptr [_bIsIncDec],		01h
+movsw
+jmp	_lXFPStart
+
+_lXFPXX_DFX:
+cmp	word ptr [esi],			"--"
+jne	_lXFPXX_MFX
+mov	byte ptr [_bIsIncDec],		01h
+movsw
+jmp	_lXFPStart
+
+_lXFPXX_MFX:
+
+
 		je	_lXFPBSRem
 		cmp	al,			22h	;; "
 		je	_lXFPString
@@ -7123,31 +7182,12 @@ mov	dword ptr [_dAddrDefArgPnt],	eax
 			cmp	al,			0bh
 			je	_lXFPTMArg
 
-cmp	al,				"?"
-jne	_lXFPXX_OFX
-mov	byte ptr [_bIsTernar],		01h
-movsb
-jmp	_lXFPStart
-
-_lXFPXX_OFX:
 			cmp	word ptr [esi],		3801h	;; #8
 			jne	_lXFPXX_Next
 			movsw
 			jmp	_lXFPStart
 
 			_lXFPXX_Next:
-			cmp	word ptr [esi],			"++"
-			jne	_lXFPXX_Next_00
-			mov	byte ptr [_bIsIncDec],		01h
-			jmp	_lXFPNewWord
-
-			_lXFPXX_Next_00:
-			cmp	word ptr [esi],			"--"
-			jne	_lXFPXX_Next_01
-			mov	byte ptr [_bIsIncDec],		01h
-			jmp	_lXFPNewWord
-
-			_lXFPXX_Next_01:
 			cmp	word ptr [esi],		6401h	;; #d
 			je	_lXFP_00
 			cmp	word ptr [esi],		6701h	;; #g
@@ -8852,11 +8892,8 @@ _lPostParseStr:
 
 	cmp	ax,				"fi"
 	jne	_next
-	cmp	byte ptr [ecx + 02h],		"("
-	je	_lPostParseStr_if
-	cmp	byte ptr [ecx + 02h],		22h
+	cmp	byte ptr [ecx + 02h],		2eh
 	ja	_next
-	_lPostParseStr_if:
 	cmp	byte ptr [_bIsTernar],		01h
 	je	_lPostParseStr_Err
 	jmp	_lPostParseStr_End
@@ -8866,11 +8903,8 @@ _lPostParseStr:
 	jne	_next
 	cmp	word ptr [ecx + 04h],		"fi"
 	jne	_next
-	cmp	byte ptr [ecx + 02h],		"("
-	je	_lPostParseStr_elif
-	cmp	byte ptr [ecx + 02h],		22h
+	cmp	byte ptr [ecx + 06h],		2eh
 	ja	_next
-	_lPostParseStr_elif:
 	cmp	byte ptr [_bIsTernar],		01h
 	je	_lPostParseStr_Err
 	cmp	byte ptr [_bIsIncDec],		01h
@@ -8882,16 +8916,10 @@ _lPostParseStr:
 		_lPostParseStr_Err:
 		mov	eax,				dword ptr [_dPostProcessLine]
 		mov	dword ptr [_xErrorTable],	offset _sErr_IncDecTernar
-		mov	dword ptr [_xErrorTable+04h],	eax
-
-		_lPostParseStr_ErrEx:
-		cmp	word ptr [eax],			0a0dh
-		je	_lPostParseStr_ErrDx
-		cmp	word ptr [eax],			7801h	;; #x
-		jne	_lPostParseStr_ErrEx
-
-		_lPostParseStr_ErrDx:
-		mov	dword ptr [_xErrorTable+08h],	eax
+		sub	esi,				02h
+		mov	dword ptr [_xErrorTable+08h],	esi
+		dec	esi
+		mov	dword ptr [_xErrorTable+04h],	esi
 		jmp	_lErrIn
 		;;----------------
 
@@ -14216,8 +14244,8 @@ cmp	ecx,			offset _dModulesEntry - 04h
 					_lFNPPxFF:
 					cmp	word ptr [ecx],		0a0dh		;; nl
 					je	_lFNPPxNorm
-;; cmp	byte ptr [ecx], 00h
-;; je ...
+cmp	byte ptr [ecx], 00h
+je	_lFNPPxNorm
 					cmp	byte ptr [ecx],		28h		;; (
 					jne	_lFNPPxSS
 
