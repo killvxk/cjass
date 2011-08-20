@@ -2,13 +2,13 @@
 64 cursor discardable "x.cur"
 
 1 versioninfo
-fileversion 1,4,2,37
-productversion 1,4,2,37
+fileversion 1,4,2,38
+productversion 1,4,2,38
 fileos 0x00000004
 filetype 0x00000001 {
 	block "StringFileInfo" {
 		block "040904e4" {
-			value "CompanyName", "ADX\0"
+			value "CompanyName", "adic3x\0"
 			value "FileDescription", "cJass parser and optimizer\0"
 		}
 	}
