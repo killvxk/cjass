@@ -576,196 +576,230 @@ extern	_imp__SFileCloseFile@4:dword
 	_sBool			db	"boolean", 00h
 
 
-;;				null terminated string, arg count, type id
-_cbt_onInit			equ	00h
-_cbt_onUnitAttacked		equ	01h
-_cbt_onUnitDeath		equ	02h
-_cbt_onUnitDecay		equ	03h
-_cbt_onUnitIssuedOrder		equ	04h
-_cbt_onUnitIssuedPointOrder	equ	05h
-_cbt_onUnitIssuedTargetOrder	equ	06h
-_cbt_onHeroLevel		equ	07h
-_cbt_onHeroSkill		equ	08h
-_cbt_onUnitSpellChannel		equ	09h
-_cbt_onUnitSpellCast		equ	0ah
-_cbt_onUnitSpellEffect		equ	0bh
-_cbt_onUnitSpellFinish		equ	0ch
-_cbt_onUnitSpellEndcast		equ	0dh
-_cbt_onGameLoad			equ	0eh
-_cbt_onGameSave			equ	0fh
+	;;				null terminated string, arg count, type id
+	_cbt_onInit			equ	00h
+	_cbt_onUnitAttacked		equ	01h
+	_cbt_onUnitDeath		equ	02h
+	_cbt_onUnitDecay		equ	03h
+	_cbt_onUnitIssuedOrder		equ	04h
+	_cbt_onUnitIssuedPointOrder	equ	05h
+	_cbt_onUnitIssuedTargetOrder	equ	06h
+	_cbt_onHeroLevel		equ	07h
+	_cbt_onHeroSkill		equ	08h
+	_cbt_onUnitSpellChannel		equ	09h
+	_cbt_onUnitSpellCast		equ	0ah
+	_cbt_onUnitSpellEffect		equ	0bh
+	_cbt_onUnitSpellFinish		equ	0ch
+	_cbt_onUnitSpellEndcast		equ	0dh
+_cbt_onUnitUseItem		equ	0eh
+_cbt_onUnitPickupItem		equ	0fh
+_cbt_onUnitDropItem		equ	10h
+_cbt_onUnitSellItem		equ	11h
+_cbt_onUnitPawnItem		equ	12h
+	_cbt_onGameLoad			equ	13h
+	_cbt_onGameSave			equ	14h
 
-_xCallbacksTypes	db	"onInit", 			00h, 00h, _cbt_onInit
-			db	"onUnitAttacked", 		00h, 00h, _cbt_onUnitAttacked
-			db	"onUnitDeath", 			00h, 00h, _cbt_onUnitDeath
-			db	"onUnitDecay", 			00h, 00h, _cbt_onUnitDecay
-			db	"onUnitIssuedOrder", 		00h, 01h, _cbt_onUnitIssuedOrder
-			db	"onUnitIssuedPointOrder", 	00h, 01h, _cbt_onUnitIssuedPointOrder
-			db	"onUnitIssuedTargetOrder", 	00h, 01h, _cbt_onUnitIssuedTargetOrder
-			db	"onHeroLevel", 			00h, 00h, _cbt_onHeroLevel
-			db	"onHeroSkill", 			00h, 01h, _cbt_onHeroSkill
-			db	"onUnitSpellChannel", 		00h, 01h, _cbt_onUnitSpellChannel
-			db	"onUnitSpellCast", 		00h, 01h, _cbt_onUnitSpellCast
-			db	"onUnitSpellEffect", 		00h, 01h, _cbt_onUnitSpellEffect
-			db	"onUnitSpellFinish", 		00h, 01h, _cbt_onUnitSpellFinish
-			db	"onUnitSpellEndcast", 		00h, 01h, _cbt_onUnitSpellEndcast
-			db	"onGameLoad", 			00h, 00h, _cbt_onGameLoad
-			db	"onGameSave", 			00h, 00h, _cbt_onGameSave
-			db	00h, 00h, 00h, 00h
+	_xCallbacksTypes	db	"onInit", 			00h, 00h, _cbt_onInit
+				db	"onUnitAttacked", 		00h, 00h, _cbt_onUnitAttacked
+				db	"onUnitDeath", 			00h, 00h, _cbt_onUnitDeath
+				db	"onUnitDecay", 			00h, 00h, _cbt_onUnitDecay
+				db	"onUnitIssuedOrder", 		00h, 01h, _cbt_onUnitIssuedOrder
+				db	"onUnitIssuedPointOrder", 	00h, 01h, _cbt_onUnitIssuedPointOrder
+				db	"onUnitIssuedTargetOrder", 	00h, 01h, _cbt_onUnitIssuedTargetOrder
+				db	"onHeroLevel", 			00h, 00h, _cbt_onHeroLevel
+				db	"onHeroSkill", 			00h, 01h, _cbt_onHeroSkill
+				db	"onUnitSpellChannel", 		00h, 01h, _cbt_onUnitSpellChannel
+				db	"onUnitSpellCast", 		00h, 01h, _cbt_onUnitSpellCast
+				db	"onUnitSpellEffect", 		00h, 01h, _cbt_onUnitSpellEffect
+				db	"onUnitSpellFinish", 		00h, 01h, _cbt_onUnitSpellFinish
+				db	"onUnitSpellEndcast", 		00h, 01h, _cbt_onUnitSpellEndcast
+			db	"onUnitUseItem",			00h, 01h, _cbt_onUnitUseItem
+			db	"onUnitPickupItem",			00h, 01h, _cbt_onUnitPickupItem
+			db	"onUnitDropItem",			00h, 01h, _cbt_onUnitDropItem
+			db	"onUnitSellItem",			00h, 01h, _cbt_onUnitSellItem
+			db	"onUnitPawnItem",			00h, 01h, _cbt_onUnitPawnItem
+				db	"onGameLoad", 			00h, 00h, _cbt_onGameLoad
+				db	"onGameSave", 			00h, 00h, _cbt_onGameSave
+				db	00h, 00h, 00h, 00h
 
-_dCallbackListPnt	dd	offset _dCallbackList - _dCBSize
-_dCallbackListNext	dd	0ffffffffh
+	_dCallbackListPnt	dd	offset _dCallbackList - _dCBSize
+	_dCallbackListNext	dd	0ffffffffh
 
-_sCallbackReg_00_Str	equ	$
-			db	"library cjCallbacksRegestrationHack initializer cjCallbacksRegestration__init0", 0dh, 0ah
-			db	"function cjCallbacksRegestration__init0 takes nothing returns nothing", 0dh, 0ah
-			db	"//# optional", 0dh, 0ah
-			db	"call ExecuteFunc(", 22h, "cjCallbacksRegestration__initX", 22h, ")", 0dh, 0ah
-			db	"endfunction", 0dh, 0ah
-			db	"endlibrary", 0dh, 0ah
-			db	"scope cjCallbacksRegestration", 0dh, 0ah
-_sCallbackReg_00_End	equ	$
+	_sCallbackReg_00_Str	equ	$
+				db	"library cjCallbacksRegestrationHack initializer cjCallbacksRegestration__init0", 0dh, 0ah
+				db	"function cjCallbacksRegestration__init0 takes nothing returns nothing", 0dh, 0ah
+				db	"//# optional", 0dh, 0ah
+				db	"call ExecuteFunc(", 22h, "cjCallbacksRegestration__initX", 22h, ")", 0dh, 0ah
+				db	"endfunction", 0dh, 0ah
+				db	"endlibrary", 0dh, 0ah
+				db	"scope cjCallbacksRegestration", 0dh, 0ah
+	_sCallbackReg_00_End	equ	$
 
-_sCallbackReg_01_Str	equ	$
-			db	"private function reg_** takes nothing returns nothing", 0dh, 0ah
-_sCallbackReg_01_End	equ	$
+	_sCallbackReg_01_Str	equ	$
+				db	"private function reg_** takes nothing returns nothing", 0dh, 0ah
+	_sCallbackReg_01_End	equ	$
 
-_sCallbackReg_Order_Str	equ	$
-			db	"local integer i=GetIssuedOrderId()", 0dh, 0ah
-_sCallbackReg_Order_End	equ	$
+	_sCallbackReg_Order_Str	equ	$
+				db	"local integer i=GetIssuedOrderId()", 0dh, 0ah
+	_sCallbackReg_Order_End	equ	$
 
-_sCallbackReg_Skill_Str	equ	$
-			db	"local integer i=GetLearnedSkill()", 0dh, 0ah
-_sCallbackReg_Skill_End	equ	$
+	_sCallbackReg_Skill_Str	equ	$
+				db	"local integer i=GetLearnedSkill()", 0dh, 0ah
+	_sCallbackReg_Skill_End	equ	$
 
-_sCallbackReg_Spell_Str	equ	$
-			db	"local integer i=GetSpellAbilityId()", 0dh, 0ah
-_sCallbackReg_Spell_End	equ	$
+	_sCallbackReg_Spell_Str	equ	$
+				db	"local integer i=GetSpellAbilityId()", 0dh, 0ah
+	_sCallbackReg_Spell_End	equ	$
 
-_sCallbackReg_02_Str	equ	$
-			db	"function cjCallbacksRegestration__initX takes nothing returns nothing", 0dh, 0ah
-_sCallbackReg_02_End	equ	$
+_sCallbackReg_Item_Str	equ	$
+			db	"local integer i=GetItemTypeId(GetManipulatedItem())", 0dh, 0ah
+_sCallbackReg_Item_End	equ	$
 
-_sCallbackReg_03_Str	equ	$
-			db	"local integer i=0", 0dh, 0ah, "local player p", 0dh, 0ah, "loop", 0dh, 0ah, "set p=Player(i)", 0dh, 0ah
-_sCallbackReg_03_End	equ	$
+	_sCallbackReg_02_Str	equ	$
+				db	"function cjCallbacksRegestration__initX takes nothing returns nothing", 0dh, 0ah
+	_sCallbackReg_02_End	equ	$
 
-_sCallbackReg_04_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_01, p, EVENT_PLAYER_UNIT_ATTACKED, null)", 0dh, 0ah
-_sCallbackReg_04_End	equ	$
+	_sCallbackReg_03_Str	equ	$
+				db	"local integer i=0", 0dh, 0ah, "local player p", 0dh, 0ah, "loop", 0dh, 0ah, "set p=Player(i)", 0dh, 0ah
+	_sCallbackReg_03_End	equ	$
 
-_sCallbackReg_05_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_02, p, EVENT_PLAYER_UNIT_DEATH, null)", 0dh, 0ah
-_sCallbackReg_05_End	equ	$
+	_sCallbackReg_04_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_01, p, EVENT_PLAYER_UNIT_ATTACKED, null)", 0dh, 0ah
+	_sCallbackReg_04_End	equ	$
 
-_sCallbackReg_06_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_03, p, EVENT_PLAYER_UNIT_DECAY, null)", 0dh, 0ah
-_sCallbackReg_06_End	equ	$
+	_sCallbackReg_05_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_02, p, EVENT_PLAYER_UNIT_DEATH, null)", 0dh, 0ah
+	_sCallbackReg_05_End	equ	$
 
-_sCallbackReg_07_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_04, p, EVENT_PLAYER_UNIT_ISSUED_ORDER, null)", 0dh, 0ah
-_sCallbackReg_07_End	equ	$
+	_sCallbackReg_06_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_03, p, EVENT_PLAYER_UNIT_DECAY, null)", 0dh, 0ah
+	_sCallbackReg_06_End	equ	$
 
-_sCallbackReg_08_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_05, p, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER, null)", 0dh, 0ah
-_sCallbackReg_08_End	equ	$
+	_sCallbackReg_07_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_04, p, EVENT_PLAYER_UNIT_ISSUED_ORDER, null)", 0dh, 0ah
+	_sCallbackReg_07_End	equ	$
 
-_sCallbackReg_09_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_06, p, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER, null)", 0dh, 0ah
-_sCallbackReg_09_End	equ	$
+	_sCallbackReg_08_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_05, p, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER, null)", 0dh, 0ah
+	_sCallbackReg_08_End	equ	$
 
-_sCallbackReg_0a_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_07, p, EVENT_PLAYER_HERO_LEVEL, null)", 0dh, 0ah
-_sCallbackReg_0a_End	equ	$
+	_sCallbackReg_09_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_06, p, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER, null)", 0dh, 0ah
+	_sCallbackReg_09_End	equ	$
 
-_sCallbackReg_0b_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_08, p, EVENT_PLAYER_HERO_SKILL, null)", 0dh, 0ah
-_sCallbackReg_0b_End	equ	$
+	_sCallbackReg_0a_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_07, p, EVENT_PLAYER_HERO_LEVEL, null)", 0dh, 0ah
+	_sCallbackReg_0a_End	equ	$
 
-_sCallbackReg_0c_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_09, p, EVENT_PLAYER_UNIT_SPELL_CHANNEL, null)", 0dh, 0ah
-_sCallbackReg_0c_End	equ	$
+	_sCallbackReg_0b_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_08, p, EVENT_PLAYER_HERO_SKILL, null)", 0dh, 0ah
+	_sCallbackReg_0b_End	equ	$
 
-_sCallbackReg_0d_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_0a, p, EVENT_PLAYER_UNIT_SPELL_CAST, null)", 0dh, 0ah
-_sCallbackReg_0d_End	equ	$
+	_sCallbackReg_0c_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_09, p, EVENT_PLAYER_UNIT_SPELL_CHANNEL, null)", 0dh, 0ah
+	_sCallbackReg_0c_End	equ	$
 
-_sCallbackReg_0e_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_0b, p, EVENT_PLAYER_UNIT_SPELL_EFFECT, null)", 0dh, 0ah
-_sCallbackReg_0e_End	equ	$
+	_sCallbackReg_0d_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_0a, p, EVENT_PLAYER_UNIT_SPELL_CAST, null)", 0dh, 0ah
+	_sCallbackReg_0d_End	equ	$
 
-_sCallbackReg_0f_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_0c, p, EVENT_PLAYER_UNIT_SPELL_FINISH, null)", 0dh, 0ah
-_sCallbackReg_0f_End	equ	$
+	_sCallbackReg_0e_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_0b, p, EVENT_PLAYER_UNIT_SPELL_EFFECT, null)", 0dh, 0ah
+	_sCallbackReg_0e_End	equ	$
 
-_sCallbackReg_10_Str	equ	$
-			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_0d, p, EVENT_PLAYER_UNIT_SPELL_ENDCAST, null)", 0dh, 0ah
-_sCallbackReg_10_End	equ	$
+	_sCallbackReg_0f_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_0c, p, EVENT_PLAYER_UNIT_SPELL_FINISH, null)", 0dh, 0ah
+	_sCallbackReg_0f_End	equ	$
 
-_sCallbackReg_11_Str	equ	$
-			db	"call TriggerAddAction(cj_callback_trg_**, function reg_**)", 0dh, 0ah
-_sCallbackReg_11_End	equ	$
+	_sCallbackReg_10_Str	equ	$
+				db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_0d, p, EVENT_PLAYER_UNIT_SPELL_ENDCAST, null)", 0dh, 0ah
+	_sCallbackReg_10_End	equ	$
 
-_sCallbackReg_12_Str	equ	$
-			db	"call TriggerRegisterGameEvent(cj_callback_trg_0e, EVENT_GAME_LOADED)", 0dh ,0ah
-_sCallbackReg_12_End	equ	$
+_sCallbackReg_16_Str	equ	$
+			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_0e, p, EVENT_PLAYER_UNIT_SPELL_ENDCAST, null)", 0dh, 0ah
+_sCallbackReg_16_End	equ	$
 
-_sCallbackReg_13_Str	equ	$
-			db	"call TriggerRegisterGameEvent(cj_callback_trg_0e, EVENT_GAME_SAVE)", 0dh ,0ah
-_sCallbackReg_13_End	equ	$
+_sCallbackReg_17_Str	equ	$
+			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_0f, p, EVENT_PLAYER_UNIT_SPELL_ENDCAST, null)", 0dh, 0ah
+_sCallbackReg_17_End	equ	$
 
-_sCallbackReg_14_Str	equ	$
-			db	"trigger cj_callback_trg_**=CreateTrigger()", 0dh, 0ah
-_sCallbackReg_14_End	equ	$
+_sCallbackReg_18_Str	equ	$
+			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_10, p, EVENT_PLAYER_UNIT_SPELL_ENDCAST, null)", 0dh, 0ah
+_sCallbackReg_18_End	equ	$
 
-_sCallbackReg_15_Str	equ	$
-			db	"set i=i+1", 0dh, 0ah
-			db	"exitwhen i==16", 0dh, 0ah
-			db	"endloop", 0dh, 0ah
-_sCallbackReg_15_End	equ	$
+_sCallbackReg_19_Str	equ	$
+			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_11, p, EVENT_PLAYER_UNIT_SPELL_ENDCAST, null)", 0dh, 0ah
+_sCallbackReg_19_End	equ	$
 
-_sTempMacroIn		db	"macro_preprocessing_in.j", 00h
-_sTempMacroOut		db	"macro_preprocessing_out.j", 00h
-_sTempMacroCJ		db	"cj_null.j", 00h
-_sTempMacroBJ		db	"bj_null.j", 00h
+_sCallbackReg_1a_Str	equ	$
+			db	"call TriggerRegisterPlayerUnitEvent(cj_callback_trg_12, p, EVENT_PLAYER_UNIT_SPELL_ENDCAST, null)", 0dh, 0ah
+_sCallbackReg_1a_End	equ	$
 
-_sEndMacroExStr		db	"//! cjpreprocendmacrodetectionen_8H4f855w9Ioen68EgE337gy", 0dh, 0ah
-_sEndMacroExStrSize	equ	$ - offset _sEndMacroExStr
+	_sCallbackReg_11_Str	equ	$
+				db	"call TriggerAddAction(cj_callback_trg_**, function reg_**)", 0dh, 0ah
+	_sCallbackReg_11_End	equ	$
 
-_sVXPreProcCmdLine	db	"--nooptimize --macromode cj_null.j bj_null.j macro_preprocessing_in.j macro_preprocessing_out.j", 00h
+	_sCallbackReg_12_Str	equ	$
+				db	"call TriggerRegisterGameEvent(cj_callback_trg_13, EVENT_GAME_LOADED)", 0dh ,0ah
+	_sCallbackReg_12_End	equ	$
 
-_sGroupCopyCode		db	"library cjLib75hJKJ374s4e597nba9o7w45gf", 0dh, 0ah
-			db	"globals", 0dh, 0ah
-			db	"group cj_tmpgr_copy_nw509ert7", 0dh, 0ah
-			db	"endglobals", 0dh, 0ah
-			db	"function cj_group_copy_75hJKJ3745gf takes nothing returns nothing", 0dh, 0ah
-			db	"//# optional", 0dh, 0ah
-			db	"call GroupAddUnit(cj_tmpgr_copy_nw509ert7,GetEnumUnit())", 0dh, 0ah
-			db	"endfunction", 0dh ,0ah
-			db	"endlibrary", 0dh, 0ah
-_sGroupCopyCodeSize	equ	$ - offset _sGroupCopyCode
+	_sCallbackReg_13_Str	equ	$
+				db	"call TriggerRegisterGameEvent(cj_callback_trg_14, EVENT_GAME_SAVE)", 0dh ,0ah
+	_sCallbackReg_13_End	equ	$
 
-_sDefBxprCode		db	"library cjLibw560nbs9b8nse46703948 initializer init", 0dh, 0ah
-			db	"globals", 0dh, 0ah
-			db	"boolexpr cj_true_bool_4896bnao87", 0dh, 0ah
-			db	"endglobals", 0dh, 0ah
-			db	"function cj_true_a497bnsor7 takes nothing returns boolean", 0dh, 0ah
-			db	"//# optional", 0dh, 0ah
-			db	"return true", 0dh, 0ah
-			db	"endfunction", 0dh ,0ah
-			db	"private function init takes nothing returns nothing", 0dh, 0ah
-			db	"set cj_true_bool_4896bnao87=Condition(function cj_true_a497bnsor7)", 0dh, 0ah
-			db	"endfunction", 0dh ,0ah
-			db	"endlibrary", 0dh, 0ah
-_sDefBxprCodeSize	equ	$ - offset _sDefBxprCode
+	_sCallbackReg_14_Str	equ	$
+				db	"trigger cj_callback_trg_**=CreateTrigger()", 0dh, 0ah
+	_sCallbackReg_14_End	equ	$
 
-_sLibrariCJFix		db	" requires cjLib75hJKJ374s4e597nba9o7w45gf,optional cjLibw560nbs9b8nse46703948,"
-_sLibrariCJFixSize	equ	$ - offset _sLibrariCJFix
-_sLibrariCJFixSizeEx	equ	$ - offset _sLibrariCJFix - 01h
+	_sCallbackReg_15_Str	equ	$
+				db	"set i=i+1", 0dh, 0ah
+				db	"exitwhen i==16", 0dh, 0ah
+				db	"endloop", 0dh, 0ah
+	_sCallbackReg_15_End	equ	$
 
-_dFreeScopesStackPnt	dd	offset _dFreeScopesStack
+	_sTempMacroIn		db	"macro_preprocessing_in.j", 00h
+	_sTempMacroOut		db	"macro_preprocessing_out.j", 00h
+	_sTempMacroCJ		db	"cj_null.j", 00h
+	_sTempMacroBJ		db	"bj_null.j", 00h
 
-_dModulesPnt		dd	offset _dModules
-_dModulesEntryPnt	dd	offset _dModulesEntry
+	_sEndMacroExStr		db	"//! cjpreprocendmacrodetectionen_8H4f855w9Ioen68EgE337gy", 0dh, 0ah
+	_sEndMacroExStrSize	equ	$ - offset _sEndMacroExStr
+
+	_sVXPreProcCmdLine	db	"--nooptimize --macromode cj_null.j bj_null.j macro_preprocessing_in.j macro_preprocessing_out.j", 00h
+
+	_sGroupCopyCode		db	"library cjLib75hJKJ374s4e597nba9o7w45gf", 0dh, 0ah
+				db	"globals", 0dh, 0ah
+				db	"group cj_tmpgr_copy_nw509ert7", 0dh, 0ah
+				db	"endglobals", 0dh, 0ah
+				db	"function cj_group_copy_75hJKJ3745gf takes nothing returns nothing", 0dh, 0ah
+				db	"//# optional", 0dh, 0ah
+				db	"call GroupAddUnit(cj_tmpgr_copy_nw509ert7,GetEnumUnit())", 0dh, 0ah
+				db	"endfunction", 0dh ,0ah
+				db	"endlibrary", 0dh, 0ah
+	_sGroupCopyCodeSize	equ	$ - offset _sGroupCopyCode
+
+	_sDefBxprCode		db	"library cjLibw560nbs9b8nse46703948 initializer init", 0dh, 0ah
+				db	"globals", 0dh, 0ah
+				db	"boolexpr cj_true_bool_4896bnao87", 0dh, 0ah
+				db	"endglobals", 0dh, 0ah
+				db	"function cj_true_a497bnsor7 takes nothing returns boolean", 0dh, 0ah
+				db	"//# optional", 0dh, 0ah
+				db	"return true", 0dh, 0ah
+				db	"endfunction", 0dh ,0ah
+				db	"private function init takes nothing returns nothing", 0dh, 0ah
+				db	"set cj_true_bool_4896bnao87=Condition(function cj_true_a497bnsor7)", 0dh, 0ah
+				db	"endfunction", 0dh ,0ah
+				db	"endlibrary", 0dh, 0ah
+	_sDefBxprCodeSize	equ	$ - offset _sDefBxprCode
+
+	_sLibrariCJFix		db	" requires cjLib75hJKJ374s4e597nba9o7w45gf,optional cjLibw560nbs9b8nse46703948,"
+	_sLibrariCJFixSize	equ	$ - offset _sLibrariCJFix
+	_sLibrariCJFixSizeEx	equ	$ - offset _sLibrariCJFix - 01h
+
+	_dFreeScopesStackPnt	dd	offset _dFreeScopesStack
+
+	_dModulesPnt		dd	offset _dModules
+	_dModulesEntryPnt	dd	offset _dModulesEntry
 
 ;;_dAonBlockBaseFuncS	dd	0ffffffffh	;; base anon block's function
 ;;_dAonBlockBaseFuncE	dd	0ffffffffh
@@ -1125,6 +1159,16 @@ _bCallbackArgPickType	db	?
 						db	?
 	_bIsExist_onUnitSpellEndcast		db	?
 						db	?
+_bIsExist_onUnitUseItem			db	?
+					db	?
+_bIsExist_onUnitPickupItem		db	?
+					db	?
+_bIsExist_onUnitDropItem		db	?
+					db	?
+_bIsExist_onUnitSellItem		db	?
+					db	?
+_bIsExist_onUnitPawnItem		db	?
+					db	?
 	_bIsExist_onGameLoad			db	?
 						db	?
 	_bIsExist_onGameSave			db	?
@@ -16116,27 +16160,43 @@ rep	movsb
 		cmp	byte ptr [edx + 01h],	00h
 		je	_lCallbackReg_AddFunc_WithoutArgs
 
-		cmp	edx,			offset _bIsExist_onHeroLevel
-		jb	_lCallbackReg_AddFunc_Arg_00
+			;;----------------
+			;; get arg type
+			cmp	edx,			offset _bIsExist_onHeroLevel
+			jb	_lCallbackReg_AddFunc_Arg_00
 
-		cmp	edx,			offset _bIsExist_onUnitSpellChannel
-		jb	_lCallbackReg_AddFunc_Arg_01
+			cmp	edx,			offset _bIsExist_onUnitSpellChannel
+			jb	_lCallbackReg_AddFunc_Arg_01
 
-		mov	esi,			_sCallbackReg_Spell_Str
-		mov	ecx,			_sCallbackReg_Spell_End - _sCallbackReg_Spell_Str
-		rep	movsb
-		jmp	_lCallbackReg_AddFunc_GetArged
+cmp	edx,				offset _bIsExist_onUnitUseItem
+jb	_lCallbackReg_AddFunc_Arg_02
 
-		_lCallbackReg_AddFunc_Arg_00:
-		mov	esi,			_sCallbackReg_Order_Str
-		mov	ecx,			_sCallbackReg_Order_End - _sCallbackReg_Order_Str
-		rep	movsb
-		jmp	_lCallbackReg_AddFunc_GetArged
+mov	esi,			_sCallbackReg_Item_Str
+mov	ecx,			_sCallbackReg_Item_End - _sCallbackReg_Item_Str
+rep	movsb
+jmp	_lCallbackReg_AddFunc_ArgTypeEnd
 
-		_lCallbackReg_AddFunc_Arg_01:
-		mov	esi,			_sCallbackReg_Skill_Str
-		mov	ecx,			_sCallbackReg_Skill_End - _sCallbackReg_Skill_Str
-		rep	movsb
+
+			_lCallbackReg_AddFunc_Arg_00:
+			mov	esi,			_sCallbackReg_Order_Str
+			mov	ecx,			_sCallbackReg_Order_End - _sCallbackReg_Order_Str
+			rep	movsb
+			jmp	_lCallbackReg_AddFunc_ArgTypeEnd
+
+			_lCallbackReg_AddFunc_Arg_01:
+			mov	esi,			_sCallbackReg_Skill_Str
+			mov	ecx,			_sCallbackReg_Skill_End - _sCallbackReg_Skill_Str
+			rep	movsb
+			jmp	_lCallbackReg_AddFunc_ArgTypeEnd
+
+			_lCallbackReg_AddFunc_Arg_02:
+			mov	esi,			_sCallbackReg_Spell_Str
+			mov	ecx,			_sCallbackReg_Spell_End - _sCallbackReg_Spell_Str
+			rep	movsb
+;			jmp	_lCallbackReg_AddFunc_ArgTypeEnd
+
+			_lCallbackReg_AddFunc_ArgTypeEnd:
+			;;----------------
 
 			;;----------------
 			;; add
@@ -16448,6 +16508,11 @@ _lCallbackReg_AddFunc_AddEndif:
 		add	al,			byte ptr [_bIsExist_onUnitSpellEffect]
 		add	al,			byte ptr [_bIsExist_onUnitSpellFinish]
 		add	al,			byte ptr [_bIsExist_onUnitSpellEndcast]
+add	al,			byte ptr [_bIsExist_onUnitUseItem]
+add	al,			byte ptr [_bIsExist_onUnitPickupItem]
+add	al,			byte ptr [_bIsExist_onUnitDropItem]
+add	al,			byte ptr [_bIsExist_onUnitSellItem]
+add	al,			byte ptr [_bIsExist_onUnitPawnItem]
 
 		test	eax,			eax
 		jz	_lCallbackReg_NoPlayer
@@ -16545,6 +16610,41 @@ _lCallbackReg_AddFunc_AddEndif:
 		mov	esi,				_sCallbackReg_10_Str
 		mov	ecx,				_sCallbackReg_10_End - _sCallbackReg_10_Str
 		rep	movsb
+
+_lbl:
+cmp	byte ptr [_bIsExist_onUnitUseItem],	00h
+je	_next
+mov	esi,				_sCallbackReg_16_Str
+mov	ecx,				_sCallbackReg_16_End - _sCallbackReg_16_Str
+rep	movsb
+
+_lbl:
+cmp	byte ptr [_bIsExist_onUnitPickupItem],	00h
+je	_next
+mov	esi,				_sCallbackReg_17_Str
+mov	ecx,				_sCallbackReg_17_End - _sCallbackReg_17_Str
+rep	movsb
+
+_lbl:
+cmp	byte ptr [_bIsExist_onUnitDropItem],	00h
+je	_next
+mov	esi,				_sCallbackReg_18_Str
+mov	ecx,				_sCallbackReg_18_End - _sCallbackReg_18_Str
+rep	movsb
+
+_lbl:
+cmp	byte ptr [_bIsExist_onUnitSellItem],	00h
+je	_next
+mov	esi,				_sCallbackReg_19_Str
+mov	ecx,				_sCallbackReg_19_End - _sCallbackReg_19_Str
+rep	movsb
+
+_lbl:
+cmp	byte ptr [_bIsExist_onUnitPawnItem],	00h
+je	_next
+mov	esi,				_sCallbackReg_1a_Str
+mov	ecx,				_sCallbackReg_1a_End - _sCallbackReg_1a_Str
+rep	movsb
 
 		_lbl:
 		mov	esi,				_sCallbackReg_15_Str
@@ -16668,6 +16768,11 @@ _lCallbackReg_AddFunc_AddEndif:
 	add	al,			byte ptr [_bIsExist_onUnitSpellEffect]
 	add	al,			byte ptr [_bIsExist_onUnitSpellFinish]
 	add	al,			byte ptr [_bIsExist_onUnitSpellEndcast]
+add	al,			byte ptr [_bIsExist_onUnitUseItem]
+add	al,			byte ptr [_bIsExist_onUnitPickupItem]
+add	al,			byte ptr [_bIsExist_onUnitDropItem]
+add	al,			byte ptr [_bIsExist_onUnitSellItem]
+add	al,			byte ptr [_bIsExist_onUnitPawnItem]
 	add	al,			byte ptr [_bIsExist_onGameLoad]
 	add	al,			byte ptr [_bIsExist_onGameSave]
 
