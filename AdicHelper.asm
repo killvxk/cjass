@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 1.4.2.38
+;;	v 1.4.2.39
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -104,8 +104,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.38", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.38", 0dh, 0ah, "adic3x aka ADOLF, 2009 - 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.39", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.39", 0dh, 0ah, "adic3x aka ADOLF, 2009 - 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -758,7 +758,7 @@ _sDefBxprCode		db	"library cjLibw560nbs9b8nse46703948 initializer init", 0dh, 0a
 			db	"endlibrary", 0dh, 0ah
 _sDefBxprCodeSize	equ	$ - offset _sDefBxprCode
 
-_sLibrariCJFix		db	" requires cjLib75hJKJ374s4e597nba9o7w45gf, optional cjLibw560nbs9b8nse46703948"
+_sLibrariCJFix		db	" requires cjLib75hJKJ374s4e597nba9o7w45gf,optional cjLibw560nbs9b8nse46703948,"
 _sLibrariCJFixSize	equ	$ - offset _sLibrariCJFix
 _sLibrariCJFixSizeEx	equ	$ - offset _sLibrariCJFix - 01h
 
@@ -12815,7 +12815,7 @@ _lFNPMetAddAnon_05:
 				cmp	byte ptr [esi - 01h],		" "
 				jne	_lFNPLibBlockEX
 
-				;; copy name
+				;; copy name or initfunc
 				xor	eax,				eax
 				_lFNPLibPrdx:
 				lodsb
@@ -12833,6 +12833,20 @@ _lFNPMetAddAnon_05:
 ;;jne err
 				inc	esi
 
+cmp	dword ptr [esi],		"tini"
+jne	_lFNPLibPrdx_04
+cmp	dword ptr [esi + 04h],		"ilai"
+jne	_lFNPLibPrdx_04
+cmp	dword ptr [esi + 08h],		" rez"
+jne	_lFNPLibPrdx_04
+mov	byte ptr [edi],			" "
+inc	edi
+movsd
+movsd
+movsd
+jmp	_lFNPLibPrdx
+
+				_lFNPLibPrdx_04:
 				cmp	dword ptr [esi],		"sesu"
 				jne	_lFNPLibPrdx_01
 				cmp	byte ptr [esi + 04h],		" "
