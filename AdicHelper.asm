@@ -9195,8 +9195,10 @@ cmp	eax,			_dModulesEnd
 	mov	dword ptr [eax],		"mdne"
 	mov	dword ptr [eax + 04h],		"ludo"
 	mov	byte ptr [eax + 08h],		"e"
-mov	dword ptr [edi - 06h],	06060606h
-mov	word ptr [edi - 02h],	0a0dh
+;mov	dword ptr [edi - 06h],	06060606h
+;mov	word ptr [edi - 02h],	0a0dh
+mov	word ptr [edi - 06h],	0a0dh
+sub	edi,			04h
 	jmp	_lPostParseStr_End
 
 	_lbl:
@@ -14004,7 +14006,8 @@ push	01h	;; no optional
 		jmp	_lModuleIn_Get_01
 
 		_lModuleIn_Get_02:
-		cmp	al,				byte ptr [edx]
+		mov	al,				byte ptr [edx]
+		cmp	byte ptr [_bAscii_00 + eax],	ah
 		jne	_lModuleIn_Get
 
 			;;----------------
@@ -15742,6 +15745,8 @@ jmp	_lFNPIncDecSTXEndSFXD
 							;;----------------
 
 						_lFNPIncDecFXScan_00:
+cmp	byte ptr [edx],			00h
+je	_lFNPIncDecNormJJ
 						cmp	word ptr [edx],		0a0dh	;; nl
 						jne	_lFNPIncDecFXScan
 						;;----------------
