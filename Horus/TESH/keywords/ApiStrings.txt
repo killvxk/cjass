@@ -1,0 +1,2106 @@
+AbilityId(string abilityIdString)returns integer
+AbilityId2String(integer abilityId)returns string
+AbortCinematicFadeBJ(nothing)
+Acos(real x)returns real
+AcosBJ(real degrees)returns real
+AddHeroXP(unit whichHero, integer xpToAdd, boolean showEyeCandy)
+AddHeroXPSwapped(integer xpToAdd, unit whichHero, boolean showEyeCandy)
+AddIndicator(widget whichWidget, integer red, integer green, integer blue, integer alpha)
+AddItemToAllStock(integer itemId, integer currentStock, integer stockMax)
+AddItemToStock(unit whichUnit, integer itemId, integer currentStock, integer stockMax)
+AddItemToStockBJ(integer itemId, unit whichUnit, integer currentStock, integer stockMax)
+AddLightning(string codeName, boolean checkVisibility, real x1, real y1, real x2, real y2)returns lightning
+AddLightningEx(string codeName, boolean checkVisibility, real x1, real y1, real z1, real x2, real y2, real z2)returns lightning
+AddLightningLoc(string codeName, location where1, location where2)returns lightning
+AddPlayerTechResearched(player whichPlayer, integer techid, integer levels)
+AddResourceAmount(unit whichUnit, integer amount)
+AddResourceAmountBJ(integer delta, unit whichUnit)
+AddSpecialEffect(string modelName, real x, real y)returns effect
+AddSpecialEffectLoc(string modelName, location where)returns effect
+AddSpecialEffectLocBJ(location where, string modelName)returns effect
+AddSpecialEffectTarget(string modelName, widget targetWidget, string attachPointName)returns effect
+AddSpecialEffectTargetUnitBJ(string attachPointName, widget targetWidget, string modelName)returns effect
+AddSpellEffect(string abilityString, effecttype t, real x, real y)returns effect
+AddSpellEffectById(integer abilityId, effecttype t,real x, real y)returns effect
+AddSpellEffectByIdLoc(integer abilityId, effecttype t,location where)returns effect
+AddSpellEffectLoc(string abilityString, effecttype t,location where)returns effect
+AddSpellEffectTarget(string modelName, effecttype t, widget targetWidget, string attachPoint)returns effect
+AddSpellEffectTargetById(integer abilityId, effecttype t, widget targetWidget, string attachPoint)returns effect
+AddUnitAnimationProperties(unit whichUnit, string animProperties, boolean add)
+AddUnitAnimationPropertiesBJ(boolean add, string animProperties, unit whichUnit)
+AddUnitToAllStock(integer unitId, integer currentStock, integer stockMax)
+AddUnitToStock(unit whichUnit, integer unitId, integer currentStock, integer stockMax)
+AddUnitToStockBJ(integer unitId, unit whichUnit, integer currentStock, integer stockMax)
+AddWeatherEffect(rect where, integer effectID)returns weathereffect
+AddWeatherEffectSaveLast(rect where, integer effectID)returns weathereffect
+AdjustCameraBoundsBJ(integer adjustMethod, real dxWest, real dxEast, real dyNorth, real dySouth)
+AdjustCameraBoundsForPlayerBJ(integer adjustMethod, player whichPlayer, real dxWest, real dxEast, real dyNorth, real dySouth)
+AdjustCameraField(camerafield whichField, real offset, real duration)
+AdjustPlayerStateBJ(integer delta, player whichPlayer, playerstate whichPlayerState)
+AdjustPlayerStateSimpleBJ(player whichPlayer, playerstate whichPlayerState, integer delta)
+AllowVictoryDefeat(playergameresult gameResult)returns boolean
+And(boolexpr operandA, boolexpr operandB)returns boolexpr
+AngleBetweenPoints(location locA, location locB)returns real
+Asin(real y)returns real
+AsinBJ(real degrees)returns real
+Atan(real x)returns real
+Atan2(real y, real x)returns real
+Atan2BJ(real y, real x)returns real
+AtanBJ(real degrees)returns real
+AttachSoundToUnit(sound soundHandle, unit whichUnit)
+AttachSoundToUnitBJ(sound soundHandle, unit whichUnit)
+BJDebugMsg(string msg)
+BlightGoldMineForPlayer(unit goldMine, player whichPlayer)returns unit
+BlightGoldMineForPlayerBJ(unit goldMine, player whichPlayer)returns unit
+CachePlayerHeroData(player whichPlayer)
+CameraClearNoiseForPlayer(player whichPlayer)
+CameraResetSmoothingFactorBJ(nothing)
+CameraSetEQNoiseForPlayer(player whichPlayer, real magnitude)
+CameraSetSmoothingFactor(real factor)
+CameraSetSmoothingFactorBJ(real factor)
+CameraSetSourceNoise(real mag, real velocity)
+CameraSetSourceNoiseEx(real mag, real velocity, boolean vertOnly)
+CameraSetSourceNoiseForPlayer(player whichPlayer, real magnitude, real velocity)
+CameraSetTargetNoise(real mag, real velocity)
+CameraSetTargetNoiseEx(real mag, real velocity, boolean vertOnly)
+CameraSetTargetNoiseForPlayer(player whichPlayer, real magnitude, real velocity)
+CameraSetupApply(camerasetup whichSetup, boolean doPan, boolean panTimed)
+CameraSetupApplyForceDuration(camerasetup whichSetup, boolean doPan, real forceDuration)
+CameraSetupApplyForceDurationWithZ(camerasetup whichSetup, real zDestOffset, real forceDuration)
+CameraSetupApplyForPlayer(boolean doPan, camerasetup whichSetup, player whichPlayer, real duration)
+CameraSetupApplyWithZ(camerasetup whichSetup, real zDestOffset)
+CameraSetupGetDestPositionLoc(camerasetup whichSetup)returns location
+CameraSetupGetDestPositionX(camerasetup whichSetup)returns real
+CameraSetupGetDestPositionY(camerasetup whichSetup)returns real
+CameraSetupGetField(camerasetup whichSetup, camerafield whichField)returns real
+CameraSetupGetFieldSwap(camerafield whichField, camerasetup whichSetup)returns real
+CameraSetupSetDestPosition(camerasetup whichSetup, real x, real y, real duration)
+CameraSetupSetField(camerasetup whichSetup, camerafield whichField, real value, real duration)
+CancelCineSceneBJ(nothing)
+ChangeElevatorHeight(destructable d, integer newHeight)
+ChangeElevatorWallBlocker(real x, real y, real facing, boolean open)
+ChangeElevatorWalls(boolean open, integer walls, destructable d)
+ChangeLevel(string newLevel, boolean doScoreScreen)
+Cheat(string cheatStr)
+CheckInitPlayerSlotAvailability(nothing)
+CheckItemcodeStatus(integer itemId, integer status)returns boolean
+CheckItemStatus(item whichItem, integer status)returns boolean
+ChooseRandomCreep(integer level)returns integer
+ChooseRandomCreepBJ(integer level)returns integer
+ChooseRandomItem(integer level)returns integer
+ChooseRandomItemBJ(integer level)returns integer
+ChooseRandomItemEx(itemtype whichType, integer level)returns integer
+ChooseRandomItemExBJ(integer level, itemtype whichType)returns integer
+ChooseRandomNPBuilding(nothing)returns integer
+ChooseRandomNPBuildingBJ(nothing)returns integer
+CinematicFadeBJ(integer fadetype, real duration, string tex, real red, real green, real blue, real trans)
+CinematicFadeCommonBJ(real red, real green, real blue, real duration, string tex, real startTrans, real endTrans)
+CinematicFilterGenericBJ(real duration, blendmode bmode, string tex, real red0, real green0, real blue0, real trans0, real red1, real green1, real blue1, real trans1)
+CinematicModeBJ(boolean cineMode, force forForce)
+CinematicModeExBJ(boolean cineMode, force forForce, real interfaceFadeTime)
+ClearMapMusic(nothing)
+ClearMapMusicBJ(nothing)
+ClearSelection(nothing)
+ClearSelectionForPlayer(player whichPlayer)
+ClearTextMessages(nothing)
+ClearTextMessagesBJ(force toForce)
+CommandAI(player num, integer command, integer data)
+CommentString(string commentString)
+CompareLocationsBJ(location A, location B)returns boolean
+CompareRectsBJ(rect A, rect B)returns boolean
+Condition(code func)returns conditionfunc
+ConditionalTriggerExecute(trigger trig)
+ConfigureNeutralVictim(nothing)
+ContinueCinematicFadeAfterBJ(real duration, real red, real green, real blue, real trans, string tex)
+ContinueCinematicFadeBJ(nothing)
+ConvertAIDifficulty(integer i)returns aidifficulty
+ConvertAllianceType(integer i)returns alliancetype
+ConvertAttackType(integer i)returns attacktype
+ConvertBlendMode(integer i)returns blendmode
+ConvertCameraField(integer i)returns camerafield
+ConvertDamageType(integer i)returns damagetype
+ConvertDialogEvent(integer i)returns dialogevent
+ConvertedPlayer(integer convertedPlayerId)returns player
+ConvertEffectType(integer i)returns effecttype
+ConvertFGameState(integer i)returns fgamestate
+ConvertFogState(integer i)returns fogstate
+ConvertGameDifficulty(integer i)returns gamedifficulty
+ConvertGameEvent(integer i)returns gameevent
+ConvertGameSpeed(integer i)returns gamespeed
+ConvertGameType(integer i)returns gametype
+ConvertIGameState(integer i)returns igamestate
+ConvertItemType(integer i)returns itemtype
+ConvertLimitOp(integer i)returns limitop
+ConvertMapControl(integer i)returns mapcontrol
+ConvertMapDensity(integer i)returns mapdensity
+ConvertMapFlag(integer i)returns mapflag
+ConvertMapSetting(integer i)returns mapsetting
+ConvertMapVisibility(integer i)returns mapvisibility
+ConvertPathingType(integer i)returns pathingtype
+ConvertPlacement(integer i)returns placement
+ConvertPlayerColor(integer i)returns playercolor
+ConvertPlayerEvent(integer i)returns playerevent
+ConvertPlayerGameResult(integer i)returns playergameresult
+ConvertPlayerScore(integer i)returns playerscore
+ConvertPlayerSlotState(integer i)returns playerslotstate
+ConvertPlayerState(integer i)returns playerstate
+ConvertPlayerUnitEvent(integer i)returns playerunitevent
+ConvertRace(integer i)returns race
+ConvertRacePref(integer i)returns racepreference
+ConvertRarityControl(integer i)returns raritycontrol
+ConvertSoundType(integer i)returns soundtype
+ConvertStartLocPrio(integer i)returns startlocprio
+ConvertTexMapFlags(integer i)returns texmapflags
+ConvertUnitEvent(integer i)returns unitevent
+ConvertUnitState(integer i)returns unitstate
+ConvertUnitType(integer i)returns unittype
+ConvertVersion(integer i)returns version
+ConvertVolumeGroup(integer i)returns volumegroup
+ConvertWeaponType(integer i)returns weapontype
+ConvertWidgetEvent(integer i)returns widgetevent
+CopySaveGame(string sourceSaveName, string destSaveName)returns boolean
+CopySaveGameBJ(string sourceSaveName, string destSaveName)returns boolean
+Cos(real radians)returns real
+CosBJ(real degrees)returns real
+CountLivingPlayerUnitsOfTypeId(integer unitId, player whichPlayer)returns integer
+CountPlayersInForceBJ(force f)returns integer
+CountPlayersInForceEnum(nothing)
+CountUnitsInGroup(group g)returns integer
+CountUnitsInGroupEnum(nothing)
+CreateBlightedGoldmine(player id, real x, real y, real face)returns unit
+CreateCameraSetup(nothing)returns camerasetup
+CreateCorpse(player whichPlayer, integer unitid, real x, real y, real face)returns unit
+CreateCorpseLocBJ(integer unitid, player whichPlayer, location loc)returns unit
+CreateDeadDestructable(integer objectid, real x, real y, real face, real scale, integer variation)returns destructable
+CreateDeadDestructableLocBJ(integer objectid, location loc, real facing, real scale, integer variation)returns destructable
+CreateDeadDestructableZ(integer objectid, real x, real y, real z, real face, real scale, integer variation)returns destructable
+CreateDefeatCondition(nothing)returns defeatcondition
+CreateDefeatConditionBJ(string description)returns defeatcondition
+CreateDestructable(integer objectid, real x, real y, real face, real scale, integer variation)returns destructable
+CreateDestructableLoc(integer objectid, location loc, real facing, real scale, integer variation)returns destructable
+CreateDestructableZ(integer objectid, real x, real y, real z, real face, real scale, integer variation)returns destructable
+CreateFogModifierRadius(player forWhichPlayer, fogstate whichState, real centerx, real centerY, real radius, boolean useSharedVision, boolean afterUnits)returns fogmodifier
+CreateFogModifierRadiusLoc(player forWhichPlayer, fogstate whichState, location center, real radius, boolean useSharedVision, boolean afterUnits)returns fogmodifier
+CreateFogModifierRadiusLocBJ(boolean enabled, player whichPlayer, fogstate whichFogState, location center, real radius)returns fogmodifier
+CreateFogModifierRadiusLocSimple(player whichPlayer, fogstate whichFogState, location center, real radius, boolean afterUnits)returns fogmodifier
+CreateFogModifierRect(player forWhichPlayer, fogstate whichState, rect where, boolean useSharedVision, boolean afterUnits)returns fogmodifier
+CreateFogModifierRectBJ(boolean enabled, player whichPlayer, fogstate whichFogState, rect r)returns fogmodifier
+CreateFogModifierRectSimple(player whichPlayer, fogstate whichFogState, rect r, boolean afterUnits)returns fogmodifier
+CreateForce(nothing)returns force
+CreateGroup(nothing)returns group
+CreateImage(string file, real sizeX, real sizeY, real sizeZ, real posX, real posY, real posZ, real originX, real originY, real originZ, integer imageType)returns image
+CreateImageBJ(string file, real size, location where, real zOffset, integer imageType)returns image
+CreateItem(integer itemid, real x, real y)returns item
+CreateItemLoc(integer itemId, location loc)returns item
+CreateItemPool(nothing)returns itempool
+CreateLeaderboard(nothing)returns leaderboard
+CreateLeaderboardBJ(force toForce, string label)returns leaderboard
+CreateMIDISound(string soundLabel, integer fadeInRate, integer fadeOutRate)returns sound
+CreateMultiboard(nothing)returns multiboard
+CreateMultiboardBJ(integer cols, integer rows, string title)returns multiboard
+CreateNUnitsAtLoc(integer count, integer unitId, player whichPlayer, location loc, real face)returns group
+CreateNUnitsAtLocFacingLocBJ(integer count, integer unitId, player whichPlayer, location loc, location lookAt)returns group
+CreatePermanentCorpseLocBJ(integer style, integer unitid, player whichPlayer, location loc, real facing)returns unit
+CreateQuest(nothing)returns quest
+CreateQuestBJ(integer questType, string title, string description, string iconPath)returns quest
+CreateQuestItemBJ(quest whichQuest, string description)returns questitem
+CreateRegion(nothing)returns region
+CreateSound(string fileName, boolean looping, boolean is3D, boolean stopwhenoutofrange, integer fadeInRate, integer fadeOutRate, string eaxSetting)returns sound
+CreateSoundFilenameWithLabel(string fileName, boolean looping, boolean is3D, boolean stopwhenoutofrange, integer fadeInRate, integer fadeOutRate, string SLKEntryName)returns sound
+CreateSoundFromLabel(string soundLabel, boolean looping, boolean is3D, boolean stopwhenoutofrange, integer fadeInRate, integer fadeOutRate)returns sound
+CreateTextTag(nothing)returns texttag
+CreateTextTagLocBJ(string s, location loc, real zOffset, real size, real red, real green, real blue, real transparency)returns texttag
+CreateTextTagUnitBJ(string s, unit whichUnit, real zOffset, real size, real red, real green, real blue, real transparency)returns texttag
+CreateTimer(nothing)returns timer
+CreateTimerBJ(boolean periodic, real timeout)returns timer
+CreateTimerDialog(timer t)returns timerdialog
+CreateTimerDialogBJ(timer t, string title)returns timerdialog
+CreateTrackable(string trackableModelPath, real x, real y, real facing)returns trackable
+CreateTrigger(nothing)returns trigger
+CreateUbersplat(real x, real y, string name, integer red, integer green, integer blue, integer alpha, boolean forcePaused, boolean noBirthTime)returns ubersplat
+CreateUbersplatBJ(location where, string name, real red, real green, real blue, real alpha, boolean forcePaused, boolean noBirthTime)returns ubersplat
+CreateUnit(player id, integer unitid, real x, real y, real face)returns unit
+CreateUnitAtLoc(player id, integer unitid, location whichLocation, real face)returns unit
+CreateUnitAtLocByName(player id, string unitname, location whichLocation, real face)returns unit
+CreateUnitAtLocSaveLast(player id, integer unitid, location loc, real face)returns unit
+CreateUnitByName(player whichPlayer, string unitname, real x, real y, real face)returns unit
+CreateUnitPool(nothing)returns unitpool
+CripplePlayer(player whichPlayer, force toWhichPlayers, boolean flag)
+CustomDefeatBJ(player whichPlayer, string message)
+CustomDefeatDialogBJ(player whichPlayer, string message)
+CustomDefeatLoadBJ(nothing)
+CustomDefeatQuitBJ(nothing)
+CustomDefeatReduceDifficultyBJ(nothing)
+CustomDefeatRestartBJ(nothing)
+CustomVictoryBJ(player whichPlayer, boolean showDialog, boolean showScores)
+CustomVictoryDialogBJ(player whichPlayer)
+CustomVictoryOkBJ(nothing)
+CustomVictoryQuitBJ(nothing)
+CustomVictorySkipBJ(player whichPlayer)
+DecUnitAbilityLevel(unit whichUnit, integer abilcode)returns integer
+DecUnitAbilityLevelSwapped(integer abilcode, unit whichUnit)returns integer
+DefeatConditionSetDescription(defeatcondition whichCondition, string description)
+DefeatConditionSetDescriptionBJ(defeatcondition whichCondition, string description)
+DefineStartLocation(integer whichStartLoc, real x, real y)
+DefineStartLocationLoc(integer whichStartLoc, location whichLocation)
+Deg2Rad(real degrees)returns real
+DelayedSuspendDecay(nothing)
+DelayedSuspendDecayBoneEnum(nothing)
+DelayedSuspendDecayCreate(nothing)
+DelayedSuspendDecayFleshEnum(nothing)
+DelayedSuspendDecayStopAnimEnum(nothing)
+DestroyBoolExpr(boolexpr e)
+DestroyCondition(conditionfunc c)
+DestroyDefeatCondition(defeatcondition whichCondition)
+DestroyDefeatConditionBJ(defeatcondition whichCondition)
+DestroyEffect(effect whichEffect)
+DestroyEffectBJ(effect whichEffect)
+DestroyFilter(filterfunc f)
+DestroyFogModifier(fogmodifier whichFogModifier)
+DestroyForce(force whichForce)
+DestroyGroup(group whichGroup)
+DestroyImage(image whichImage)
+DestroyItemPool(itempool whichItemPool)
+DestroyLeaderboard(leaderboard lb)
+DestroyLeaderboardBJ(leaderboard lb)
+DestroyLightning(lightning whichBolt)returns boolean
+DestroyLightningBJ(lightning whichBolt)returns boolean
+DestroyMultiboard(multiboard lb)
+DestroyMultiboardBJ(multiboard mb)
+DestroyQuest(quest whichQuest)
+DestroyQuestBJ(quest whichQuest)
+DestroyTextTag(texttag t)
+DestroyTextTagBJ(texttag tt)
+DestroyTimer(timer whichTimer)
+DestroyTimerBJ(timer whichTimer)
+DestroyTimerDialog(timerdialog whichDialog)
+DestroyTimerDialogBJ(timerdialog td)
+DestroyTrigger(trigger whichTrigger)
+DestroyUbersplat(ubersplat whichSplat)
+DestroyUnitPool(unitpool whichPool)
+DestructableAddIndicatorBJ(destructable whichDestructable, real red, real green, real blue, real transparency)
+DestructableRestoreLife(destructable d, real life, boolean birth)
+DetectGameStarted(nothing)
+DialogAddButton(dialog whichDialog, string buttonText, integer hotkey)returns button
+DialogAddButtonBJ(dialog whichDialog, string buttonText)returns button
+DialogAddButtonWithHotkeyBJ(dialog whichDialog, string buttonText, integer hotkey)returns button
+DialogAddQuitButton(dialog whichDialog, boolean doScoreScreen, string buttonText, integer hotkey)returns button
+DialogClear(dialog whichDialog)
+DialogClearBJ(dialog whichDialog)
+DialogCreate(nothing)returns dialog
+DialogDestroy(dialog whichDialog)
+DialogDisplay(player whichPlayer, dialog whichDialog, boolean flag)
+DialogDisplayBJ(boolean flag, dialog whichDialog, player whichPlayer)
+DialogSetMessage(dialog whichDialog, string messageText)
+DialogSetMessageBJ(dialog whichDialog, string message)
+DisableRestartMission(boolean flag)
+DisableTrigger(trigger whichTrigger)
+DisplayCineFilter(boolean flag)
+DisplayCineFilterBJ(boolean flag)
+DisplayLoadDialog(nothing)
+DisplayTextToForce(force toForce, string message)
+DisplayTextToPlayer(player toPlayer, real x, real y, string message)
+DisplayTimedTextFromPlayer(player toPlayer, real x, real y, real duration, string message)
+DisplayTimedTextToForce(force toForce, real duration, string message)
+DisplayTimedTextToPlayer(player toPlayer, real x, real y, real duration, string message)
+DistanceBetweenPoints(location locA, location locB)returns real
+DoesUnitGenerateAlarms(unit whichUnit)returns boolean
+DoNothing(nothing)
+DoNotSaveReplay(nothing)
+DoTransmissionBasicsXYBJ(integer unitId, playercolor color, real x, real y, sound soundHandle, string unitName, string message, real duration)
+EnableCreepSleepBJ(boolean enable)
+EnableDawnDusk(boolean flag)
+EnableDragSelect(boolean state, boolean ui)
+EnableMinimapFilterButtons(boolean enableAlly, boolean enableCreep)
+EnableOcclusion(boolean flag)
+EnableOcclusionBJ(boolean enable, force f)
+EnablePreSelect(boolean state, boolean ui)
+EnableSelect(boolean state, boolean ui)
+EnableTrigger(trigger whichTrigger)
+EnableUserControl(boolean b)
+EnableUserUI(boolean b)
+EnableWeatherEffect(weathereffect whichEffect, boolean enable)
+EnableWorldFogBoundary(boolean b)
+EnableWorldFogBoundaryBJ(boolean enable, force f)
+EndCinematicScene(nothing)
+EndGame(boolean doScoreScreen)
+EndGameBJ(nothing)
+EndThematicMusic(nothing)
+EndThematicMusicBJ(nothing)
+EnumDestructablesInCircleBJ(real radius, location loc, code actionFunc)
+EnumDestructablesInCircleBJFilter(nothing)returns boolean
+EnumDestructablesInRect(rect r, boolexpr filter, code actionFunc)
+EnumDestructablesInRectAll(rect r, code actionFunc)
+EnumItemsInRect(rect r, boolexpr filter, code actionFunc)
+EnumItemsInRectBJ(rect r, code actionFunc)
+EnumUnitsSelected(player whichPlayer, boolexpr enumFilter, code enumAction)
+ExecuteFunc(string funcName)
+ExplodeUnitBJ(unit whichUnit)
+FFAInitPlayerSlots(nothing)
+Filter(code func)returns filterfunc
+FindElevatorWallBlockerEnum(nothing)
+FinishCinematicFadeAfterBJ(real duration)
+FinishCinematicFadeBJ(nothing)
+FinishUbersplat(ubersplat whichSplat)
+FirstOfGroup(group whichGroup)returns unit
+FlashQuestDialogButton(nothing)
+FlashQuestDialogButtonBJ(nothing)
+FlushChildHashtable(hashtable table, integer parentKey)
+FlushChildHashtableBJ(integer missionKey, hashtable table)
+FlushGameCache(gamecache cache)
+FlushGameCacheBJ(gamecache cache)
+FlushParentHashtable(hashtable table)
+FlushParentHashtableBJ(hashtable table)
+FlushStoredBoolean(gamecache cache, string missionKey, string key)
+FlushStoredInteger(gamecache cache, string missionKey, string key)
+FlushStoredMission(gamecache cache, string missionKey)
+FlushStoredMissionBJ(string missionKey, gamecache cache)
+FlushStoredReal(gamecache cache, string missionKey, string key)
+FlushStoredString(gamecache cache, string missionKey, string key)
+FlushStoredUnit(gamecache cache, string missionKey, string key)
+FogEnable(boolean enable)
+FogEnableOff(nothing)
+FogEnableOn(nothing)
+FogMaskEnable(boolean enable)
+FogMaskEnableOff(nothing)
+FogMaskEnableOn(nothing)
+FogModifierStart(fogmodifier whichFogModifier)
+FogModifierStop(fogmodifier whichFogModifier)
+ForceAddPlayer(force whichForce, player whichPlayer)
+ForceAddPlayerSimple(player whichPlayer, force whichForce)
+ForceCampaignSelectScreen(nothing)
+ForceCinematicSubtitles(boolean flag)
+ForceCinematicSubtitlesBJ(boolean flag)
+ForceClear(force whichForce)
+ForceEnumAllies(force whichForce, player whichPlayer, boolexpr filter)
+ForceEnumEnemies(force whichForce, player whichPlayer, boolexpr filter)
+ForceEnumPlayers(force whichForce, boolexpr filter)
+ForceEnumPlayersCounted(force whichForce, boolexpr filter, integer countLimit)
+ForcePickRandomPlayer(force whichForce)returns player
+ForcePickRandomPlayerEnum(nothing)
+ForcePlayerStartLocation(player whichPlayer, integer startLocIndex)
+ForceQuestDialogUpdate(nothing)
+ForceRemovePlayer(force whichForce, player whichPlayer)
+ForceRemovePlayerSimple(player whichPlayer, force whichForce)
+ForceSetLeaderboardBJ(leaderboard lb, force toForce)
+ForceUICancel(nothing)
+ForceUICancelBJ(player whichPlayer)
+ForceUIKey(string key)
+ForceUIKeyBJ(player whichPlayer, string key)
+ForForce(force whichForce, code callback)
+ForGroup(group whichGroup, code callback)
+ForGroupBJ(group whichGroup, code callback)
+GameOverDialogBJ(player whichPlayer, boolean leftGame)
+GetAbilityEffect(string abilityString, effecttype t, integer index)returns string
+GetAbilityEffectBJ(integer abilcode, effecttype t, integer index)returns string
+GetAbilityEffectById(integer abilityId, effecttype t, integer index)returns string
+GetAbilityName(integer abilcode)returns string
+GetAbilitySound(string abilityString, soundtype t)returns string
+GetAbilitySoundBJ(integer abilcode, soundtype t)returns string
+GetAbilitySoundById(integer abilityId, soundtype t)returns string
+GetAIDifficulty(player num)returns aidifficulty
+GetAllyColorFilterState(nothing)returns integer
+GetAttackedUnitBJ(nothing)returns unit
+GetAttacker(nothing)returns unit
+GetBooleanAnd(boolean valueA, boolean valueB)returns boolean
+GetBooleanOr(boolean valueA, boolean valueB)returns boolean
+GetBuyingUnit(nothing)returns unit
+GetCameraBoundMaxX(nothing)returns real
+GetCameraBoundMaxY(nothing)returns real
+GetCameraBoundMinX(nothing)returns real
+GetCameraBoundMinY(nothing)returns real
+GetCameraBoundsMapRect(nothing)returns rect
+GetCameraEyePositionLoc(nothing)returns location
+GetCameraEyePositionX(nothing)returns real
+GetCameraEyePositionY(nothing)returns real
+GetCameraEyePositionZ(nothing)returns real
+GetCameraField(camerafield whichField)returns real
+GetCameraMargin(integer whichMargin)returns real
+GetCameraTargetPositionLoc(nothing)returns location
+GetCameraTargetPositionX(nothing)returns real
+GetCameraTargetPositionY(nothing)returns real
+GetCameraTargetPositionZ(nothing)returns real
+GetCancelledStructure(nothing)returns unit
+GetChangingUnit(nothing)returns unit
+GetChangingUnitPrevOwner(nothing)returns player
+GetClickedButton(nothing)returns button
+GetClickedButtonBJ(nothing)returns button
+GetClickedDialog(nothing)returns dialog
+GetClickedDialogBJ(nothing)returns dialog
+GetConstructedStructure(nothing)returns unit
+GetConstructingStructure(nothing)returns unit
+GetConvertedPlayerId(player whichPlayer)returns integer
+GetCreatureDensity(nothing)returns mapdensity
+GetCreepCampFilterState(nothing)returns boolean
+GetCurrentCameraBoundsMapRectBJ(nothing)returns rect
+GetCurrentCameraSetup(nothing)returns camerasetup
+GetCustomCampaignButtonVisible(integer whichButton)returns boolean
+GetDecayingUnit(nothing)returns unit
+GetDefaultDifficulty(nothing)returns gamedifficulty
+GetDestructableLife(destructable d)returns real
+GetDestructableLoc(destructable whichDestructable)returns location
+GetDestructableMaxLife(destructable d)returns real
+GetDestructableName(destructable d)returns string
+GetDestructableOccluderHeight(destructable d)returns real
+GetDestructableTypeId(destructable d)returns integer
+GetDestructableX(destructable d)returns real
+GetDestructableY(destructable d)returns real
+GetDetectedUnit(nothing)returns unit
+GetDyingDestructable(nothing)returns destructable
+GetDyingUnit(nothing)returns unit
+GetElevatorHeight(destructable d)returns integer
+GetEnteringUnit(nothing)returns unit
+GetEntireMapRect(nothing)returns rect
+GetEnumDestructable(nothing)returns destructable
+GetEnumItem(nothing)returns item
+GetEnumPlayer(nothing)returns player
+GetEnumUnit(nothing)returns unit
+GetEventDamage(nothing)returns real
+GetEventDamageSource(nothing)returns unit
+GetEventDetectingPlayer(nothing)returns player
+GetEventGameState(nothing)returns gamestate
+GetEventPlayerChatString(nothing)returns string
+GetEventPlayerChatStringMatched(nothing)returns string
+GetEventPlayerState(nothing)returns playerstate
+GetEventTargetUnit(nothing)returns unit
+GetEventUnitState(nothing)returns unitstate
+GetExpiredTimer(nothing)returns timer
+GetFadeFromSeconds(real seconds)returns integer
+GetFilterDestructable(nothing)returns destructable
+GetFilterItem(nothing)returns item
+GetFilterPlayer(nothing)returns player
+GetFilterUnit(nothing)returns unit
+GetFloatGameState(fgamestate whichFloatGameState)returns real
+GetFoodMade(integer unitId)returns integer
+GetFoodUsed(integer unitId)returns integer
+GetForceOfPlayer(player whichPlayer)returns force
+GetForLoopIndexA(nothing)returns integer
+GetForLoopIndexB(nothing)returns integer
+GetGameDifficulty(nothing)returns gamedifficulty
+GetGamePlacement(nothing)returns placement
+GetGameSpeed(nothing)returns gamespeed
+GetGameTypeSelected(nothing)returns gametype
+GetHandleId(handle h)returns integer
+GetHandleIdBJ(handle h)returns integer
+GetHeroAgi(unit whichHero, boolean includeBonuses)returns integer
+GetHeroInt(unit whichHero, boolean includeBonuses)returns integer
+GetHeroLevel(unit whichHero)returns integer
+GetHeroProperName(unit whichHero)returns string
+GetHeroSkillPoints(unit whichHero)returns integer
+GetHeroStatBJ(integer whichStat, unit whichHero, boolean includeBonuses)returns integer
+GetHeroStr(unit whichHero, boolean includeBonuses)returns integer
+GetHeroXP(unit whichHero)returns integer
+GetIntegerGameState(igamestate whichIntegerGameState)returns integer
+GetInventoryIndexOfItemTypeBJ(unit whichUnit, integer itemId)returns integer
+GetIssuedOrderId(nothing)returns integer
+GetIssuedOrderIdBJ(nothing)returns integer
+GetItemCharges(item whichItem)returns integer
+GetItemLevel(item whichItem)returns integer
+GetItemLifeBJ(widget whichWidget)returns real
+GetItemLoc(item whichItem)returns location
+GetItemName(item whichItem)returns string
+GetItemOfTypeFromUnitBJ(unit whichUnit, integer itemId)returns item
+GetItemPlayer(item whichItem)returns player
+GetItemType(item whichItem)returns itemtype
+GetItemTypeId(item i)returns integer
+GetItemUserData(item whichItem)returns integer
+GetItemX(item i)returns real
+GetItemY(item i)returns real
+GetKillingUnit(nothing)returns unit
+GetKillingUnitBJ(nothing)returns unit
+GetLastCreatedButtonBJ(nothing)returns button
+GetLastCreatedDefeatConditionBJ(nothing)returns defeatcondition
+GetLastCreatedDestructable(nothing)returns destructable
+GetLastCreatedEffectBJ(nothing)returns effect
+GetLastCreatedFogModifier(nothing)returns fogmodifier
+GetLastCreatedGameCacheBJ(nothing)returns gamecache
+GetLastCreatedGroup(nothing)returns group
+GetLastCreatedGroupEnum(nothing)
+GetLastCreatedHashtableBJ(nothing)returns hashtable
+GetLastCreatedImage(nothing)returns image
+GetLastCreatedItem(nothing)returns item
+GetLastCreatedLeaderboard(nothing)returns leaderboard
+GetLastCreatedLightningBJ(nothing)returns lightning
+GetLastCreatedMultiboard(nothing)returns multiboard
+GetLastCreatedQuestBJ(nothing)returns quest
+GetLastCreatedQuestItemBJ(nothing)returns questitem
+GetLastCreatedTerrainDeformation(nothing)returns terraindeformation
+GetLastCreatedTextTag(nothing)returns texttag
+GetLastCreatedTimerBJ(nothing)returns timer
+GetLastCreatedTimerDialogBJ(nothing)returns timerdialog
+GetLastCreatedUbersplat(nothing)returns ubersplat
+GetLastCreatedUnit(nothing)returns unit
+GetLastCreatedWeatherEffect(nothing)returns weathereffect
+GetLastHauntedGoldMine(nothing)returns unit
+GetLastPlayedMusic(nothing)returns string
+GetLastPlayedSound(nothing)returns sound
+GetLastRemovedItem(nothing)returns item
+GetLastReplacedUnitBJ(nothing)returns unit
+GetLastRestoredUnitBJ(nothing)returns unit
+GetLastTransmissionDurationBJ(nothing)returns real
+GetLearnedSkill(nothing)returns integer
+GetLearnedSkillBJ(nothing)returns integer
+GetLearnedSkillLevel(nothing)returns integer
+GetLearningUnit(nothing)returns unit
+GetLeavingUnit(nothing)returns unit
+GetLevelingUnit(nothing)returns unit
+GetLightningColorA(lightning whichBolt)returns real
+GetLightningColorABJ(lightning whichBolt)returns real
+GetLightningColorB(lightning whichBolt)returns real
+GetLightningColorBBJ(lightning whichBolt)returns real
+GetLightningColorG(lightning whichBolt)returns real
+GetLightningColorGBJ(lightning whichBolt)returns real
+GetLightningColorR(lightning whichBolt)returns real
+GetLightningColorRBJ(lightning whichBolt)returns real
+GetLoadedUnit(nothing)returns unit
+GetLoadedUnitBJ(nothing)returns unit
+GetLocalizedHotkey(string source)returns integer
+GetLocalizedString(string source)returns string
+GetLocalPlayer(nothing)returns player
+GetLocationX(location whichLocation)returns real
+GetLocationY(location whichLocation)returns real
+GetLocationZ(location whichLocation)returns real
+GetManipulatedItem(nothing)returns item
+GetManipulatingUnit(nothing)returns unit
+GetObjectName(integer objectId)returns string
+GetOrderedUnit(nothing)returns unit
+GetOrderPointLoc(nothing)returns location
+GetOrderPointX(nothing)returns real
+GetOrderPointY(nothing)returns real
+GetOrderTarget(nothing)returns widget
+GetOrderTargetDestructable(nothing)returns destructable
+GetOrderTargetItem(nothing)returns item
+GetOrderTargetUnit(nothing)returns unit
+GetOwningPlayer(unit whichUnit)returns player
+GetPlayableMapRect(nothing)returns rect
+GetPlayerAlliance(player sourcePlayer, player otherPlayer, alliancetype whichAllianceSetting)returns boolean
+GetPlayerColor(player whichPlayer)returns playercolor
+GetPlayerController(player whichPlayer)returns mapcontrol
+GetPlayerHandicap(player whichPlayer)returns real
+GetPlayerHandicapBJ(player whichPlayer)returns real
+GetPlayerHandicapXP(player whichPlayer)returns real
+GetPlayerHandicapXPBJ(player whichPlayer)returns real
+GetPlayerId(player whichPlayer)returns integer
+GetPlayerName(player whichPlayer)returns string
+GetPlayerRace(player whichPlayer)returns race
+GetPlayers(nothing)returns integer
+GetPlayersAll(nothing)returns force
+GetPlayersAllies(player whichPlayer)returns force
+GetPlayersByMapControl(mapcontrol whichControl)returns force
+GetPlayerScore(player whichPlayer, playerscore whichPlayerScore)returns integer
+GetPlayerSelectable(player whichPlayer)returns boolean
+GetPlayersEnemies(player whichPlayer)returns force
+GetPlayerSlotState(player whichPlayer)returns playerslotstate
+GetPlayersMatching(boolexpr filter)returns force
+GetPlayerStartLocation(player whichPlayer)returns integer
+GetPlayerStartLocationLoc(player whichPlayer)returns location
+GetPlayerStartLocationX(player whichPlayer)returns real
+GetPlayerStartLocationY(player whichPlayer)returns real
+GetPlayerState(player whichPlayer, playerstate whichPlayerState)returns integer
+GetPlayerStructureCount(player whichPlayer, boolean includeIncomplete)returns integer
+GetPlayerTaxRate(player sourcePlayer, player otherPlayer, playerstate whichResource)returns integer
+GetPlayerTaxRateBJ(playerstate whichResource, player sourcePlayer, player otherPlayer)returns integer
+GetPlayerTeam(player whichPlayer)returns integer
+GetPlayerTechCount(player whichPlayer, integer techid, boolean specificonly)returns integer
+GetPlayerTechCountSimple(integer techid, player whichPlayer)returns integer
+GetPlayerTechMaxAllowed(player whichPlayer, integer techid)returns integer
+GetPlayerTechMaxAllowedSwap(integer techid, player whichPlayer)returns integer
+GetPlayerTechResearched(player whichPlayer, integer techid, boolean specificonly)returns boolean
+GetPlayerTypedUnitCount(player whichPlayer, string unitName, boolean includeIncomplete, boolean includeUpgrades)returns integer
+GetPlayerUnitCount(player whichPlayer, boolean includeIncomplete)returns integer
+GetRandomDirectionDeg(nothing)returns real
+GetRandomInt(integer lowBound, integer highBound)returns integer
+GetRandomLocInRect(rect whichRect)returns location
+GetRandomPercentageBJ(nothing)returns real
+GetRandomReal(real lowBound, real highBound)returns real
+GetRandomSubGroup(integer count, group sourceGroup)returns group
+GetRandomSubGroupEnum(nothing)
+GetRectCenter(rect whichRect)returns location
+GetRectCenterX(rect whichRect)returns real
+GetRectCenterY(rect whichRect)returns real
+GetRectFromCircleBJ(location center, real radius)returns rect
+GetRectHeightBJ(rect r)returns real
+GetRectMaxX(rect whichRect)returns real
+GetRectMaxY(rect whichRect)returns real
+GetRectMinX(rect whichRect)returns real
+GetRectMinY(rect whichRect)returns real
+GetRectWidthBJ(rect r)returns real
+GetRescuer(nothing)returns unit
+GetResearched(nothing)returns integer
+GetResearchingUnit(nothing)returns unit
+GetResourceAmount(unit whichUnit)returns integer
+GetResourceDensity(nothing)returns mapdensity
+GetRevivableUnit(nothing)returns unit
+GetRevivingUnit(nothing)returns unit
+GetSaveBasicFilename(nothing)returns string
+GetSellingUnit(nothing)returns unit
+GetSoldItem(nothing)returns item
+GetSoldUnit(nothing)returns unit
+GetSoundDuration(sound soundHandle)returns integer
+GetSoundDurationBJ(sound soundHandle)returns real
+GetSoundFileDuration(string musicFileName)returns integer
+GetSoundFileDurationBJ(string musicFileName)returns real
+GetSoundIsLoading(sound soundHandle)returns boolean
+GetSoundIsPlaying(sound soundHandle)returns boolean
+GetSoundIsPlayingBJ(sound soundHandle)returns boolean
+GetSpellAbility(nothing)returns ability
+GetSpellAbilityId(nothing)returns integer
+GetSpellAbilityUnit(nothing)returns unit
+GetSpellTargetDestructable(nothing)returns destructable
+GetSpellTargetItem(nothing)returns item
+GetSpellTargetLoc(nothing)returns location
+GetSpellTargetUnit(nothing)returns unit
+GetSpellTargetX(nothing)returns real
+GetSpellTargetY(nothing)returns real
+GetStartLocationLoc(integer whichStartLocation)returns location
+GetStartLocationX(integer whichStartLocation)returns real
+GetStartLocationY(integer whichStartLocation)returns real
+GetStartLocPrio(integer whichStartLoc, integer prioSlotIndex)returns startlocprio
+GetStartLocPrioSlot(integer whichStartLoc, integer prioSlotIndex)returns integer
+GetStoredBoolean(gamecache cache, string missionKey, string key)returns boolean
+GetStoredBooleanBJ(string key, string missionKey, gamecache cache)returns boolean
+GetStoredInteger(gamecache cache, string missionKey, string key)returns integer
+GetStoredIntegerBJ(string key, string missionKey, gamecache cache)returns integer
+GetStoredReal(gamecache cache, string missionKey, string key)returns real
+GetStoredRealBJ(string key, string missionKey, gamecache cache)returns real
+GetStoredString(gamecache cache, string missionKey, string key)returns string
+GetStoredStringBJ(string key, string missionKey, gamecache cache)returns string
+GetSummonedUnit(nothing)returns unit
+GetSummoningUnit(nothing)returns unit
+GetTeams(nothing)returns integer
+GetTerrainCliffLevel(real x, real y)returns integer
+GetTerrainCliffLevelBJ(location where)returns integer
+GetTerrainType(real x, real y)returns integer
+GetTerrainTypeBJ(location where)returns integer
+GetTerrainVariance(real x, real y)returns integer
+GetTerrainVarianceBJ(location where)returns integer
+GetTimeOfDay(nothing)returns real
+GetTimeOfDayScale(nothing)returns real
+GetTimeOfDayScalePercentBJ(nothing)returns real
+GetTournamentFinishNowPlayer(nothing)returns player
+GetTournamentFinishNowRule(nothing)returns integer
+GetTournamentFinishSoonTimeRemaining(nothing)returns real
+GetTournamentScore(player whichPlayer)returns integer
+GetTrainedUnit(nothing)returns unit
+GetTrainedUnitType(nothing)returns integer
+GetTransmissionDuration(sound soundHandle, integer timeType, real timeVal)returns real
+GetTransportUnit(nothing)returns unit
+GetTransportUnitBJ(nothing)returns unit
+GetTriggerDestructable(nothing)returns destructable
+GetTriggerEvalCount(trigger whichTrigger)returns integer
+GetTriggerEventId(nothing)returns eventid
+GetTriggerExecCount(trigger whichTrigger)returns integer
+GetTriggeringRegion(nothing)returns region
+GetTriggeringTrackable(nothing)returns trackable
+GetTriggeringTrigger(nothing)returns trigger
+GetTriggerPlayer(nothing)returns player
+GetTriggerUnit(nothing)returns unit
+GetTriggerWidget(nothing)returns widget
+GetUnitAbilityLevel(unit whichUnit, integer abilcode)returns integer
+GetUnitAbilityLevelSwapped(integer abilcode, unit whichUnit)returns integer
+GetUnitAcquireRange(unit whichUnit)returns real
+GetUnitCurrentOrder(unit whichUnit)returns integer
+GetUnitDefaultAcquireRange(unit whichUnit)returns real
+GetUnitDefaultFlyHeight(unit whichUnit)returns real
+GetUnitDefaultMoveSpeed(unit whichUnit)returns real
+GetUnitDefaultPropWindow(unit whichUnit)returns real
+GetUnitDefaultPropWindowBJ(unit whichUnit)returns real
+GetUnitDefaultTurnSpeed(unit whichUnit)returns real
+GetUnitFacing(unit whichUnit)returns real
+GetUnitFlyHeight(unit whichUnit)returns real
+GetUnitFoodMade(unit whichUnit)returns integer
+GetUnitFoodUsed(unit whichUnit)returns integer
+GetUnitLevel(unit whichUnit)returns integer
+GetUnitLifePercent(unit whichUnit)returns real
+GetUnitLoc(unit whichUnit)returns location
+GetUnitManaPercent(unit whichUnit)returns real
+GetUnitMoveSpeed(unit whichUnit)returns real
+GetUnitName(unit whichUnit)returns string
+GetUnitPointValue(unit whichUnit)returns integer
+GetUnitPointValueByType(integer unitType)returns integer
+GetUnitPropWindow(unit whichUnit)returns real
+GetUnitPropWindowBJ(unit whichUnit)returns real
+GetUnitRace(unit whichUnit)returns race
+GetUnitRallyDestructable(unit whichUnit)returns destructable
+GetUnitRallyPoint(unit whichUnit)returns location
+GetUnitRallyUnit(unit whichUnit)returns unit
+GetUnitsInRangeOfLocAll(real radius, location whichLocation)returns group
+GetUnitsInRangeOfLocMatching(real radius, location whichLocation, boolexpr filter)returns group
+GetUnitsInRectAll(rect r)returns group
+GetUnitsInRectMatching(rect r, boolexpr filter)returns group
+GetUnitsInRectOfPlayer(rect r, player whichPlayer)returns group
+GetUnitsInRectOfPlayerFilter(nothing)returns boolean
+GetUnitsOfPlayerAll(player whichPlayer)returns group
+GetUnitsOfPlayerAndTypeId(player whichPlayer, integer unitid)returns group
+GetUnitsOfPlayerAndTypeIdFilter(nothing)returns boolean
+GetUnitsOfPlayerMatching(player whichPlayer, boolexpr filter)returns group
+GetUnitsOfTypeIdAll(integer unitid)returns group
+GetUnitsOfTypeIdAllFilter(nothing)returns boolean
+GetUnitsSelectedAll(player whichPlayer)returns group
+GetUnitState(unit whichUnit, unitstate whichUnitState)returns real
+GetUnitStatePercent(unit whichUnit, unitstate whichState, unitstate whichMaxState)returns real
+GetUnitStateSwap(unitstate whichState, unit whichUnit)returns real
+GetUnitTurnSpeed(unit whichUnit)returns real
+GetUnitTypeId(unit whichUnit)returns integer
+GetUnitUserData(unit whichUnit)returns integer
+GetUnitX(unit whichUnit)returns real
+GetUnitY(unit whichUnit)returns real
+GetWidgetLife(widget whichWidget)returns real
+GetWidgetX(widget whichWidget)returns real
+GetWidgetY(widget whichWidget)returns real
+GetWinningPlayer(nothing)returns player
+GetWorldBounds(nothing)returns rect
+GroupAddGroup(group sourceGroup, group destGroup)
+GroupAddGroupEnum(nothing)
+GroupAddUnit(group whichGroup, unit whichUnit)
+GroupAddUnitSimple(unit whichUnit, group whichGroup)
+GroupClear(group whichGroup)
+GroupEnumUnitsInRange(group whichGroup, real x, real y, real radius, boolexpr filter)
+GroupEnumUnitsInRangeCounted(group whichGroup, real x, real y, real radius, boolexpr filter, integer countLimit)
+GroupEnumUnitsInRangeOfLoc(group whichGroup, location whichLocation, real radius, boolexpr filter)
+GroupEnumUnitsInRangeOfLocCounted(group whichGroup, location whichLocation, real radius, boolexpr filter, integer countLimit)
+GroupEnumUnitsInRect(group whichGroup, rect r, boolexpr filter)
+GroupEnumUnitsInRectCounted(group whichGroup, rect r, boolexpr filter, integer countLimit)
+GroupEnumUnitsOfPlayer(group whichGroup, player whichPlayer, boolexpr filter)
+GroupEnumUnitsOfType(group whichGroup, string unitname, boolexpr filter)
+GroupEnumUnitsOfTypeCounted(group whichGroup, string unitname, boolexpr filter, integer countLimit)
+GroupEnumUnitsSelected(group whichGroup, player whichPlayer, boolexpr filter)
+GroupImmediateOrder(group whichGroup, string order)returns boolean
+GroupImmediateOrderBJ(group whichGroup, string order)returns boolean
+GroupImmediateOrderById(group whichGroup, integer order)returns boolean
+GroupPickRandomUnit(group whichGroup)returns unit
+GroupPickRandomUnitEnum(nothing)
+GroupPointOrder(group whichGroup, string order, real x, real y)returns boolean
+GroupPointOrderById(group whichGroup, integer order, real x, real y)returns boolean
+GroupPointOrderByIdLoc(group whichGroup, integer order, location whichLocation)returns boolean
+GroupPointOrderLoc(group whichGroup, string order, location whichLocation)returns boolean
+GroupPointOrderLocBJ(group whichGroup, string order, location whichLocation)returns boolean
+GroupRemoveGroup(group sourceGroup, group destGroup)
+GroupRemoveGroupEnum(nothing)
+GroupRemoveUnit(group whichGroup, unit whichUnit)
+GroupRemoveUnitSimple(unit whichUnit, group whichGroup)
+GroupTargetDestructableOrder(group whichGroup, string order, widget targetWidget)returns boolean
+GroupTargetItemOrder(group whichGroup, string order, widget targetWidget)returns boolean
+GroupTargetOrder(group whichGroup, string order, widget targetWidget)returns boolean
+GroupTargetOrderBJ(group whichGroup, string order, widget targetWidget)returns boolean
+GroupTargetOrderById(group whichGroup, integer order, widget targetWidget)returns boolean
+GroupTrainOrderByIdBJ(group g, integer unitId)returns boolean
+HaveSavedBoolean(hashtable table, integer parentKey, integer childKey)returns boolean
+HaveSavedHandle(hashtable table, integer parentKey, integer childKey)returns boolean
+HaveSavedInteger(hashtable table, integer parentKey, integer childKey)returns boolean
+HaveSavedReal(hashtable table, integer parentKey, integer childKey)returns boolean
+HaveSavedString(hashtable table, integer parentKey, integer childKey)returns boolean
+HaveSavedValue(integer key, integer valueType, integer missionKey, hashtable table)returns boolean
+HaveStoredBoolean(gamecache cache, string missionKey, string key)returns boolean
+HaveStoredInteger(gamecache cache, string missionKey, string key)returns boolean
+HaveStoredReal(gamecache cache, string missionKey, string key)returns boolean
+HaveStoredString(gamecache cache, string missionKey, string key)returns boolean
+HaveStoredUnit(gamecache cache, string missionKey, string key)returns boolean
+HaveStoredValue(string key, integer valueType, string missionKey, gamecache cache)returns boolean
+I2R(integer i)returns real
+I2S(integer i)returns string
+IAbsBJ(integer a)returns integer
+IMaxBJ(integer a, integer b)returns integer
+IMinBJ(integer a, integer b)returns integer
+IncUnitAbilityLevel(unit whichUnit, integer abilcode)returns integer
+IncUnitAbilityLevelSwapped(integer abilcode, unit whichUnit)returns integer
+InitBlizzard(nothing)
+InitBlizzardGlobals(nothing)
+InitDNCSounds(nothing)
+InitGameCache(string campaignFile)returns gamecache
+InitGameCacheBJ(string campaignFile)returns gamecache
+InitGenericPlayerSlots(nothing)
+InitHashtable(nothing)returns hashtable
+InitHashtableBJ(nothing)returns hashtable
+InitMapRects(nothing)
+InitNeutralBuildings(nothing)
+InitQueuedTriggers(nothing)
+InitRescuableBehaviorBJ(nothing)
+InitSummonableCaps(nothing)
+IntegerTertiaryOp(boolean flag, integer valueA, integer valueB)returns integer
+IsCineFilterDisplayed(nothing)returns boolean
+IsCustomCampaignButtonVisibile(integer whichButton)returns boolean
+IsDawnDuskEnabled(nothing)returns boolean
+IsDestructableAliveBJ(destructable d)returns boolean
+IsDestructableDeadBJ(destructable d)returns boolean
+IsDestructableInvulnerable(destructable d)returns boolean
+IsDestructableInvulnerableBJ(destructable d)returns boolean
+IsFogEnabled(nothing)returns boolean
+IsFoggedToPlayer(real x, real y, player whichPlayer)returns boolean
+IsFogMaskEnabled(nothing)returns boolean
+IsGameTypeSupported(gametype whichGameType)returns boolean
+IsHeroUnitId(integer unitId)returns boolean
+ISignBJ(integer a)returns integer
+IsItemHiddenBJ(item whichItem)returns boolean
+IsItemIdPawnable(integer itemId)returns boolean
+IsItemIdPowerup(integer itemId)returns boolean
+IsItemIdSellable(integer itemId)returns boolean
+IsItemInvulnerable(item whichItem)returns boolean
+IsItemOwned(item whichItem)returns boolean
+IsItemPawnable(item whichItem)returns boolean
+IsItemPowerup(item whichItem)returns boolean
+IsItemSellable(item whichItem)returns boolean
+IsItemVisible(item whichItem)returns boolean
+IsLeaderboardDisplayed(leaderboard lb)returns boolean
+IsLocationFoggedToPlayer(location whichLocation, player whichPlayer)returns boolean
+IsLocationInRegion(region whichRegion, location whichLocation)returns boolean
+IsLocationMaskedToPlayer(location whichLocation, player whichPlayer)returns boolean
+IsLocationVisibleToPlayer(location whichLocation, player whichPlayer)returns boolean
+IsMapFlagSet(mapflag whichMapFlag)returns boolean
+IsMaskedToPlayer(real x, real y, player whichPlayer)returns boolean
+IsMultiboardDisplayed(multiboard lb)returns boolean
+IsMultiboardMinimized(multiboard lb)returns boolean
+IsNoDefeatCheat(nothing)returns boolean
+IsNoVictoryCheat(nothing)returns boolean
+IsPlayerAlly(player whichPlayer, player otherPlayer)returns boolean
+IsPlayerEnemy(player whichPlayer, player otherPlayer)returns boolean
+IsPlayerFlagSetBJ(playerstate whichPlayerFlag, player whichPlayer)returns boolean
+IsPlayerInForce(player whichPlayer, force whichForce)returns boolean
+IsPlayerObserver(player whichPlayer)returns boolean
+IsPlayerRacePrefSet(player whichPlayer, racepreference pref)returns boolean
+IsPlayerSlotState(player whichPlayer, playerslotstate whichState)returns boolean
+IsPointBlighted(real x, real y)returns boolean
+IsPointBlightedBJ(location where)returns boolean
+IsPointInRegion(region whichRegion, real x, real y)returns boolean
+IsQuestCompleted(quest whichQuest)returns boolean
+IsQuestDiscovered(quest whichQuest)returns boolean
+IsQuestEnabled(quest whichQuest)returns boolean
+IsQuestFailed(quest whichQuest)returns boolean
+IsQuestItemCompleted(questitem whichQuestItem)returns boolean
+IsQuestRequired(quest whichQuest)returns boolean
+IssueBuildOrder(unit whichPeon, string unitToBuild, real x, real y)returns boolean
+IssueBuildOrderById(unit whichPeon, integer unitId, real x, real y)returns boolean
+IssueBuildOrderByIdLocBJ(unit whichPeon, integer unitId, location loc)returns boolean
+IssueHauntOrderAtLocBJ(unit whichPeon, location loc)returns boolean
+IssueHauntOrderAtLocBJFilter(nothing)returns boolean
+IssueImmediateOrder(unit whichUnit, string order)returns boolean
+IssueImmediateOrderBJ(unit whichUnit, string order)returns boolean
+IssueImmediateOrderById(unit whichUnit, integer order)returns boolean
+IssueInstantPointOrder(unit whichUnit, string order, real x, real y, widget instantTargetWidget)returns boolean
+IssueInstantPointOrderById(unit whichUnit, integer order, real x, real y, widget instantTargetWidget)returns boolean
+IssueInstantTargetOrder(unit whichUnit, string order, widget targetWidget, widget instantTargetWidget)returns boolean
+IssueInstantTargetOrderById(unit whichUnit, integer order, widget targetWidget, widget instantTargetWidget)returns boolean
+IssueNeutralImmediateOrder(player forWhichPlayer, unit neutralStructure, string unitToBuild)returns boolean
+IssueNeutralImmediateOrderById(player forWhichPlayer,unit neutralStructure, integer unitId)returns boolean
+IssueNeutralPointOrder(player forWhichPlayer,unit neutralStructure, string unitToBuild, real x, real y)returns boolean
+IssueNeutralPointOrderById(player forWhichPlayer,unit neutralStructure, integer unitId, real x, real y)returns boolean
+IssueNeutralTargetOrder(player forWhichPlayer,unit neutralStructure, string unitToBuild, widget target)returns boolean
+IssueNeutralTargetOrderById(player forWhichPlayer,unit neutralStructure, integer unitId, widget target)returns boolean
+IssuePointOrder(unit whichUnit, string order, real x, real y)returns boolean
+IssuePointOrderById(unit whichUnit, integer order, real x, real y)returns boolean
+IssuePointOrderByIdLoc(unit whichUnit, integer order, location whichLocation)returns boolean
+IssuePointOrderLoc(unit whichUnit, string order, location whichLocation)returns boolean
+IssuePointOrderLocBJ(unit whichUnit, string order, location whichLocation)returns boolean
+IssueTargetDestructableOrder(unit whichUnit, string order, widget targetWidget)returns boolean
+IssueTargetItemOrder(unit whichUnit, string order, widget targetWidget)returns boolean
+IssueTargetOrder(unit whichUnit, string order, widget targetWidget)returns boolean
+IssueTargetOrderBJ(unit whichUnit, string order, widget targetWidget)returns boolean
+IssueTargetOrderById(unit whichUnit, integer order, widget targetWidget)returns boolean
+IssueTrainOrderByIdBJ(unit whichUnit, integer unitId)returns boolean
+IssueUpgradeOrderByIdBJ(unit whichUnit, integer techId)returns boolean
+IsSuspendedXP(unit whichHero)returns boolean
+IsTerrainPathable(real x, real y, pathingtype t)returns boolean
+IsTerrainPathableBJ(location where, pathingtype t)returns boolean
+IsTimerDialogDisplayed(timerdialog whichDialog)returns boolean
+IsTriggerEnabled(trigger whichTrigger)returns boolean
+IsTriggerQueuedBJ(trigger trig)returns boolean
+IsTriggerQueueEmptyBJ(nothing)returns boolean
+IsTriggerWaitOnSleeps(trigger whichTrigger)returns boolean
+IsUnit(unit whichUnit, unit whichSpecifiedUnit)returns boolean
+IsUnitAliveBJ(unit whichUnit)returns boolean
+IsUnitAlly(unit whichUnit, player whichPlayer)returns boolean
+IsUnitDeadBJ(unit whichUnit)returns boolean
+IsUnitDetected(unit whichUnit, player whichPlayer)returns boolean
+IsUnitEnemy(unit whichUnit, player whichPlayer)returns boolean
+IsUnitFogged(unit whichUnit, player whichPlayer)returns boolean
+IsUnitGroupDeadBJ(group g)returns boolean
+IsUnitGroupDeadBJEnum(nothing)
+IsUnitGroupEmptyBJ(group g)returns boolean
+IsUnitGroupEmptyBJEnum(nothing)
+IsUnitGroupInRectBJ(group g, rect r)returns boolean
+IsUnitGroupInRectBJEnum(nothing)
+IsUnitHidden(unit whichUnit)returns boolean
+IsUnitHiddenBJ(unit whichUnit)returns boolean
+IsUnitIdType(integer unitId, unittype whichUnitType)returns boolean
+IsUnitIllusion(unit whichUnit)returns boolean
+IsUnitIllusionBJ(unit whichUnit)returns boolean
+IsUnitInForce(unit whichUnit, force whichForce)returns boolean
+IsUnitInGroup(unit whichUnit, group whichGroup)returns boolean
+IsUnitInRange(unit whichUnit, unit otherUnit, real distance)returns boolean
+IsUnitInRangeLoc(unit whichUnit, location whichLocation, real distance)returns boolean
+IsUnitInRangeXY(unit whichUnit, real x, real y, real distance)returns boolean
+IsUnitInRegion(region whichRegion, unit whichUnit)returns boolean
+IsUnitInTransport(unit whichUnit, unit whichTransport)returns boolean
+IsUnitInTransportBJ(unit whichUnit, unit whichTransport)returns boolean
+IsUnitInvisible(unit whichUnit, player whichPlayer)returns boolean
+IsUnitLoaded(unit whichUnit)returns boolean
+IsUnitLoadedBJ(unit whichUnit)returns boolean
+IsUnitMasked(unit whichUnit, player whichPlayer)returns boolean
+IsUnitOwnedByPlayer(unit whichUnit, player whichPlayer)returns boolean
+IsUnitPaused(unit whichHero)returns boolean
+IsUnitPausedBJ(unit whichUnit)returns boolean
+IsUnitRace(unit whichUnit, race whichRace)returns boolean
+IsUnitSelected(unit whichUnit, player whichPlayer)returns boolean
+IsUnitType(unit whichUnit, unittype whichUnitType)returns boolean
+IsUnitVisible(unit whichUnit, player whichPlayer)returns boolean
+IsVisibleToPlayer(real x, real y, player whichPlayer)returns boolean
+ItemAddIndicatorBJ(item whichItem, real red, real green, real blue, real transparency)
+ItemPoolAddItemType(itempool whichItemPool, integer itemId, real weight)
+ItemPoolRemoveItemType(itempool whichItemPool, integer itemId)
+KillDestructable(destructable d)
+KillSoundWhenDone(sound soundHandle)
+KillSoundWhenDoneBJ(sound soundHandle)
+KillUnit(unit whichUnit)
+LeaderboardAddItem(leaderboard lb, string label, integer value, player p)
+LeaderboardAddItemBJ(player whichPlayer, leaderboard lb, string label, integer value)
+LeaderboardClear(leaderboard lb)
+LeaderboardDisplay(leaderboard lb, boolean show)
+LeaderboardDisplayBJ(boolean show, leaderboard lb)
+LeaderboardGetIndexedPlayerBJ(integer position, leaderboard lb)returns player
+LeaderboardGetItemCount(leaderboard lb)returns integer
+LeaderboardGetItemCountBJ(leaderboard lb)returns integer
+LeaderboardGetLabelText(leaderboard lb)returns string
+LeaderboardGetPlayerIndex(leaderboard lb, player p)returns integer
+LeaderboardGetPlayerIndexBJ(player whichPlayer, leaderboard lb)returns integer
+LeaderboardHasPlayerItem(leaderboard lb, player p)returns boolean
+LeaderboardHasPlayerItemBJ(leaderboard lb, player whichPlayer)returns boolean
+LeaderboardRemoveItem(leaderboard lb, integer index)
+LeaderboardRemovePlayerItem(leaderboard lb, player p)
+LeaderboardRemovePlayerItemBJ(player whichPlayer, leaderboard lb)
+LeaderboardResizeBJ(leaderboard lb)
+LeaderboardSetItemLabel(leaderboard lb, integer whichItem, string val)
+LeaderboardSetItemLabelColor(leaderboard lb, integer whichItem, integer red, integer green, integer blue, integer alpha)
+LeaderboardSetItemStyle(leaderboard lb, integer whichItem, boolean showLabel, boolean showValue, boolean showIcon)
+LeaderboardSetItemValue(leaderboard lb, integer whichItem, integer val)
+LeaderboardSetItemValueColor(leaderboard lb, integer whichItem, integer red, integer green, integer blue, integer alpha)
+LeaderboardSetLabel(leaderboard lb, string label)
+LeaderboardSetLabelBJ(leaderboard lb, string label)
+LeaderboardSetLabelColor(leaderboard lb, integer red, integer green, integer blue, integer alpha)
+LeaderboardSetLabelColorBJ(leaderboard lb, real red, real green, real blue, real transparency)
+LeaderboardSetPlayerItemLabelBJ(player whichPlayer, leaderboard lb, string val)
+LeaderboardSetPlayerItemLabelColorBJ(player whichPlayer, leaderboard lb, real red, real green, real blue, real transparency)
+LeaderboardSetPlayerItemStyleBJ(player whichPlayer, leaderboard lb, boolean showLabel, boolean showValue, boolean showIcon)
+LeaderboardSetPlayerItemValueBJ(player whichPlayer, leaderboard lb, integer val)
+LeaderboardSetPlayerItemValueColorBJ(player whichPlayer, leaderboard lb, real red, real green, real blue, real transparency)
+LeaderboardSetSizeByItemCount(leaderboard lb, integer count)
+LeaderboardSetStyle(leaderboard lb, boolean showLabel, boolean showNames, boolean showValues, boolean showIcons)
+LeaderboardSetStyleBJ(leaderboard lb, boolean showLabel, boolean showNames, boolean showValues, boolean showIcons)
+LeaderboardSetValueColor(leaderboard lb, integer red, integer green, integer blue, integer alpha)
+LeaderboardSetValueColorBJ(leaderboard lb, real red, real green, real blue, real transparency)
+LeaderboardSortItemsBJ(leaderboard lb, integer sortType, boolean ascending)
+LeaderboardSortItemsByLabel(leaderboard lb, boolean ascending)
+LeaderboardSortItemsByLabelBJ(leaderboard lb, boolean ascending)
+LeaderboardSortItemsByPlayer(leaderboard lb, boolean ascending)
+LeaderboardSortItemsByPlayerBJ(leaderboard lb, boolean ascending)
+LeaderboardSortItemsByValue(leaderboard lb, boolean ascending)
+LivingPlayerUnitsOfTypeIdFilter(nothing)returns boolean
+LoadAbilityHandle(hashtable table, integer parentKey, integer childKey)returns ability
+LoadAbilityHandleBJ(integer key, integer missionKey, hashtable table)returns ability
+LoadBoolean(hashtable table, integer parentKey, integer childKey)returns boolean
+LoadBooleanBJ(integer key, integer missionKey, hashtable table)returns boolean
+LoadBooleanExprHandle(hashtable table, integer parentKey, integer childKey)returns boolexpr
+LoadBooleanExprHandleBJ(integer key, integer missionKey, hashtable table)returns boolexpr
+LoadButtonHandle(hashtable table, integer parentKey, integer childKey)returns button
+LoadButtonHandleBJ(integer key, integer missionKey, hashtable table)returns button
+LoadDefeatConditionHandle(hashtable table, integer parentKey, integer childKey)returns defeatcondition
+LoadDefeatConditionHandleBJ(integer key, integer missionKey, hashtable table)returns defeatcondition
+LoadDestructableHandle(hashtable table, integer parentKey, integer childKey)returns destructable
+LoadDestructableHandleBJ(integer key, integer missionKey, hashtable table)returns destructable
+LoadDialogHandle(hashtable table, integer parentKey, integer childKey)returns dialog
+LoadDialogHandleBJ(integer key, integer missionKey, hashtable table)returns dialog
+LoadEffectHandle(hashtable table, integer parentKey, integer childKey)returns effect
+LoadEffectHandleBJ(integer key, integer missionKey, hashtable table)returns effect
+LoadFogModifierHandle(hashtable table, integer parentKey, integer childKey)returns fogmodifier
+LoadFogModifierHandleBJ(integer key, integer missionKey, hashtable table)returns fogmodifier
+LoadFogStateHandle(hashtable table, integer parentKey, integer childKey)returns fogstate
+LoadFogStateHandleBJ(integer key, integer missionKey, hashtable table)returns fogstate
+LoadForceHandle(hashtable table, integer parentKey, integer childKey)returns force
+LoadForceHandleBJ(integer key, integer missionKey, hashtable table)returns force
+LoadGame(string saveFileName, boolean doScoreScreen)
+LoadGameBJ(string loadFileName, boolean doScoreScreen)
+LoadGroupHandle(hashtable table, integer parentKey, integer childKey)returns group
+LoadGroupHandleBJ(integer key, integer missionKey, hashtable table)returns group
+LoadImageHandle(hashtable table, integer parentKey, integer childKey)returns image
+LoadImageHandleBJ(integer key, integer missionKey, hashtable table)returns image
+LoadInteger(hashtable table, integer parentKey, integer childKey)returns integer
+LoadIntegerBJ(integer key, integer missionKey, hashtable table)returns integer
+LoadItemHandle(hashtable table, integer parentKey, integer childKey)returns item
+LoadItemHandleBJ(integer key, integer missionKey, hashtable table)returns item
+LoadItemPoolHandle(hashtable table, integer parentKey, integer childKey)returns itempool
+LoadItemPoolHandleBJ(integer key, integer missionKey, hashtable table)returns itempool
+LoadLeaderboardHandle(hashtable table, integer parentKey, integer childKey)returns leaderboard
+LoadLeaderboardHandleBJ(integer key, integer missionKey, hashtable table)returns leaderboard
+LoadLightningHandle(hashtable table, integer parentKey, integer childKey)returns lightning
+LoadLightningHandleBJ(integer key, integer missionKey, hashtable table)returns lightning
+LoadLocationHandle(hashtable table, integer parentKey, integer childKey)returns location
+LoadLocationHandleBJ(integer key, integer missionKey, hashtable table)returns location
+LoadMultiboardHandle(hashtable table, integer parentKey, integer childKey)returns multiboard
+LoadMultiboardHandleBJ(integer key, integer missionKey, hashtable table)returns multiboard
+LoadMultiboardItemHandle(hashtable table, integer parentKey, integer childKey)returns multiboarditem
+LoadMultiboardItemHandleBJ(integer key, integer missionKey, hashtable table)returns multiboarditem
+LoadPlayerHandle(hashtable table, integer parentKey, integer childKey)returns player
+LoadPlayerHandleBJ(integer key, integer missionKey, hashtable table)returns player
+LoadQuestHandle(hashtable table, integer parentKey, integer childKey)returns quest
+LoadQuestHandleBJ(integer key, integer missionKey, hashtable table)returns quest
+LoadQuestItemHandle(hashtable table, integer parentKey, integer childKey)returns questitem
+LoadQuestItemHandleBJ(integer key, integer missionKey, hashtable table)returns questitem
+LoadReal(hashtable table, integer parentKey, integer childKey)returns real
+LoadRealBJ(integer key, integer missionKey, hashtable table)returns real
+LoadRectHandle(hashtable table, integer parentKey, integer childKey)returns rect
+LoadRectHandleBJ(integer key, integer missionKey, hashtable table)returns rect
+LoadRegionHandle(hashtable table, integer parentKey, integer childKey)returns region
+LoadRegionHandleBJ(integer key, integer missionKey, hashtable table)returns region
+LoadSoundHandle(hashtable table, integer parentKey, integer childKey)returns sound
+LoadSoundHandleBJ(integer key, integer missionKey, hashtable table)returns sound
+LoadStr(hashtable table, integer parentKey, integer childKey)returns string
+LoadStringBJ(integer key, integer missionKey, hashtable table)returns string
+LoadTextTagHandle(hashtable table, integer parentKey, integer childKey)returns texttag
+LoadTextTagHandleBJ(integer key, integer missionKey, hashtable table)returns texttag
+LoadTimerDialogHandle(hashtable table, integer parentKey, integer childKey)returns timerdialog
+LoadTimerDialogHandleBJ(integer key, integer missionKey, hashtable table)returns timerdialog
+LoadTimerHandle(hashtable table, integer parentKey, integer childKey)returns timer
+LoadTimerHandleBJ(integer key, integer missionKey, hashtable table)returns timer
+LoadTrackableHandle(hashtable table, integer parentKey, integer childKey)returns trackable
+LoadTrackableHandleBJ(integer key, integer missionKey, hashtable table)returns trackable
+LoadTriggerActionHandle(hashtable table, integer parentKey, integer childKey)returns triggeraction
+LoadTriggerActionHandleBJ(integer key, integer missionKey, hashtable table)returns triggeraction
+LoadTriggerConditionHandle(hashtable table, integer parentKey, integer childKey)returns triggercondition
+LoadTriggerConditionHandleBJ(integer key, integer missionKey, hashtable table)returns triggercondition
+LoadTriggerEventHandle(hashtable table, integer parentKey, integer childKey)returns event
+LoadTriggerEventHandleBJ(integer key, integer missionKey, hashtable table)returns event
+LoadTriggerHandle(hashtable table, integer parentKey, integer childKey)returns trigger
+LoadTriggerHandleBJ(integer key, integer missionKey, hashtable table)returns trigger
+LoadUbersplatHandle(hashtable table, integer parentKey, integer childKey)returns ubersplat
+LoadUbersplatHandleBJ(integer key, integer missionKey, hashtable table)returns ubersplat
+LoadUnitHandle(hashtable table, integer parentKey, integer childKey)returns unit
+LoadUnitHandleBJ(integer key, integer missionKey, hashtable table)returns unit
+LoadUnitPoolHandle(hashtable table, integer parentKey, integer childKey)returns unitpool
+LoadUnitPoolHandleBJ(integer key, integer missionKey, hashtable table)returns unitpool
+LoadWidgetHandle(hashtable table, integer parentKey, integer childKey)returns widget
+LoadWidgetHandleBJ(integer key, integer missionKey, hashtable table)returns widget
+Location(real x, real y)returns location
+LockGameSpeedBJ(nothing)
+LockGuardPosition(unit targ)
+MakeUnitRescuableToForceBJ(unit whichUnit, boolean isRescuable, force whichForce)
+MakeUnitRescuableToForceBJEnum(nothing)
+MakeUnitsPassiveForPlayer(player whichPlayer)
+MakeUnitsPassiveForPlayerEnum(nothing)
+MakeUnitsPassiveForTeam(player whichPlayer)
+MarkGameStarted(nothing)
+MeleeCheckAddedUnit(unit addedUnit)
+MeleeCheckForCrippledPlayers(nothing)
+MeleeCheckForLosersAndVictors(nothing)
+MeleeCheckForVictors(nothing)returns force
+MeleeCheckLostUnit(unit lostUnit)
+MeleeClearExcessUnit(nothing)
+MeleeClearExcessUnits(nothing)
+MeleeClearNearbyUnits(real x, real y, real range)
+MeleeCrippledPlayerTimeout(nothing)
+MeleeDefeatDialogBJ(player whichPlayer, boolean leftGame)
+MeleeDoDefeat(player whichPlayer)
+MeleeDoDefeatEnum(nothing)
+MeleeDoDrawEnum(nothing)
+MeleeDoLeave(player whichPlayer)
+MeleeDoVictoryEnum(nothing)
+MeleeEnumFindNearestMine(nothing)
+MeleeExposeAllPlayers(nothing)
+MeleeExposePlayer(player whichPlayer, boolean expose)
+MeleeFindNearestMine(location src, real range)returns unit
+MeleeGetAllyCount(player whichPlayer)returns integer
+MeleeGetAllyKeyStructureCount(player whichPlayer)returns integer
+MeleeGetAllyStructureCount(player whichPlayer)returns integer
+MeleeGetCrippledRevealedMessage(player whichPlayer)returns string
+MeleeGetCrippledTimerMessage(player whichPlayer)returns string
+MeleeGetCrippledWarningMessage(player whichPlayer)returns string
+MeleeGetLocWithinRect(location src, rect r)returns location
+MeleeGetNearestValueWithin(real val, real minVal, real maxVal)returns real
+MeleeGetProjectedLoc(location src, location targ, real distance, real deltaAngle)returns location
+MeleeGrantHeroItems(nothing)
+MeleeGrantItemsToHero(unit whichUnit)
+MeleeGrantItemsToHiredHero(nothing)
+MeleeGrantItemsToTrainedHero(nothing)
+MeleeInitPlayerSlots(nothing)
+MeleeInitVictoryDefeat(nothing)
+MeleePlayerIsCrippled(player whichPlayer)returns boolean
+MeleePlayerIsOpponent(integer playerIndex, integer opponentIndex)returns boolean
+MeleeRandomHeroLoc(player p, integer id1, integer id2, integer id3, integer id4, location loc)returns unit
+MeleeRemoveObservers(nothing)
+MeleeStartingAI(nothing)
+MeleeStartingHeroLimit(nothing)
+MeleeStartingResources(nothing)
+MeleeStartingUnits(nothing)
+MeleeStartingUnitsForPlayer(race whichRace, player whichPlayer, location loc, boolean doHeroes)
+MeleeStartingUnitsHuman(player whichPlayer, location startLoc, boolean doHeroes, boolean doCamera, boolean doPreload)
+MeleeStartingUnitsNightElf(player whichPlayer, location startLoc, boolean doHeroes, boolean doCamera, boolean doPreload)
+MeleeStartingUnitsOrc(player whichPlayer, location startLoc, boolean doHeroes, boolean doCamera, boolean doPreload)
+MeleeStartingUnitsUndead(player whichPlayer, location startLoc, boolean doHeroes, boolean doCamera, boolean doPreload)
+MeleeStartingUnitsUnknownRace(player whichPlayer, location startLoc, boolean doHeroes, boolean doCamera, boolean doPreload)
+MeleeStartingVisibility(nothing)
+MeleeTournamentFinishNowRuleA(integer multiplier)
+MeleeTrainedUnitIsHeroBJFilter(nothing)returns boolean
+MeleeTriggerActionAllianceChange(nothing)
+MeleeTriggerActionConstructCancel(nothing)
+MeleeTriggerActionPlayerDefeated(nothing)
+MeleeTriggerActionPlayerLeft(nothing)
+MeleeTriggerActionUnitConstructionStart(nothing)
+MeleeTriggerActionUnitDeath(nothing)
+MeleeTriggerTournamentFinishNow(nothing)
+MeleeTriggerTournamentFinishSoon(nothing)
+MeleeVictoryDialogBJ(player whichPlayer, boolean leftGame)
+MeleeWasUserPlayer(player whichPlayer)returns boolean
+ModifyGateBJ(integer gateOperation, destructable d)
+ModifyHeroSkillPoints(unit whichHero, integer modifyMethod, integer value)returns boolean
+ModifyHeroStat(integer whichStat, unit whichHero, integer modifyMethod, integer value)
+ModuloInteger(integer dividend, integer divisor)returns integer
+ModuloReal(real dividend, real divisor)returns real
+MoveLightning(lightning whichBolt, boolean checkVisibility, real x1, real y1, real x2, real y2)returns boolean
+MoveLightningEx(lightning whichBolt, boolean checkVisibility, real x1, real y1, real z1, real x2, real y2, real z2)returns boolean
+MoveLightningLoc(lightning whichBolt, location where1, location where2)returns boolean
+MoveLocation(location whichLocation, real newX, real newY)
+MoveRectTo(rect whichRect, real newCenterX, real newCenterY)
+MoveRectToLoc(rect whichRect, location newCenterLoc)
+MultiboardAllowDisplayBJ(boolean flag)
+MultiboardClear(multiboard lb)
+MultiboardDisplay(multiboard lb, boolean show)
+MultiboardDisplayBJ(boolean show, multiboard mb)
+MultiboardGetColumnCount(multiboard lb)returns integer
+MultiboardGetItem(multiboard lb, integer row, integer column)returns multiboarditem
+MultiboardGetRowCount(multiboard lb)returns integer
+MultiboardGetTitleText(multiboard lb)returns string
+MultiboardMinimize(multiboard lb, boolean minimize)
+MultiboardMinimizeBJ(boolean minimize, multiboard mb)
+MultiboardReleaseItem(multiboarditem mbi)
+MultiboardSetColumnCount(multiboard lb, integer count)
+MultiboardSetItemColorBJ(multiboard mb, integer col, integer row, real red, real green, real blue, real transparency)
+MultiboardSetItemIcon(multiboarditem mbi, string iconFileName)
+MultiboardSetItemIconBJ(multiboard mb, integer col, integer row, string iconFileName)
+MultiboardSetItemsIcon(multiboard lb, string iconPath)
+MultiboardSetItemsStyle(multiboard lb, boolean showValues, boolean showIcons)
+MultiboardSetItemStyle(multiboarditem mbi, boolean showValue, boolean showIcon)
+MultiboardSetItemStyleBJ(multiboard mb, integer col, integer row, boolean showValue, boolean showIcon)
+MultiboardSetItemsValue(multiboard lb, string value)
+MultiboardSetItemsValueColor(multiboard lb, integer red, integer green, integer blue, integer alpha)
+MultiboardSetItemsWidth(multiboard lb, real width)
+MultiboardSetItemValue(multiboarditem mbi, string val)
+MultiboardSetItemValueBJ(multiboard mb, integer col, integer row, string val)
+MultiboardSetItemValueColor(multiboarditem mbi, integer red, integer green, integer blue, integer alpha)
+MultiboardSetItemWidth(multiboarditem mbi, real width)
+MultiboardSetItemWidthBJ(multiboard mb, integer col, integer row, real width)
+MultiboardSetRowCount(multiboard lb, integer count)
+MultiboardSetTitleText(multiboard lb, string label)
+MultiboardSetTitleTextColor(multiboard lb, integer red, integer green, integer blue, integer alpha)
+MultiboardSetTitleTextColorBJ(multiboard mb, real red, real green, real blue, real transparency)
+MultiboardSuppressDisplay(boolean flag)
+NearbyElevatorExists(real x, real y)returns boolean
+NearbyElevatorExistsEnum(nothing)
+NewSoundEnvironment(string environmentName)
+Not(boolexpr operand)returns boolexpr
+NudgeItemsInRectEnum(nothing)
+NudgeObjectsInRect(rect nudgeArea)
+NudgeUnitsInRectEnum(nothing)
+OffsetLocation(location loc, real dx, real dy)returns location
+OffsetRectBJ(rect r, real dx, real dy)returns rect
+OneOnOneInitPlayerSlots(nothing)
+Or(boolexpr operandA, boolexpr operandB)returns boolexpr
+OrderId(string orderIdString)returns integer
+OrderId2String(integer orderId)returns string
+OrderId2StringBJ(integer orderId)returns string
+PanCameraTo(real x, real y)
+PanCameraToForPlayer(player whichPlayer, real x, real y)
+PanCameraToLocForPlayer(player whichPlayer, location loc)
+PanCameraToTimed(real x, real y, real duration)
+PanCameraToTimedForPlayer(player whichPlayer, real x, real y, real duration)
+PanCameraToTimedLocForPlayer(player whichPlayer, location loc, real duration)
+PanCameraToTimedLocWithZForPlayer(player whichPlayer, location loc, real zOffset, real duration)
+PanCameraToTimedWithZ(real x, real y, real zOffsetDest, real duration)
+PanCameraToWithZ(real x, real y, real zOffsetDest)
+PauseAllUnitsBJ(boolean pause)
+PauseAllUnitsBJEnum(nothing)
+PauseCompAI(player p, boolean pause)
+PauseGame(boolean flag)
+PauseGameOff(nothing)
+PauseGameOn(nothing)
+PauseTimer(timer whichTimer)
+PauseTimerBJ(boolean pause, timer whichTimer)
+PauseUnit(unit whichUnit, boolean flag)
+PauseUnitBJ(boolean pause, unit whichUnit)
+PercentTo255(real percentage)returns integer
+PercentToInt(real percentage, integer max)returns integer
+PerformStockUpdates(nothing)
+PickMeleeAI(player num, string s1, string s2, string s3)
+PingMinimap(real x, real y, real duration)
+PingMinimapEx(real x, real y, real duration, integer red, integer green, integer blue, boolean extraEffects)
+PingMinimapForForce(force whichForce, real x, real y, real duration)
+PingMinimapForForceEx(force whichForce, real x, real y, real duration, integer style, real red, real green, real blue)
+PingMinimapForPlayer(player whichPlayer, real x, real y, real duration)
+PingMinimapLocForForce(force whichForce, location loc, real duration)
+PingMinimapLocForForceEx(force whichForce, location loc, real duration, integer style, real red, real green, real blue)
+PingMinimapLocForPlayer(player whichPlayer, location loc, real duration)
+PlaceRandomItem(itempool whichItemPool, real x, real y)returns item
+PlaceRandomUnit(unitpool whichPool, player forWhichPlayer, real x, real y, real facing)returns unit
+PlayCinematic(string movieName)
+Player(integer number)returns player
+PlayerGetLeaderboard(player toPlayer)returns leaderboard
+PlayerGetLeaderboardBJ(player whichPlayer)returns leaderboard
+PlayersAreCoAllied(player playerA, player playerB)returns boolean
+PlayerSetLeaderboard(player toPlayer, leaderboard lb)
+PlayModelCinematic(string modelName)
+PlayMusic(string musicName)
+PlayMusicBJ(string musicFileName)
+PlayMusicEx(string musicName, integer frommsecs, integer fadeinmsecs)
+PlayMusicExBJ(string musicFileName, real startingOffset, real fadeInTime)
+PlaySound(string soundName)
+PlaySoundAtPointBJ(sound soundHandle, real volumePercent, location loc, real z)
+PlaySoundBJ(sound soundHandle)
+PlaySoundFromOffsetBJ(sound soundHandle, real volumePercent, real startingOffset)
+PlaySoundOnUnitBJ(sound soundHandle, real volumePercent, unit whichUnit)
+PlayThematicMusic(string musicFileName)
+PlayThematicMusicBJ(string musicName)
+PlayThematicMusicEx(string musicFileName, integer frommsecs)
+PlayThematicMusicExBJ(string musicName, real startingOffset)
+PolarProjectionBJ(location source, real dist, real angle)returns location
+PolledWait(real duration)
+PostTriggerExecuteBJ(trigger trig, boolean checkConditions)returns boolean
+Pow(real x, real power)returns real
+Preload(string filename)
+PreloadEnd(real timeout)
+PreloadEndEx(nothing)
+Preloader(string filename)
+PreloadGenClear(nothing)
+PreloadGenEnd(string filename)
+PreloadGenStart(nothing)
+PreloadRefresh(nothing)
+PreloadStart(nothing)
+QuestCreateItem(quest whichQuest)returns questitem
+QuestItemSetCompleted(questitem whichQuestItem, boolean completed)
+QuestItemSetCompletedBJ(questitem whichQuestItem, boolean completed)
+QuestItemSetDescription(questitem whichQuestItem, string description)
+QuestItemSetDescriptionBJ(questitem whichQuestItem, string description)
+QuestMessageBJ(force f, integer messageType, string message)
+QuestSetCompleted(quest whichQuest, boolean completed)
+QuestSetCompletedBJ(quest whichQuest, boolean completed)
+QuestSetDescription(quest whichQuest, string description)
+QuestSetDescriptionBJ(quest whichQuest, string description)
+QuestSetDiscovered(quest whichQuest, boolean discovered)
+QuestSetDiscoveredBJ(quest whichQuest, boolean discovered)
+QuestSetEnabled(quest whichQuest, boolean enabled)
+QuestSetEnabledBJ(boolean enabled, quest whichQuest)
+QuestSetFailed(quest whichQuest, boolean failed)
+QuestSetFailedBJ(quest whichQuest, boolean failed)
+QuestSetIconPath(quest whichQuest, string iconPath)
+QuestSetRequired(quest whichQuest, boolean required)
+QuestSetTitle(quest whichQuest, string title)
+QuestSetTitleBJ(quest whichQuest, string title)
+QueueDestructableAnimation(destructable d, string whichAnimation)
+QueueDestructableAnimationBJ(destructable d, string whichAnimation)
+QueuedTriggerAddBJ(trigger trig, boolean checkConditions)returns boolean
+QueuedTriggerAttemptExec(nothing)returns boolean
+QueuedTriggerCheck(nothing)
+QueuedTriggerClearBJ(nothing)
+QueuedTriggerClearInactiveBJ(nothing)
+QueuedTriggerCountBJ(nothing)returns integer
+QueuedTriggerDoneBJ(nothing)
+QueuedTriggerGetIndex(trigger trig)returns integer
+QueuedTriggerRemoveBJ(trigger trig)
+QueuedTriggerRemoveByIndex(integer trigIndex)returns boolean
+QueueUnitAnimation(unit whichUnit, string whichAnimation)
+QueueUnitAnimationBJ(unit whichUnit, string whichAnimation)
+R2I(real r)returns integer
+R2S(real r)returns string
+R2SW(real r, integer width, integer precision)returns string
+RAbsBJ(real a)returns real
+Rad2Deg(real radians)returns real
+RandomDestructableInRectBJ(rect r, boolexpr filter)returns destructable
+RandomDestructableInRectBJEnum(nothing)
+RandomDestructableInRectSimpleBJ(rect r)returns destructable
+RandomDistAddItem(integer inID, integer inChance)
+RandomDistChoose(nothing)returns integer
+RandomDistReset(nothing)
+RandomItemInRectBJ(rect r, boolexpr filter)returns item
+RandomItemInRectBJEnum(nothing)
+RandomItemInRectSimpleBJ(rect r)returns item
+Rect(real minx, real miny, real maxx, real maxy)returns rect
+RectContainsCoords(rect r, real x, real y)returns boolean
+RectContainsItem(item whichItem, rect r)returns boolean
+RectContainsLoc(rect r, location loc)returns boolean
+RectContainsUnit(rect r, unit whichUnit)returns boolean
+RectFromCenterSizeBJ(location center, real width, real height)returns rect
+RectFromLoc(location min, location max)returns rect
+RecycleGuardPosition(unit hUnit)
+ReducePlayerTechMaxAllowed(player whichPlayer, integer techId, integer limit)
+RegionAddCell(region whichRegion, real x, real y)
+RegionAddCellAtLoc(region whichRegion, location whichLocation)
+RegionAddRect(region whichRegion, rect r)
+RegionClearCell(region whichRegion, real x, real y)
+RegionClearCellAtLoc(region whichRegion, location whichLocation)
+RegionClearRect(region whichRegion, rect r)
+RegisterDestDeathInRegionEnum(nothing)
+RegisterStackedSound(sound soundHandle, boolean byPosition, real rectwidth, real rectheight)
+ReloadGame(nothing)
+ReloadGameCachesFromDisk(nothing)returns boolean
+RemoveAllGuardPositions(player num)
+RemoveDestructable(destructable d)
+RemoveGuardPosition(unit hUnit)
+RemoveItem(item whichItem)
+RemoveItemFromAllStock(integer itemId)
+RemoveItemFromStock(unit whichUnit, integer itemId)
+RemoveItemFromStockBJ(integer itemId, unit whichUnit)
+RemoveLocation(location whichLocation)
+RemovePlayer(player whichPlayer, playergameresult gameResult)
+RemovePlayerPreserveUnitsBJ(player whichPlayer, playergameresult gameResult, boolean leftGame)
+RemovePurchasedItem(nothing)
+RemoveRect(rect whichRect)
+RemoveRegion(region whichRegion)
+RemoveSavedBoolean(hashtable table, integer parentKey, integer childKey)
+RemoveSavedHandle(hashtable table, integer parentKey, integer childKey)
+RemoveSavedInteger(hashtable table, integer parentKey, integer childKey)
+RemoveSaveDirectory(string sourceDirName)returns boolean
+RemoveSaveDirectoryBJ(string sourceDirName)returns boolean
+RemoveSavedReal(hashtable table, integer parentKey, integer childKey)
+RemoveSavedString(hashtable table, integer parentKey, integer childKey)
+RemoveUnit(unit whichUnit)
+RemoveUnitFromAllStock(integer unitId)
+RemoveUnitFromStock(unit whichUnit, integer unitId)
+RemoveUnitFromStockBJ(integer unitId, unit whichUnit)
+RemoveWeatherEffect(weathereffect whichEffect)
+RemoveWeatherEffectBJ(weathereffect whichWeatherEffect)
+RenameSaveDirectory(string sourceDirName, string destDirName)returns boolean
+RenameSaveDirectoryBJ(string sourceDirName, string destDirName)returns boolean
+ReplaceUnitBJ(unit whichUnit, integer newUnitId, integer unitStateMethod)returns unit
+RescueUnitBJ(unit whichUnit, player rescuer, boolean changeColor)
+ResetTerrainFog(nothing)
+ResetTerrainFogBJ(nothing)
+ResetToGameCamera(real duration)
+ResetToGameCameraForPlayer(player whichPlayer, real duration)
+ResetTrigger(trigger whichTrigger)
+ResetUbersplat(ubersplat whichSplat)
+ResetUnitAnimation(unit whichUnit)
+ResetUnitLookAt(unit whichUnit)
+RestartGame(boolean doScoreScreen)
+RestoreUnit(gamecache cache, string missionKey, string key, player forWhichPlayer, real x, real y, real facing)returns unit
+RestoreUnitLocFacingAngleBJ(string key, string missionKey, gamecache cache, player forWhichPlayer, location loc, real facing)returns unit
+RestoreUnitLocFacingPointBJ(string key, string missionKey, gamecache cache, player forWhichPlayer, location loc, location lookAt)returns unit
+ResumeMusic(nothing)
+ResumeMusicBJ(nothing)
+ResumeTimer(timer whichTimer)
+ReviveHero(unit whichHero, real x, real y, boolean doEyecandy)returns boolean
+ReviveHeroLoc(unit whichHero, location loc, boolean doEyecandy)returns boolean
+RMaxBJ(real a, real b)returns real
+RMinBJ(real a, real b)returns real
+RotateCameraAroundLocBJ(real degrees, location loc, player whichPlayer, real duration)
+RSignBJ(real a)returns real
+S2I(string s)returns integer
+S2R(string s)returns real
+SaveAbilityHandle(hashtable table, integer parentKey, integer childKey, ability whichAbility)returns boolean
+SaveAbilityHandleBJ(ability whichAbility, integer key, integer missionKey, hashtable table)returns boolean
+SaveAndChangeLevelBJ(string saveFileName, string newLevel, boolean doScoreScreen)
+SaveAndLoadGameBJ(string saveFileName, string loadFileName, boolean doScoreScreen)
+SaveBoolean(hashtable table, integer parentKey, integer childKey, boolean value)
+SaveBooleanBJ(boolean value, integer key, integer missionKey, hashtable table)
+SaveBooleanExprHandle(hashtable table, integer parentKey, integer childKey, boolexpr whichBoolexpr)returns boolean
+SaveBooleanExprHandleBJ(boolexpr whichBoolexpr, integer key, integer missionKey, hashtable table)returns boolean
+SaveButtonHandle(hashtable table, integer parentKey, integer childKey, button whichButton)returns boolean
+SaveButtonHandleBJ(button whichButton, integer key, integer missionKey, hashtable table)returns boolean
+SaveDefeatConditionHandle(hashtable table, integer parentKey, integer childKey, defeatcondition whichDefeatcondition)returns boolean
+SaveDefeatConditionHandleBJ(defeatcondition whichDefeatcondition, integer key, integer missionKey, hashtable table)returns boolean
+SaveDestructableHandle(hashtable table, integer parentKey, integer childKey, destructable whichDestructable)returns boolean
+SaveDestructableHandleBJ(destructable whichDestructable, integer key, integer missionKey, hashtable table)returns boolean
+SaveDialogHandle(hashtable table, integer parentKey, integer childKey, dialog whichDialog)returns boolean
+SaveDialogHandleBJ(dialog whichDialog, integer key, integer missionKey, hashtable table)returns boolean
+SaveDyingWidget(nothing)
+SaveEffectHandle(hashtable table, integer parentKey, integer childKey, effect whichEffect)returns boolean
+SaveEffectHandleBJ(effect whichEffect, integer key, integer missionKey, hashtable table)returns boolean
+SaveFogModifierHandle(hashtable table, integer parentKey, integer childKey, fogmodifier whichFogModifier)returns boolean
+SaveFogModifierHandleBJ(fogmodifier whichFogModifier, integer key, integer missionKey, hashtable table)returns boolean
+SaveFogStateHandle(hashtable table, integer parentKey, integer childKey, fogstate whichFogState)returns boolean
+SaveFogStateHandleBJ(fogstate whichFogState, integer key, integer missionKey, hashtable table)returns boolean
+SaveForceHandle(hashtable table, integer parentKey, integer childKey, force whichForce)returns boolean
+SaveForceHandleBJ(force whichForce, integer key, integer missionKey, hashtable table)returns boolean
+SaveGame(string saveFileName)
+SaveGameCache(gamecache whichCache)returns boolean
+SaveGameCacheBJ(gamecache cache)returns boolean
+SaveGameExists(string saveName)returns boolean
+SaveGroupHandle(hashtable table, integer parentKey, integer childKey, group whichGroup)returns boolean
+SaveGroupHandleBJ(group whichGroup, integer key, integer missionKey, hashtable table)returns boolean
+SaveImageHandle(hashtable table, integer parentKey, integer childKey, image whichImage)returns boolean
+SaveImageHandleBJ(image whichImage, integer key, integer missionKey, hashtable table)returns boolean
+SaveInteger(hashtable table, integer parentKey, integer childKey, integer value)
+SaveIntegerBJ(integer value, integer key, integer missionKey, hashtable table)
+SaveItemHandle(hashtable table, integer parentKey, integer childKey, item whichItem)returns boolean
+SaveItemHandleBJ(item whichItem, integer key, integer missionKey, hashtable table)returns boolean
+SaveItemPoolHandle(hashtable table, integer parentKey, integer childKey, itempool whichItempool)returns boolean
+SaveItemPoolHandleBJ(itempool whichItempool, integer key, integer missionKey, hashtable table)returns boolean
+SaveLeaderboardHandle(hashtable table, integer parentKey, integer childKey, leaderboard whichLeaderboard)returns boolean
+SaveLeaderboardHandleBJ(leaderboard whichLeaderboard, integer key, integer missionKey, hashtable table)returns boolean
+SaveLightningHandle(hashtable table, integer parentKey, integer childKey, lightning whichLightning)returns boolean
+SaveLightningHandleBJ(lightning whichLightning, integer key, integer missionKey, hashtable table)returns boolean
+SaveLocationHandle(hashtable table, integer parentKey, integer childKey, location whichLocation)returns boolean
+SaveLocationHandleBJ(location whichLocation, integer key, integer missionKey, hashtable table)returns boolean
+SaveMultiboardHandle(hashtable table, integer parentKey, integer childKey, multiboard whichMultiboard)returns boolean
+SaveMultiboardHandleBJ(multiboard whichMultiboard, integer key, integer missionKey, hashtable table)returns boolean
+SaveMultiboardItemHandle(hashtable table, integer parentKey, integer childKey, multiboarditem whichMultiboarditem)returns boolean
+SaveMultiboardItemHandleBJ(multiboarditem whichMultiboarditem, integer key, integer missionKey, hashtable table)returns boolean
+SavePlayerHandle(hashtable table, integer parentKey, integer childKey, player whichPlayer)returns boolean
+SavePlayerHandleBJ(player whichPlayer, integer key, integer missionKey, hashtable table)returns boolean
+SaveQuestHandle(hashtable table, integer parentKey, integer childKey, quest whichQuest)returns boolean
+SaveQuestHandleBJ(quest whichQuest, integer key, integer missionKey, hashtable table)returns boolean
+SaveQuestItemHandle(hashtable table, integer parentKey, integer childKey, questitem whichQuestitem)returns boolean
+SaveQuestItemHandleBJ(questitem whichQuestitem, integer key, integer missionKey, hashtable table)returns boolean
+SaveReal(hashtable table, integer parentKey, integer childKey, real value)
+SaveRealBJ(real value, integer key, integer missionKey, hashtable table)
+SaveRectHandle(hashtable table, integer parentKey, integer childKey, rect whichRect)returns boolean
+SaveRectHandleBJ(rect whichRect, integer key, integer missionKey, hashtable table)returns boolean
+SaveRegionHandle(hashtable table, integer parentKey, integer childKey, region whichRegion)returns boolean
+SaveRegionHandleBJ(region whichRegion, integer key, integer missionKey, hashtable table)returns boolean
+SaveSoundHandle(hashtable table, integer parentKey, integer childKey, sound whichSound)returns boolean
+SaveSoundHandleBJ(sound whichSound, integer key, integer missionKey, hashtable table)returns boolean
+SaveStr(hashtable table, integer parentKey, integer childKey, string value)returns boolean
+SaveStringBJ(string value, integer key, integer missionKey, hashtable table)returns boolean
+SaveTextTagHandle(hashtable table, integer parentKey, integer childKey, texttag whichTexttag)returns boolean
+SaveTextTagHandleBJ(texttag whichTexttag, integer key, integer missionKey, hashtable table)returns boolean
+SaveTimerDialogHandle(hashtable table, integer parentKey, integer childKey, timerdialog whichTimerdialog)returns boolean
+SaveTimerDialogHandleBJ(timerdialog whichTimerdialog, integer key, integer missionKey, hashtable table)returns boolean
+SaveTimerHandle(hashtable table, integer parentKey, integer childKey, timer whichTimer)returns boolean
+SaveTimerHandleBJ(timer whichTimer, integer key, integer missionKey, hashtable table)returns boolean
+SaveTrackableHandle(hashtable table, integer parentKey, integer childKey, trackable whichTrackable)returns boolean
+SaveTrackableHandleBJ(trackable whichTrackable, integer key, integer missionKey, hashtable table)returns boolean
+SaveTriggerActionHandle(hashtable table, integer parentKey, integer childKey, triggeraction whichTriggeraction)returns boolean
+SaveTriggerActionHandleBJ(triggeraction whichTriggeraction, integer key, integer missionKey, hashtable table)returns boolean
+SaveTriggerConditionHandle(hashtable table, integer parentKey, integer childKey, triggercondition whichTriggercondition)returns boolean
+SaveTriggerConditionHandleBJ(triggercondition whichTriggercondition, integer key, integer missionKey, hashtable table)returns boolean
+SaveTriggerEventHandle(hashtable table, integer parentKey, integer childKey, event whichEvent)returns boolean
+SaveTriggerEventHandleBJ(event whichEvent, integer key, integer missionKey, hashtable table)returns boolean
+SaveTriggerHandle(hashtable table, integer parentKey, integer childKey, trigger whichTrigger)returns boolean
+SaveTriggerHandleBJ(trigger whichTrigger, integer key, integer missionKey, hashtable table)returns boolean
+SaveUbersplatHandle(hashtable table, integer parentKey, integer childKey, ubersplat whichUbersplat)returns boolean
+SaveUbersplatHandleBJ(ubersplat whichUbersplat, integer key, integer missionKey, hashtable table)returns boolean
+SaveUnitHandle(hashtable table, integer parentKey, integer childKey, unit whichUnit)returns boolean
+SaveUnitHandleBJ(unit whichUnit, integer key, integer missionKey, hashtable table)returns boolean
+SaveUnitPoolHandle(hashtable table, integer parentKey, integer childKey, unitpool whichUnitpool)returns boolean
+SaveUnitPoolHandleBJ(unitpool whichUnitpool, integer key, integer missionKey, hashtable table)returns boolean
+SaveWidgetHandle(hashtable table, integer parentKey, integer childKey, widget whichWidget)returns boolean
+SaveWidgetHandleBJ(widget whichWidget, integer key, integer missionKey, hashtable table)returns boolean
+SelectGroupBJ(group g)
+SelectGroupBJEnum(nothing)
+SelectGroupForPlayerBJ(group g, player whichPlayer)
+SelectHeroSkill(unit whichHero, integer abilcode)
+SelectUnit(unit whichUnit, boolean flag)
+SelectUnitAdd(unit whichUnit)
+SelectUnitAddForPlayer(unit whichUnit, player whichPlayer)
+SelectUnitForPlayerSingle(unit whichUnit, player whichPlayer)
+SelectUnitRemove(unit whichUnit)
+SelectUnitRemoveForPlayer(unit whichUnit, player whichPlayer)
+SelectUnitSingle(unit whichUnit)
+SetAllItemTypeSlots(integer slots)
+SetAllUnitTypeSlots(integer slots)
+SetAllyColorFilterState(integer state)
+SetAltMinimapIcon(string iconPath)
+SetAmbientDaySound(string inLabel)
+SetAmbientNightSound(string inLabel)
+SetBlight(player whichPlayer, real x, real y, real radius, boolean addBlight)
+SetBlightLoc(player whichPlayer, location whichLocation, real radius, boolean addBlight)
+SetBlightPoint(player whichPlayer, real x, real y, boolean addBlight)
+SetBlightRadiusLocBJ(boolean addBlight, player whichPlayer, location loc, real radius)
+SetBlightRect(player whichPlayer, rect r, boolean addBlight)
+SetBlightRectBJ(boolean addBlight, player whichPlayer, rect r)
+SetCameraBounds(real x1, real y1, real x2, real y2, real x3, real y3, real x4, real y4)
+SetCameraBoundsToRect(rect r)
+SetCameraBoundsToRectForPlayerBJ(player whichPlayer, rect r)
+SetCameraField(camerafield whichField, real value, real duration)
+SetCameraFieldForPlayer(player whichPlayer, camerafield whichField, real value, real duration)
+SetCameraOrientController(unit whichUnit, real xoffset, real yoffset)
+SetCameraOrientControllerForPlayerBJ(player whichPlayer, unit whichUnit, real xoffset, real yoffset)
+SetCameraPosition(real x, real y)
+SetCameraPositionForPlayer(player whichPlayer, real x, real y)
+SetCameraPositionLocForPlayer(player whichPlayer, location loc)
+SetCameraQuickPosition(real x, real y)
+SetCameraQuickPositionForPlayer(player whichPlayer, real x, real y)
+SetCameraQuickPositionLoc(location loc)
+SetCameraQuickPositionLocForPlayer(player whichPlayer, location loc)
+SetCameraRotateMode(real x, real y, real radiansToSweep, real duration)
+SetCameraTargetController(unit whichUnit, real xoffset, real yoffset, boolean inheritOrientation)
+SetCameraTargetControllerNoZForPlayer(player whichPlayer, unit whichUnit, real xoffset, real yoffset, boolean inheritOrientation)
+SetCampaignAvailable(integer campaignNumber, boolean available)
+SetCampaignAvailableBJ(boolean available, integer campaignNumber)
+SetCampaignMenuRace(race r)
+SetCampaignMenuRaceBJ(integer campaignNumber)
+SetCampaignMenuRaceEx(integer campaignIndex)
+SetCineFilterBlendMode(blendmode whichMode)
+SetCineFilterDuration(real duration)
+SetCineFilterEndColor(integer red, integer green, integer blue, integer alpha)
+SetCineFilterEndUV(real minu, real minv, real maxu, real maxv)
+SetCineFilterStartColor(integer red, integer green, integer blue, integer alpha)
+SetCineFilterStartUV(real minu, real minv, real maxu, real maxv)
+SetCineFilterTexMapFlags(texmapflags whichFlags)
+SetCineFilterTexture(string filename)
+SetCinematicAvailableBJ(boolean available, integer cinematicIndex)
+SetCinematicCamera(string cameraModelFile)
+SetCinematicCameraForPlayer(player whichPlayer, string cameraModelFile)
+SetCinematicScene(integer portraitUnitId, playercolor color, string speakerTitle, string text, real sceneDuration, real voiceoverDuration)
+SetCinematicSceneBJ(sound soundHandle, integer portraitUnitId, playercolor color, string speakerTitle, string text, real sceneDuration, real voiceoverDuration)
+SetCineModeVolumeGroupsBJ(nothing)
+SetCineModeVolumeGroupsImmediateBJ(nothing)
+SetCreatureDensity(mapdensity whichdensity)
+SetCreepCampFilterState(boolean state)
+SetCustomCampaignButtonVisible(integer whichButton, boolean visible)
+SetDayNightModels(string terrainDNCFile, string unitDNCFile)
+SetDefaultDifficulty(gamedifficulty g)
+SetDestAnimationSpeedPercent(destructable d, real percentScale)
+SetDestructableAnimation(destructable d, string whichAnimation)
+SetDestructableAnimationBJ(destructable d, string whichAnimation)
+SetDestructableAnimationSpeed(destructable d, real speedFactor)
+SetDestructableInvulnerable(destructable d, boolean flag)
+SetDestructableInvulnerableBJ(destructable d, boolean flag)
+SetDestructableLife(destructable d, real life)
+SetDestructableLifePercentBJ(destructable d, real percent)
+SetDestructableMaxLife(destructable d, real max)
+SetDestructableMaxLifeBJ(destructable d, real max)
+SetDestructableOccluderHeight(destructable d, real height)
+SetDNCSoundsDawn(nothing)
+SetDNCSoundsDay(nothing)
+SetDNCSoundsDusk(nothing)
+SetDNCSoundsNight(nothing)
+SetDoodadAnimation(real x, real y, real radius, integer doodadID, boolean nearestOnly, string animName, boolean animRandom)
+SetDoodadAnimationBJ(string animName, integer doodadID, real radius, location center)
+SetDoodadAnimationRect(rect r, integer doodadID, string animName, boolean animRandom)
+SetDoodadAnimationRectBJ(string animName, integer doodadID, rect r)
+SetEdCinematicAvailable(integer campaignNumber, boolean available)
+SetFloatGameState(fgamestate whichFloatGameState, real value)
+SetFogStateRadius(player forWhichPlayer, fogstate whichState, real centerx, real centerY, real radius, boolean useSharedVision)
+SetFogStateRadiusLoc(player forWhichPlayer, fogstate whichState, location center, real radius, boolean useSharedVision)
+SetFogStateRect(player forWhichPlayer, fogstate whichState, rect where, boolean useSharedVision)
+SetForceAllianceStateBJ(force sourceForce, force targetForce, integer allianceState)
+SetForLoopIndexA(integer newIndex)
+SetForLoopIndexB(integer newIndex)
+SetGameDifficulty(gamedifficulty whichdifficulty)
+SetGamePlacement(placement whichPlacementType)
+SetGameSpeed(gamespeed whichspeed)
+SetGameTypeSupported(gametype whichGameType, boolean value)
+SetHeroAgi(unit whichHero, integer newAgi, boolean permanent)
+SetHeroInt(unit whichHero, integer newInt, boolean permanent)
+SetHeroLevel(unit whichHero, integer level, boolean showEyeCandy)
+SetHeroLevelBJ(unit whichHero, integer newLevel, boolean showEyeCandy)
+SetHeroStat(unit whichHero, integer whichStat, integer value)
+SetHeroStr(unit whichHero, integer newStr, boolean permanent)
+SetHeroXP(unit whichHero, integer newXpVal, boolean showEyeCandy)
+SetImageAboveWater(image whichImage, boolean flag, boolean useWaterAlpha)
+SetImageColor(image whichImage, integer red, integer green, integer blue, integer alpha)
+SetImageColorBJ(image whichImage, real red, real green, real blue, real alpha)
+SetImageConstantHeight(image whichImage, boolean flag, real height)
+SetImagePosition(image whichImage, real x, real y, real z)
+SetImagePositionBJ(image whichImage, location where, real zOffset)
+SetImageRender(image whichImage, boolean flag)
+SetImageRenderAlways(image whichImage, boolean flag)
+SetImageType(image whichImage, integer imageType)
+SetIntegerGameState(igamestate whichIntegerGameState, integer value)
+SetIntroShotModel(string introModelPath)
+SetIntroShotText(string introText)
+SetItemCharges(item whichItem, integer charges)
+SetItemDropID(item whichItem, integer unitId)
+SetItemDropOnDeath(item whichItem, boolean flag)
+SetItemDropOnDeathBJ(item whichItem, boolean flag)
+SetItemDroppable(item i, boolean flag)
+SetItemDroppableBJ(item whichItem, boolean flag)
+SetItemInvulnerable(item whichItem, boolean flag)
+SetItemInvulnerableBJ(item whichItem, boolean flag)
+SetItemLifeBJ(widget whichWidget, real life)
+SetItemPawnable(item i, boolean flag)
+SetItemPlayer(item whichItem, player whichPlayer, boolean changeColor)
+SetItemPlayerBJ(item whichItem, player whichPlayer, boolean changeColor)
+SetItemPosition(item i, real x, real y)
+SetItemPositionLoc(item whichItem, location loc)
+SetItemTypeSlots(unit whichUnit, integer slots)
+SetItemUserData(item whichItem, integer data)
+SetItemVisible(item whichItem, boolean show)
+SetItemVisibleBJ(boolean show, item whichItem)
+SetLightningColor(lightning whichBolt, real r, real g, real b, real a)returns boolean
+SetLightningColorBJ(lightning whichBolt, real r, real g, real b, real a)returns boolean
+SetMapDescription(string description)
+SetMapFlag(mapflag whichMapFlag, boolean value)
+SetMapMusic(string musicName, boolean random, integer index)
+SetMapMusicIndexedBJ(string musicName, integer index)
+SetMapMusicRandomBJ(string musicName)
+SetMapName(string name)
+SetMissionAvailable(integer campaignNumber, integer missionNumber, boolean available)
+SetMissionAvailableBJ(boolean available, integer missionIndex)
+SetMusicOffsetBJ(real newOffset)
+SetMusicPlayPosition(integer millisecs)
+SetMusicVolume(integer volume)
+SetMusicVolumeBJ(real volumePercent)
+SetNextLevelBJ(string nextLevel)
+SetOpCinematicAvailable(integer campaignNumber, boolean available)
+SetPlayerAbilityAvailable(player whichPlayer, integer abilid, boolean avail)
+SetPlayerAbilityAvailableBJ(boolean avail, integer abilid, player whichPlayer)
+SetPlayerAlliance(player sourcePlayer, player otherPlayer, alliancetype whichAllianceSetting, boolean value)
+SetPlayerAllianceBJ(player sourcePlayer, alliancetype whichAllianceSetting, boolean value, player otherPlayer)
+SetPlayerAllianceStateAllyBJ(player sourcePlayer, player otherPlayer, boolean flag)
+SetPlayerAllianceStateBJ(player sourcePlayer, player otherPlayer, integer allianceState)
+SetPlayerAllianceStateControlBJ(player sourcePlayer, player otherPlayer, boolean flag)
+SetPlayerAllianceStateFullControlBJ(player sourcePlayer, player otherPlayer, boolean flag)
+SetPlayerAllianceStateVisionBJ(player sourcePlayer, player otherPlayer, boolean flag)
+SetPlayerColor(player whichPlayer, playercolor color)
+SetPlayerColorBJ(player whichPlayer, playercolor color, boolean changeExisting)
+SetPlayerColorBJEnum(nothing)
+SetPlayerController(player whichPlayer, mapcontrol controlType)
+SetPlayerFlagBJ(playerstate whichPlayerFlag, boolean flag, player whichPlayer)
+SetPlayerHandicap(player whichPlayer, real handicap)
+SetPlayerHandicapBJ(player whichPlayer, real handicapPercent)
+SetPlayerHandicapXP(player whichPlayer, real handicap)
+SetPlayerHandicapXPBJ(player whichPlayer, real handicapPercent)
+SetPlayerMaxHeroesAllowed(integer maximum, player whichPlayer)
+SetPlayerName(player whichPlayer, string name)
+SetPlayerOnScoreScreen(player whichPlayer, boolean flag)
+SetPlayerOnScoreScreenBJ(boolean flag, player whichPlayer)
+SetPlayerRacePreference(player whichPlayer, racepreference whichRacePreference)
+SetPlayerRaceSelectable(player whichPlayer, boolean value)
+SetPlayers(integer playercount)
+SetPlayerSlotAvailable(player whichPlayer, mapcontrol control)
+SetPlayerStartLocation(player whichPlayer, integer startLocIndex)
+SetPlayerState(player whichPlayer, playerstate whichPlayerState, integer value)
+SetPlayerStateBJ(player whichPlayer, playerstate whichPlayerState, integer value)
+SetPlayerTaxRate(player sourcePlayer, player otherPlayer, playerstate whichResource, integer rate)
+SetPlayerTaxRateBJ(integer rate, playerstate whichResource, player sourcePlayer, player otherPlayer)
+SetPlayerTeam(player whichPlayer, integer whichTeam)
+SetPlayerTechMaxAllowed(player whichPlayer, integer techid, integer maximum)
+SetPlayerTechMaxAllowedSwap(integer techid, integer maximum, player whichPlayer)
+SetPlayerTechResearched(player whichPlayer, integer techid, integer setToLevel)
+SetPlayerTechResearchedSwap(integer techid, integer levels, player whichPlayer)
+SetPlayerUnitAvailableBJ(integer unitId, boolean allowed, player whichPlayer)
+SetPlayerUnitsOwner(player whichPlayer, integer newOwner)
+SetRandomSeed(integer seed)
+SetRect(rect whichRect, real minx, real miny, real maxx, real maxy)
+SetRectFromLoc(rect whichRect, location min, location max)
+SetRescueBuildingColorChangeBJ(boolean changeColor)
+SetRescueUnitColorChangeBJ(boolean changeColor)
+SetReservedLocalHeroButtons(integer reserved)
+SetResourceAmount(unit whichUnit, integer amount)
+SetResourceDensity(mapdensity whichdensity)
+SetSkyModel(string skyModelFile)
+SetSoundChannel(sound soundHandle, integer channel)
+SetSoundConeAngles(sound soundHandle, real inside, real outside, integer outsideVolume)
+SetSoundConeAnglesBJ(sound soundHandle, real inside, real outside, real outsideVolumePercent)
+SetSoundConeOrientation(sound soundHandle, real x, real y, real z)
+SetSoundDistanceCutoff(sound soundHandle, real cutoff)
+SetSoundDistanceCutoffBJ(sound soundHandle, real cutoff)
+SetSoundDistances(sound soundHandle, real minDist, real maxDist)
+SetSoundDuration(sound soundHandle, integer duration)
+SetSoundOffsetBJ(real newOffset, sound soundHandle)
+SetSoundParamsFromLabel(sound soundHandle, string soundLabel)
+SetSoundPitch(sound soundHandle, real pitch)
+SetSoundPitchBJ(sound soundHandle, real pitch)
+SetSoundPlayPosition(sound soundHandle, integer millisecs)
+SetSoundPosition(sound soundHandle, real x, real y, real z)
+SetSoundPositionLocBJ(sound soundHandle, location loc, real z)
+SetSoundVelocity(sound soundHandle, real x, real y, real z)
+SetSoundVolume(sound soundHandle, integer volume)
+SetSoundVolumeBJ(sound soundHandle, real volumePercent)
+SetSpeechVolumeGroupsBJ(nothing)
+SetSpeechVolumeGroupsImmediateBJ(nothing)
+SetStackedSoundBJ(boolean add, sound soundHandle, rect r)
+SetStartLocPrio(integer whichStartLoc, integer prioSlotIndex, integer otherStartLocIndex, startlocprio priority)
+SetStartLocPrioCount(integer whichStartLoc, integer prioSlotCount)
+SetTeams(integer teamcount)
+SetTerrainFog(real a, real b, real c, real d, real e)
+SetTerrainFogEx(integer style, real zstart, real zend, real density, real red, real green, real blue)
+SetTerrainFogExBJ(integer style, real zstart, real zend, real density, real red, real green, real blue)
+SetTerrainPathable(real x, real y, pathingtype t, boolean flag)
+SetTerrainPathableBJ(location where, pathingtype t, boolean flag)
+SetTerrainType(real x, real y, integer terrainType, integer variation, integer area, integer shape)
+SetTerrainTypeBJ(location where, integer terrainType, integer variation, integer area, integer shape)
+SetTextTagAge(texttag t, real age)
+SetTextTagAgeBJ(texttag tt, real age)
+SetTextTagColor(texttag t, integer red, integer green, integer blue, integer alpha)
+SetTextTagColorBJ(texttag tt, real red, real green, real blue, real transparency)
+SetTextTagFadepoint(texttag t, real fadepoint)
+SetTextTagFadepointBJ(texttag tt, real fadepoint)
+SetTextTagLifespan(texttag t, real lifespan)
+SetTextTagLifespanBJ(texttag tt, real lifespan)
+SetTextTagPermanent(texttag t, boolean flag)
+SetTextTagPermanentBJ(texttag tt, boolean flag)
+SetTextTagPos(texttag t, real x, real y, real heightOffset)
+SetTextTagPosBJ(texttag tt, location loc, real zOffset)
+SetTextTagPosUnit(texttag t, unit whichUnit, real heightOffset)
+SetTextTagPosUnitBJ(texttag tt, unit whichUnit, real zOffset)
+SetTextTagSuspended(texttag t, boolean flag)
+SetTextTagSuspendedBJ(texttag tt, boolean flag)
+SetTextTagText(texttag t, string s, real height)
+SetTextTagTextBJ(texttag tt, string s, real size)
+SetTextTagVelocity(texttag t, real xvel, real yvel)
+SetTextTagVelocityBJ(texttag tt, real speed, real angle)
+SetTextTagVisibility(texttag t, boolean flag)
+SetThematicMusicOffsetBJ(real newOffset)
+SetThematicMusicPlayPosition(integer millisecs)
+SetTimeOfDay(real whatTime)
+SetTimeOfDayScale(real r)
+SetTimeOfDayScalePercentBJ(real scalePercent)
+SetTutorialCleared(boolean cleared)
+SetUbersplatRender(ubersplat whichSplat, boolean flag)
+SetUbersplatRenderAlways(ubersplat whichSplat, boolean flag)
+SetUnitAbilityLevel(unit whichUnit, integer abilcode, integer level)returns integer
+SetUnitAbilityLevelSwapped(integer abilcode, unit whichUnit, integer level)returns integer
+SetUnitAcquireRange(unit whichUnit, real newAcquireRange)
+SetUnitAcquireRangeBJ(unit whichUnit, real acquireRange)
+SetUnitAnimation(unit whichUnit, string whichAnimation)
+SetUnitAnimationByIndex(unit whichUnit, integer whichAnimation)
+SetUnitAnimationWithRarity(unit whichUnit, string whichAnimation, raritycontrol rarity)
+SetUnitBlendTime(unit whichUnit, real blendTime)
+SetUnitBlendTimeBJ(unit whichUnit, real blendTime)
+SetUnitColor(unit whichUnit, playercolor whichColor)
+SetUnitCreepGuard(unit whichUnit, boolean creepGuard)
+SetUnitExploded(unit whichUnit, boolean exploded)
+SetUnitExplodedBJ(unit whichUnit, boolean exploded)
+SetUnitFacing(unit whichUnit, real facingAngle)
+SetUnitFacingTimed(unit whichUnit, real facingAngle, real duration)
+SetUnitFacingToFaceLocTimed(unit whichUnit, location target, real duration)
+SetUnitFacingToFaceUnitTimed(unit whichUnit, unit target, real duration)
+SetUnitFlyHeight(unit whichUnit, real newHeight, real rate)
+SetUnitFlyHeightBJ(unit whichUnit, real newHeight, real rate)
+SetUnitFog(real a, real b, real c, real d, real e)
+SetUnitInvulnerable(unit whichUnit, boolean flag)
+SetUnitLifeBJ(unit whichUnit, real newValue)
+SetUnitLifePercentBJ(unit whichUnit, real percent)
+SetUnitLookAt(unit whichUnit, string whichBone, unit lookAtTarget, real offsetX, real offsetY, real offsetZ)
+SetUnitManaBJ(unit whichUnit, real newValue)
+SetUnitManaPercentBJ(unit whichUnit, real percent)
+SetUnitMoveSpeed(unit whichUnit, real newSpeed)
+SetUnitOwner(unit whichUnit, player whichPlayer, boolean changeColor)
+SetUnitPathing(unit whichUnit, boolean flag)
+SetUnitPosition(unit whichUnit, real newX, real newY)
+SetUnitPositionLoc(unit whichUnit, location whichLocation)
+SetUnitPositionLocFacingBJ(unit whichUnit, location loc, real facing)
+SetUnitPositionLocFacingLocBJ(unit whichUnit, location loc, location lookAt)
+SetUnitPropWindow(unit whichUnit, real newPropWindowAngle)
+SetUnitPropWindowBJ(unit whichUnit, real propWindow)
+SetUnitRallyDestructable(unit whichUnit, destructable targDest)
+SetUnitRallyPoint(unit whichUnit, location targPos)
+SetUnitRallyUnit(unit whichUnit, unit targUnit)
+SetUnitRescuable(unit whichUnit, player byWhichPlayer, boolean flag)
+SetUnitRescueRange(unit whichUnit, real range)
+SetUnitScale(unit whichUnit, real scaleX, real scaleY, real scaleZ)
+SetUnitScalePercent(unit whichUnit, real percentScaleX, real percentScaleY, real percentScaleZ)
+SetUnitState(unit whichUnit, unitstate whichUnitState, real newVal)
+SetUnitTimeScale(unit whichUnit, real timeScale)
+SetUnitTimeScalePercent(unit whichUnit, real percentScale)
+SetUnitTurnSpeed(unit whichUnit, real newTurnSpeed)
+SetUnitTurnSpeedBJ(unit whichUnit, real turnSpeed)
+SetUnitTypeSlots(unit whichUnit, integer slots)
+SetUnitUseFood(unit whichUnit, boolean useFood)
+SetUnitUseFoodBJ(boolean enable, unit whichUnit)
+SetUnitUserData(unit whichUnit, integer data)
+SetUnitVertexColor(unit whichUnit, integer red, integer green, integer blue, integer alpha)
+SetUnitVertexColorBJ(unit whichUnit, real red, real green, real blue, real transparency)
+SetUnitX(unit whichUnit, real newX)
+SetUnitY(unit whichUnit, real newY)
+SetUserControlForceOff(force whichForce)
+SetUserControlForceOn(force whichForce)
+SetWaterBaseColor(integer red, integer green, integer blue, integer alpha)
+SetWaterBaseColorBJ(real red, real green, real blue, real transparency)
+SetWaterDeforms(boolean val)
+SetWidgetLife(widget whichWidget, real newLife)
+ShareEverythingWithTeam(player whichPlayer)
+ShareEverythingWithTeamAI(player whichPlayer)
+ShowCustomCampaignButton(boolean show, integer whichButton)
+ShowDestructable(destructable d, boolean flag)
+ShowDestructableBJ(boolean flag, destructable d)
+ShowImage(image whichImage, boolean flag)
+ShowImageBJ(boolean flag, image whichImage)
+ShowInterface(boolean flag, real fadeDuration)
+ShowInterfaceForceOff(force whichForce, real fadeDuration)
+ShowInterfaceForceOn(force whichForce, real fadeDuration)
+ShowTextTagForceBJ(boolean show, texttag tt, force whichForce)
+ShowUbersplat(ubersplat whichSplat, boolean flag)
+ShowUbersplatBJ(boolean flag, ubersplat whichSplat)
+ShowUnit(unit whichUnit, boolean show)
+ShowUnitHide(unit whichUnit)
+ShowUnitShow(unit whichUnit)
+Sin(real radians)returns real
+SinBJ(real degrees)returns real
+SmartCameraPanBJ(player whichPlayer, location loc, real duration)
+SquareRoot(real x)returns real
+StartCampaignAI(player num, string script)
+StartMeleeAI(player num, string script)
+StartSound(sound soundHandle)
+StartSoundForPlayerBJ(player whichPlayer, sound soundHandle)
+StartStockUpdates(nothing)
+StartTimerBJ(timer t, boolean periodic, real timeout)returns timer
+StopCamera(nothing)
+StopCameraForPlayerBJ(player whichPlayer)
+StopMusic(boolean fadeOut)
+StopMusicBJ(boolean fadeOut)
+StopSound(sound soundHandle, boolean killWhenDone, boolean fadeOut)
+StopSoundBJ(sound soundHandle, boolean fadeOut)
+StoreBoolean(gamecache cache, string missionKey, string key, boolean value)
+StoreBooleanBJ(boolean value, string key, string missionKey, gamecache cache)
+StoreInteger(gamecache cache, string missionKey, string key, integer value)
+StoreIntegerBJ(integer value, string key, string missionKey, gamecache cache)
+StoreReal(gamecache cache, string missionKey, string key, real value)
+StoreRealBJ(real value, string key, string missionKey, gamecache cache)
+StoreString(gamecache cache, string missionKey, string key, string value)returns boolean
+StoreStringBJ(string value, string key, string missionKey, gamecache cache)returns boolean
+StoreUnit(gamecache cache, string missionKey, string key, unit whichUnit)returns boolean
+StoreUnitBJ(unit whichUnit, string key, string missionKey, gamecache cache)returns boolean
+String2OrderIdBJ(string orderIdString)returns integer
+String2UnitIdBJ(string unitIdString)returns integer
+StringCase(string source, boolean upper)returns string
+StringHash(string s)returns integer
+StringHashBJ(string s)returns integer
+StringIdentity(string theString)returns string
+StringLength(string s)returns integer
+SubString(string source, integer start, integer end)returns string
+SubStringBJ(string source, integer start, integer end)returns string
+SuspendHeroXP(unit whichHero, boolean flag)
+SuspendHeroXPBJ(boolean flag, unit whichHero)
+SuspendTimeOfDay(boolean b)
+SyncSelections(nothing)
+SyncStoredBoolean(gamecache cache, string missionKey, string key)
+SyncStoredInteger(gamecache cache, string missionKey, string key)
+SyncStoredReal(gamecache cache, string missionKey, string key)
+SyncStoredString(gamecache cache, string missionKey, string key)
+SyncStoredUnit(gamecache cache, string missionKey, string key)
+Tan(real radians)returns real
+TanBJ(real degrees)returns real
+TeamInitPlayerSlots(integer teamCount)
+TerrainDeformationCraterBJ(real duration, boolean permanent, location where, real radius, real depth)returns terraindeformation
+TerrainDeformationRandomBJ(real duration, location where, real radius, real minDelta, real maxDelta, real updateInterval)returns terraindeformation
+TerrainDeformationRippleBJ(real duration, boolean limitNeg, location where, real startRadius, real endRadius, real depth, real wavePeriod, real waveWidth)returns terraindeformation
+TerrainDeformationStopBJ(terraindeformation deformation, real duration)
+TerrainDeformationWaveBJ(real duration, location source, location target, real radius, real depth, real trailDelay)returns terraindeformation
+TerrainDeformCrater(real x, real y, real radius, real depth, integer duration, boolean permanent)returns terraindeformation
+TerrainDeformRandom(real x, real y, real radius, real minDelta, real maxDelta, integer duration, integer updateInterval)returns terraindeformation
+TerrainDeformRipple(real x, real y, real radius, real depth, integer duration, integer count, real spaceWaves, real timeWaves, real radiusStartPct, boolean limitNeg)returns terraindeformation
+TerrainDeformStop(terraindeformation deformation, integer duration)
+TerrainDeformStopAll(nothing)
+TerrainDeformWave(real x, real y, real dirX, real dirY, real distance, real speed, real radius, real depth, integer trailTime, integer count)returns terraindeformation
+TextTagSize2Height(real size)returns real
+TextTagSpeed2Velocity(real speed)returns real
+TimerDialogDisplay(timerdialog whichDialog, boolean display)
+TimerDialogDisplayBJ(boolean show, timerdialog td)
+TimerDialogDisplayForPlayerBJ(boolean show, timerdialog td, player whichPlayer)
+TimerDialogSetRealTimeRemaining(timerdialog whichDialog, real timeRemaining)
+TimerDialogSetSpeed(timerdialog whichDialog, real speedMultFactor)
+TimerDialogSetSpeedBJ(timerdialog td, real speedMultFactor)
+TimerDialogSetTimeColor(timerdialog whichDialog, integer red, integer green, integer blue, integer alpha)
+TimerDialogSetTimeColorBJ(timerdialog td, real red, real green, real blue, real transparency)
+TimerDialogSetTitle(timerdialog whichDialog, string title)
+TimerDialogSetTitleBJ(timerdialog td, string title)
+TimerDialogSetTitleColor(timerdialog whichDialog, integer red, integer green, integer blue, integer alpha)
+TimerDialogSetTitleColorBJ(timerdialog td, real red, real green, real blue, real transparency)
+TimerGetElapsed(timer whichTimer)returns real
+TimerGetRemaining(timer whichTimer)returns real
+TimerGetTimeout(timer whichTimer)returns real
+TimerStart(timer whichTimer, real timeout, boolean periodic, code handlerFunc)
+TransmissionFromUnitTypeWithNameBJ(force toForce, player fromPlayer, integer unitId, string unitName, location loc, sound soundHandle, string message, integer timeType, real timeVal, boolean wait)
+TransmissionFromUnitWithNameBJ(force toForce, unit whichUnit, string unitName, sound soundHandle, string message, integer timeType, real timeVal, boolean wait)
+TriggerActionUnitRescuedBJ(nothing)
+TriggerAddAction(trigger whichTrigger, code actionFunc)returns triggeraction
+TriggerAddCondition(trigger whichTrigger, boolexpr condition)returns triggercondition
+TriggerClearActions(trigger whichTrigger)
+TriggerClearConditions(trigger whichTrigger)
+TriggerEvaluate(trigger whichTrigger)returns boolean
+TriggerExecute(trigger whichTrigger)
+TriggerExecuteBJ(trigger trig, boolean checkConditions)returns boolean
+TriggerExecuteWait(trigger whichTrigger)
+TriggerRegisterAnyUnitEventBJ(trigger trig, playerunitevent whichEvent)
+TriggerRegisterBuildSubmenuEventBJ(trigger trig)returns event
+TriggerRegisterDeathEvent(trigger whichTrigger, widget whichWidget)returns event
+TriggerRegisterDestDeathInRegionEvent(trigger trig, rect r)
+TriggerRegisterDialogButtonEvent(trigger whichTrigger, button whichButton)returns event
+TriggerRegisterDialogEvent(trigger whichTrigger, dialog whichDialog)returns event
+TriggerRegisterDialogEventBJ(trigger trig, dialog whichDialog)returns event
+TriggerRegisterDistanceBetweenUnits(trigger trig, unit whichUnit, boolexpr condition, real range)returns event
+TriggerRegisterEnterRectSimple(trigger trig, rect r)returns event
+TriggerRegisterEnterRegion(trigger whichTrigger, region whichRegion, boolexpr filter)returns event
+TriggerRegisterEnterRegionSimple(trigger trig, region whichRegion)returns event
+TriggerRegisterFilterUnitEvent(trigger whichTrigger, unit whichUnit, unitevent whichEvent, boolexpr filter)returns event
+TriggerRegisterGameEvent(trigger whichTrigger, gameevent whichGameEvent)returns event
+TriggerRegisterGameLoadedEventBJ(trigger trig)returns event
+TriggerRegisterGameSavedEventBJ(trigger trig)returns event
+TriggerRegisterGameStateEvent(trigger whichTrigger, gamestate whichState, limitop opcode, real limitval)returns event
+TriggerRegisterGameStateEventTimeOfDay(trigger trig, limitop opcode, real limitval)returns event
+TriggerRegisterLeaveRectSimple(trigger trig, rect r)returns event
+TriggerRegisterLeaveRegion(trigger whichTrigger, region whichRegion, boolexpr filter)returns event
+TriggerRegisterLeaveRegionSimple(trigger trig, region whichRegion)returns event
+TriggerRegisterPlayerAllianceChange(trigger whichTrigger, player whichPlayer, alliancetype whichAlliance)returns event
+TriggerRegisterPlayerChatEvent(trigger whichTrigger, player whichPlayer, string chatMessageToDetect, boolean exactMatchOnly)returns event
+TriggerRegisterPlayerEvent(trigger whichTrigger, player whichPlayer, playerevent whichPlayerEvent)returns event
+TriggerRegisterPlayerEventAllianceChanged(trigger trig, player whichPlayer)returns event
+TriggerRegisterPlayerEventDefeat(trigger trig, player whichPlayer)returns event
+TriggerRegisterPlayerEventEndCinematic(trigger trig, player whichPlayer)returns event
+TriggerRegisterPlayerEventLeave(trigger trig, player whichPlayer)returns event
+TriggerRegisterPlayerEventVictory(trigger trig, player whichPlayer)returns event
+TriggerRegisterPlayerKeyEventBJ(trigger trig, player whichPlayer, integer keType, integer keKey)returns event
+TriggerRegisterPlayerSelectionEventBJ(trigger trig, player whichPlayer, boolean selected)returns event
+TriggerRegisterPlayerStateEvent(trigger whichTrigger, player whichPlayer, playerstate whichState, limitop opcode, real limitval)returns event
+TriggerRegisterPlayerUnitEvent(trigger whichTrigger, player whichPlayer, playerunitevent whichPlayerUnitEvent, boolexpr filter)returns event
+TriggerRegisterPlayerUnitEventSimple(trigger trig, player whichPlayer, playerunitevent whichEvent)returns event
+TriggerRegisterShowSkillEventBJ(trigger trig)returns event
+TriggerRegisterTimerEvent(trigger whichTrigger, real timeout, boolean periodic)returns event
+TriggerRegisterTimerEventPeriodic(trigger trig, real timeout)returns event
+TriggerRegisterTimerEventSingle(trigger trig, real timeout)returns event
+TriggerRegisterTimerExpireEvent(trigger whichTrigger, timer t)returns event
+TriggerRegisterTimerExpireEventBJ(trigger trig, timer t)returns event
+TriggerRegisterTrackableHitEvent(trigger whichTrigger, trackable t)returns event
+TriggerRegisterTrackableTrackEvent(trigger whichTrigger, trackable t)returns event
+TriggerRegisterUnitEvent(trigger whichTrigger, unit whichUnit, unitevent whichEvent)returns event
+TriggerRegisterUnitInRange(trigger whichTrigger, unit whichUnit, real range, boolexpr filter)returns event
+TriggerRegisterUnitInRangeSimple(trigger trig, real range, unit whichUnit)returns event
+TriggerRegisterUnitLifeEvent(trigger trig, unit whichUnit, limitop opcode, real limitval)returns event
+TriggerRegisterUnitManaEvent(trigger trig, unit whichUnit, limitop opcode, real limitval)returns event
+TriggerRegisterUnitStateEvent(trigger whichTrigger, unit whichUnit, unitstate whichState, limitop opcode, real limitval)returns event
+TriggerRegisterVariableEvent(trigger whichTrigger, string varName, limitop opcode, real limitval)returns event
+TriggerRemoveAction(trigger whichTrigger, triggeraction whichAction)
+TriggerRemoveCondition(trigger whichTrigger, triggercondition whichCondition)
+TriggerSleepAction(real timeout)
+TriggerSyncReady(nothing)
+TriggerSyncStart(nothing)
+TriggerWaitForSound(sound s, real offset)
+TriggerWaitOnSleeps(trigger whichTrigger, boolean flag)
+TryInitCinematicBehaviorBJ(nothing)
+TryInitRescuableTriggersBJ(nothing)
+UnitAddAbility(unit whichUnit, integer abilityId)returns boolean
+UnitAddAbilityBJ(integer abilityId, unit whichUnit)returns boolean
+UnitAddIndicator(unit whichUnit, integer red, integer green, integer blue, integer alpha)
+UnitAddIndicatorBJ(unit whichUnit, real red, real green, real blue, real transparency)
+UnitAddItem(unit whichUnit, item whichItem)returns boolean
+UnitAddItemById(unit whichUnit, integer itemId)returns item
+UnitAddItemByIdSwapped(integer itemId, unit whichHero)returns item
+UnitAddItemSwapped(item whichItem, unit whichHero)returns boolean
+UnitAddItemToSlotById(unit whichUnit, integer itemId, integer itemSlot)returns boolean
+UnitAddSleep(unit whichUnit, boolean add)
+UnitAddSleepPerm(unit whichUnit, boolean add)
+UnitAddType(unit whichUnit, unittype whichUnitType)returns boolean
+UnitAddTypeBJ(unittype whichType, unit whichUnit)returns boolean
+UnitApplyTimedLife(unit whichUnit, integer buffId, real duration)
+UnitApplyTimedLifeBJ(real duration, integer buffId, unit whichUnit)
+UnitCanSleep(unit whichUnit)returns boolean
+UnitCanSleepBJ(unit whichUnit)returns boolean
+UnitCanSleepPerm(unit whichUnit)returns boolean
+UnitCountBuffsEx(unit whichUnit, boolean removePositive, boolean removeNegative, boolean magic, boolean physical, boolean timedLife, boolean aura, boolean autoDispel)returns integer
+UnitCountBuffsExBJ(integer polarity, integer resist, unit whichUnit, boolean bTLife, boolean bAura)returns integer
+UnitDamagePoint(unit whichUnit, real delay, real radius, real x, real y, real amount, boolean attack, boolean ranged, attacktype attackType, damagetype damageType, weapontype weaponType)returns boolean
+UnitDamagePointLoc(unit whichUnit, real delay, real radius, location loc, real amount, attacktype whichAttack, damagetype whichDamage)returns boolean
+UnitDamageTarget(unit whichUnit, widget target, real amount, boolean attack, boolean ranged, attacktype attackType, damagetype damageType, weapontype weaponType)returns boolean
+UnitDamageTargetBJ(unit whichUnit, unit target, real amount, attacktype whichAttack, damagetype whichDamage)returns boolean
+UnitDropItem(unit inUnit, integer inItemID)returns item
+UnitDropItemPoint(unit whichUnit, item whichItem, real x, real y)returns boolean
+UnitDropItemPointBJ(unit whichUnit, item whichItem, real x, real y)returns boolean
+UnitDropItemPointLoc(unit whichUnit, item whichItem, location loc)returns boolean
+UnitDropItemSlot(unit whichUnit, item whichItem, integer slot)returns boolean
+UnitDropItemSlotBJ(unit whichUnit, item whichItem, integer slot)returns boolean
+UnitDropItemTarget(unit whichUnit, item whichItem, widget target)returns boolean
+UnitDropItemTargetBJ(unit whichUnit, item whichItem, widget target)returns boolean
+UnitGenerateAlarms(unit whichUnit, boolean generate)returns boolean
+UnitHasBuffBJ(unit whichUnit, integer buffcode)returns boolean
+UnitHasBuffsEx(unit whichUnit, boolean removePositive, boolean removeNegative, boolean magic, boolean physical, boolean timedLife, boolean aura, boolean autoDispel)returns boolean
+UnitHasItem(unit whichUnit, item whichItem)returns boolean
+UnitHasItemOfTypeBJ(unit whichUnit, integer itemId)returns boolean
+UnitId(string unitIdString)returns integer
+UnitId2OrderIdBJ(integer unitId)returns integer
+UnitId2String(integer unitId)returns string
+UnitId2StringBJ(integer unitId)returns string
+UnitIgnoreAlarm(unit whichUnit, boolean flag)returns boolean
+UnitIgnoreAlarmToggled(unit whichUnit)returns boolean
+UnitInventoryCount(unit whichUnit)returns integer
+UnitInventorySize(unit whichUnit)returns integer
+UnitInventorySizeBJ(unit whichUnit)returns integer
+UnitIsSleeping(unit whichUnit)returns boolean
+UnitIsSleepingBJ(unit whichUnit)returns boolean
+UnitItemInSlot(unit whichUnit, integer itemSlot)returns item
+UnitItemInSlotBJ(unit whichUnit, integer itemSlot)returns item
+UnitMakeAbilityPermanent(unit whichUnit, boolean permanent, integer abilityId)returns boolean
+UnitMakeAbilityPermanentBJ(boolean permanent, integer abilityId, unit whichUnit)returns boolean
+UnitModifySkillPoints(unit whichHero, integer skillPointDelta)returns boolean
+UnitPauseTimedLife(unit whichUnit, boolean flag)
+UnitPauseTimedLifeBJ(boolean flag, unit whichUnit)
+UnitPoolAddUnitType(unitpool whichPool, integer unitId, real weight)
+UnitPoolRemoveUnitType(unitpool whichPool, integer unitId)
+UnitRemoveAbility(unit whichUnit, integer abilityId)returns boolean
+UnitRemoveAbilityBJ(integer abilityId, unit whichUnit)returns boolean
+UnitRemoveBuffBJ(integer buffcode, unit whichUnit)returns boolean
+UnitRemoveBuffs(unit whichUnit, boolean removePositive, boolean removeNegative)
+UnitRemoveBuffsBJ(integer buffType, unit whichUnit)
+UnitRemoveBuffsEx(unit whichUnit, boolean removePositive, boolean removeNegative, boolean magic, boolean physical, boolean timedLife, boolean aura, boolean autoDispel)
+UnitRemoveBuffsExBJ(integer polarity, integer resist, unit whichUnit, boolean bTLife, boolean bAura)
+UnitRemoveItem(unit whichUnit, item whichItem)
+UnitRemoveItemFromSlot(unit whichUnit, integer itemSlot)returns item
+UnitRemoveItemFromSlotSwapped(integer itemSlot, unit whichHero)returns item
+UnitRemoveItemSwapped(item whichItem, unit whichHero)
+UnitRemoveType(unit whichUnit, unittype whichUnitType)returns boolean
+UnitRemoveTypeBJ(unittype whichType, unit whichUnit)returns boolean
+UnitResetCooldown(unit whichUnit)
+UnitSetCanSleepBJ(unit whichUnit, boolean canSleep)
+UnitSetConstructionProgress(unit whichUnit, integer constructionPercentage)
+UnitSetUpgradeProgress(unit whichUnit, integer upgradePercentage)
+UnitSetUsesAltIcon(unit whichUnit, boolean flag)
+UnitSetUsesAltIconBJ(boolean flag, unit whichUnit)
+UnitShareVision(unit whichUnit, player whichPlayer, boolean share)
+UnitShareVisionBJ(boolean share, unit whichUnit, player whichPlayer)
+UnitStripHeroLevel(unit whichHero, integer howManyLevels)returns boolean
+UnitSuspendDecay(unit whichUnit, boolean suspend)
+UnitSuspendDecayBJ(boolean suspend, unit whichUnit)
+UnitUseItem(unit whichUnit, item whichItem)returns boolean
+UnitUseItemDestructable(unit whichUnit, item whichItem, widget target)returns boolean
+UnitUseItemPoint(unit whichUnit, item whichItem, real x, real y)returns boolean
+UnitUseItemPointLoc(unit whichUnit, item whichItem, location loc)returns boolean
+UnitUseItemTarget(unit whichUnit, item whichItem, widget target)returns boolean
+UnitWakeUp(unit whichUnit)
+UnitWakeUpBJ(unit whichUnit)
+UnlockGameSpeedBJ(nothing)
+UnregisterStackedSound(sound soundHandle, boolean byPosition, real rectwidth, real rectheight)
+UpdateEachStockBuilding(itemtype iType, integer iLevel)
+UpdateEachStockBuildingEnum(nothing)
+UpdateStockAvailability(item whichItem)
+UseTimeOfDayBJ(boolean flag)
+VersionCompatible(version whichVersion)returns boolean
+VersionGet(nothing)returns version
+VersionSupported(version whichVersion)returns boolean
+VolumeGroupReset(nothing)
+VolumeGroupResetBJ(nothing)
+VolumeGroupResetImmediateBJ(nothing)
+VolumeGroupSetVolume(volumegroup vgroup, real scale)
+VolumeGroupSetVolumeBJ(volumegroup vgroup, real percent)
+VolumeGroupSetVolumeForPlayerBJ(player whichPlayer, volumegroup vgroup, real scale)
+WaitForSoundBJ(sound soundHandle, real offset)
+WaitTransmissionDuration(sound soundHandle, integer timeType, real timeVal)
+WakePlayerUnits(player whichPlayer)
+WakePlayerUnitsEnum(nothing)
+WaygateActivate(unit waygate, boolean activate)
+WaygateActivateBJ(boolean activate, unit waygate)
+WaygateGetDestinationLocBJ(unit waygate)returns location
+WaygateGetDestinationX(unit waygate)returns real
+WaygateGetDestinationY(unit waygate)returns real
+WaygateIsActive(unit waygate)returns boolean
+WaygateIsActiveBJ(unit waygate)returns boolean
+WaygateSetDestination(unit waygate, real x, real y)
+WaygateSetDestinationLocBJ(unit waygate, location loc)
+WidgetDropItem(widget inWidget, integer inItemID)returns item
+UnitsOfType(string unitname)
+UnitsOfPlaye(player p)
+UnitsInRect (rect r)
+UnitsInRange(real x, real y, real radius)
+UnitsInRangeOfLoc(location whichLocation, real radius)
+UnitsSelected(player p)
+UnitsInGroup (group g)
+onInit()returns callback
+onUnitAttacked()returns callback
+onUnitDeath()returns callback
+onUnitDecay()returns callback
+onUnitIssuedOrder(int order_id)returns callback
+onUnitIssuedPointOrder(int order_id)returns callback
+onUnitIssuedTargetOrder(int order_id)returns callback
+onHeroLevel()returns callback
+onHeroSkill()returns callback
+onUnitSpellChannel(int spell_id)returns callback
+onUnitSpellCast(int spell_id)returns callback
+onUnitSpellEffect(int spell_id)returns callback
+onUnitSpellFinish(int spell_id)returns callback
+onUnitSpellEndcast(int spell_id)returns callback
+onUnitUseItem(int item_id)returns callback
+onUnitPickupItem(int item_id)returns callback
+onUnitDropItem(int item_id)returns callback
+onUnitSellItem(int item_id)returns callback
+onUnitPawnItem(int item_id)returns callback
+onGameLoad()returns callback
+onGameSave()returns callback
+CounterInc()
+CounterReset()

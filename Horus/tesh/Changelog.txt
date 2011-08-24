@@ -1,5 +1,8 @@
 Trigger Editor Syntax Highlighting Changelog
 
+0.7.1.2 (Unofficial update by Van Damm)
+	- Added a lot of missing cJass keywords and constants.
+
 0.7.1.1 (Unofficial update by Van Damm)
 	- Added some 1.24 keywords and calltips, missed when performing previous update.
 	- Added some new cJass keywords.
