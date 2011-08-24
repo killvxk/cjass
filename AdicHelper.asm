@@ -6676,7 +6676,7 @@ cmp	word ptr [edi - 02h],	0a0dh
 je	_lXFPDFF_HackEnd
 
 cmp	word ptr [edi - 06h],	7801h	;; #x
-jne	_lXFPGetNext
+jne	_lXFPNext
 
 _lXFPDFF_HackEnd:
 ;;----------------
