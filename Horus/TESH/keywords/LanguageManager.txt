@@ -342,7 +342,11 @@ item
 	'endwhile'
 	'endwhilenot'
 	'flush locals'
-	)
+	'lambda'
+	'callback'
+	'repeat'
+	'endrepeat'
+	'sysinit')
     end
     item
       KeywordListNumber = 1
@@ -478,9 +482,7 @@ item
         'int'
         'void'
         'float'
-        'bool'
-	'lambda'
-	'callback')
+        'bool')
     end
     item
       KeywordListNumber = 5
