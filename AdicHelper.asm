@@ -1,7 +1,7 @@
 ;;-------------------------------------------------------------------------
 ;;
 ;;	Adic Helper [cJass]
-;;	v 1.4.2.39
+;;	v 1.4.2.40
 ;;
 ;;	© 2009 ADOLF aka ADX 
 ;;	http://cjass.xgm.ru
@@ -104,8 +104,8 @@ extern	_imp__SFileCloseFile@4:dword
 	_dWndStlEx		dd	WS_VISIBLE
 
 ;	align			04h
-	_sWinName		db	"AdicHelper 1.4.2.39", 00h
-	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.39", 0dh, 0ah, "adic3x aka ADOLF, 2009 - 2011", 00h
+	_sWinName		db	"AdicHelper 1.4.2.40", 00h
+	_sTollInfo		db	"cJass parser and optimizer AdicHelper v 1.4.2.40", 0dh, 0ah, "adic3x aka ADOLF, 2009 - 2011", 00h
 	_sSiteAdr		db	"http://cjass.xgm.ru", 00h
 	
 	_sOpen			db	"open", 00h
@@ -1217,6 +1217,8 @@ _dNLBlock			db	?	;; used in post parse
 
 _dLastStructIn			dd	?
 _dLastModuleIn			dd	?
+
+_bInMacroBody			db	?
 
 	;;----------------
 	;; custom
@@ -3655,6 +3657,7 @@ jmp	_lEnddoPre
 
 			add	esi,			0ah
 			_lCRTTInOX:
+			mov	byte ptr [_bInMacroBody],	01h
 			mov	dword ptr [edi-04h],	69666564h	;; defi
 			mov	dword ptr [edi],	7420656eh	;; ne_t
 			mov	byte ptr [edi+04h],	6dh		;; m
@@ -3712,6 +3715,8 @@ jmp	_lEnddoPre
 			jne	_next
 			cmp	byte ptr [esi+0ch],	20h		;; _
 			jg	_next
+
+			mov	byte ptr [_bInMacroBody],	00h
 
 			sub	edi,			04h
 			add	esi,			0ch
@@ -4596,6 +4601,8 @@ mov	byte ptr [edi],			00h
 		jmp	_lCRScan
 
 		_lCRMArgSF:
+cmp	byte ptr [_bInMacroBody],	00h
+je	_lCRMArgSFScp
 		mov	al,			byte ptr [esi-02h]
 		cmp	byte ptr [_bAscii_00+eax],	ah
 		jz	_lCRMArg_00
@@ -4633,6 +4640,19 @@ mov	byte ptr [edi],			00h
 		mov	word ptr [edi],		2323h		;; ##
 		add	edi,			02h
 		jmp	_lCRScan
+
+_lCRMArgSFScp:
+mov	byte ptr [edi],			"$"
+inc	edi
+_lCRMArgSFScp_00:
+lodsb
+cmp	al,				"$"
+je	_lCRMArgSFScp_01
+stosb
+jmp	_lCRMArgSFScp_00
+_lCRMArgSFScp_01:
+stosb
+jmp	_lCRScan
 
 		_lbl:
 		cmp	ax,			3501h		;; #5
