@@ -9956,128 +9956,6 @@ je	_lFNPIfBlockNull
 			mov	byte ptr [_bCodePosOp],	00h
 
 			jmp	_lFNPCopyParse
-
-				;;----------------
-				;; whilenot
-				_lbl:
-				cmp	eax,			6c696877h	;; whil
-				jne	_next
-				cmp	dword ptr [esi+04h],	746f6e65h	;; enot
-				jne	_next
-				cmp	byte ptr [esi+08h],	2dh		;; _ ;; !!!!
-				jg	_next
-				call	_lInFuncBlockIn
-				call	_lFNPCheckBlock
-				add	esi,			08h
-				test	eax,			eax
-				jz	_lFNPWhileEX
-				mov	dword ptr [eax],	6c646e65h	;; endl
-				mov	dword ptr [eax+04h],	06706f6fh	;; oop_
-				_lFNPWhileEX:
-				mov	eax,			dword ptr [_dFCB]
-				mov	dword ptr [eax],	706f6f6ch	;; loop
-				mov	word ptr [eax+04h],	0a0dh		;; new line
-				add	eax,			06h
-				mov	dword ptr [_dFCB],	eax
-				cmp	byte ptr [esi],		10h		;; 0a0dh or #
-				jbe	_lFNPCopyParse
-				mov	dword ptr [edi],	74697865h	;; exit
-				mov	dword ptr [edi+04h],	6e656877h	;; when
-				mov	byte ptr [edi+08h],	20h		;; _
-				add	edi,			09h
-				jmp	_lFNPCopyParse
-
-				_lbl:
-				cmp	eax,			77646e65h	;; endw
-				jne	_next
-				cmp	dword ptr [esi+04h],	656c6968h	;; hile
-				jne	_next
-;cmp	byte ptr [esi + 08h],	20h
-;ja	_lEndwhilenot
-;add	esi,			09h
-;jmp	_lEndwhilenotEx
-;_lEndwhilenot:
-				cmp	dword ptr [esi+08h],	0d746f6eh	;; not_
-				jne	_next
-				add	esi,			0bh
-;_lEndwhilenotEx:
-;call	_lInFuncBlockOut
-;call	_lInFuncBlockOutVars
-				mov	dword ptr [edi],	6c646e65h	;; endl
-				mov	dword ptr [edi+04h],	00706f6fh	;; oop_
-				add	edi,			07h
-				call	_lInFuncBlockOut
-				call	_lInFuncBlockOutVars
-				jmp	_lFNPCopyParse
-				;;----------------
-
-				;;----------------
-				;; do
-				_lbl:
-				cmp	ax,			6f64h		;; do
-				jne	_next
-				cmp	byte ptr [esi+02h],	21h
-				jg	_next
-
-				call	_lInFuncBlockIn
-
-				mov	dword ptr [edi],	706f6f6ch	;; loop
-				mov	word ptr [edi+04h],	0a0dh		;; new line
-				add	edi,			06h
-
-				call	_lFNPCheckBlock
-				add	esi,			02h
-				test	eax,			eax
-				jz	_lFNPCopyParse
-
-				cmp	dword ptr [eax+10h],	6c696877h	;; whil
-				jne	_lFNPDo
-				cmp	dword ptr [eax+14h],	746f6e65h	;; enot
-				jne	_lFNPDo
-				cmp	byte ptr [eax+18h],	2dh		;; _ ;; !!!!
-				jg	_lFNPDo
-
-				mov	dword ptr [eax],	06060606h
-				mov	word ptr [eax+04h],	0606h
-				mov	dword ptr [eax+0eh],	78650a0dh	;; __ex
-				mov	dword ptr [eax+12h],	68777469h	;; itwh
-				mov	word ptr [eax+16h],	6e65h		;; en
-
-				add	eax,			11h
-				_lFNPDoEX:
-				inc	eax
-				cmp	word ptr [eax],		0a0dh		;; nl
-				jne	_lFNPDoEX
-				mov	word ptr [eax],		6f01h		;; #o
-				jmp	_lFNPCopyParse
-
-				_lFNPDo:
-				mov	dword ptr [eax],	6c646e65h	;; endl
-				mov	dword ptr [eax+04h],	06706f6fh	;; oop_
-				jmp	_lFNPCopyParse
-
-				_lbl:
-				cmp	eax,			64646e65h	;; endd
-				jne	_next
-				cmp	word ptr [esi+04h],	206fh		;; o_
-				jne	_next
-				cmp	dword ptr [esi+06h],	6c696877h	;; whil
-				jne	_next
-				cmp	dword ptr [esi+0ah],	746f6e65h	;; enot
-				jne	_next
-				cmp	byte ptr [esi+0eh],	2dh		;; _ ;; !!!!
-				jg	_next
-
-				call	_lInFuncBlockOut
-				call	_lInFuncBlockOutVars
-
-				mov	dword ptr [esi],	74697865h	;; exit
-				mov	dword ptr [esi+04h],	6e656877h	;; when
-				mov	dword ptr [esi+08h],	06060606h
-				mov	word ptr [esi+0ch],	06060606h
-				mov	eax,			esi
-				jmp	_lFNPDoEX
-				;;----------------
 			;;----------------
 
 			;;----------------
@@ -10256,6 +10134,8 @@ je	_lFNPIfBlockNull
 
 				_lFNPIDPreXfx:
 				movsb
+cmp	byte ptr [esi],		00h
+;;je err
 				cmp	word ptr [esi],		0a0dh	;; nl
 				jne	_lFNPIDPreXfx
 
@@ -12126,6 +12006,14 @@ mov	dword ptr [_bALFReturnExprUse],	00h
 			mov	dword ptr [edi],	20746573h	;; set_
 			add	edi,			04h
 			jmp	_lFNPCopyParse
+
+			_lbl:
+			cmp	ax,			7001h		;; #p ++
+			je	_lFNPSet
+
+			_lbl:
+			cmp	ax,			6d01h		;; #p --
+			je	_lFNPSet
 
 			_lbl:
 			cmp	eax,	 		0a0d2b2bh	;; ++
@@ -14314,13 +14202,6 @@ cmp	ecx,			offset _dModulesEntry - 04h
 			add	edi,			05h
 			jmp	_lFNPCopyParseNext
 
-;;_lbl:
-;;cmp	cl,				18h	;; anon func in nesteds function
-;;jne	_next
-;;mov	byte ptr [_bAnonBlockEX],	01h
-;;jmp	_lFNPCopyParseCX
-
-
 			_lbl:
 			cmp	cx,			2b2bh		;; ++
 			jne	_next
@@ -14471,6 +14352,8 @@ je	_lFNPPxNorm
 
 						_lFNPPxII:
 						dec	ecx
+cmp	byte ptr [ecx],			00h
+;; je err
 						cmp	byte ptr [ecx],		5dh		;; ]
 						jne	_lFNPPxII_00
 						inc	ah
@@ -14527,9 +14410,12 @@ je	_lFNPPxNorm
 					mov	ecx,			esi
 					_lFNPPxEX:
 					inc	ecx
+					cmp	word ptr [ecx],		3101h	;; #1
+					je	_lFNPPxXX
 					cmp	word ptr [ecx],		0a0dh	;; nl
 					jne	_lFNPPxEX
 					mov	word ptr [ecx],		3101h	;; #1
+					_lFNPPxXX:
 					lea	ecx,			[edi-01h]
 					_lFNPPxSX:
 					dec	edx
