@@ -1,0 +1,1 @@
+cJass is small, but useful preprocessor for JASS2 interpreted language, used in Warcraft III by Blizzard ent. Its main purposes are to make the process of writing the script simple and comfortable and to increase its readability.
